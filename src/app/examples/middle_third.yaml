@@ -1,0 +1,17 @@
+- id: 0
+  name: "Example 0"
+  rank: "Sgt"
+  MOS: "1833"
+  billet: "Section Leader"
+  billet_description: |
+    - None right now.
+  accomplishments: |
+    - None right now.
+  section_i: |
+    Sergeant ANON is a talented NCO whose performance during the period was outstanding. Filling a SNCO billet, he 
+    quickly mastered his responsibilities and guided his section to superior results. A superb technician with 
+    impressive MOS and professional skills, he directed the various administrative and training requirements of his 
+    unit with impressive precision. A mature and dedicated leader who provides a guiding a steadying influence on his 
+    Marines and Sailors.
+  recommendation: |
+    I recommend Sergeant ANON for promotion and billets of increased responsibility.

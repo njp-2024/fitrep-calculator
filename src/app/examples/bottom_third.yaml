@@ -1,0 +1,15 @@
+- id: 0
+  name: "Example 0"
+  rank: "Sgt"
+  MOS: "1833"
+  billet: "Section Leader"
+  billet_description: |
+    - None right now.
+  accomplishments: |
+    - None right now.
+  section_i: |
+    Sergeant ANON is an effective NCO who operates at a level expected of a Marine with his rank and experience. 
+    Demonstrates the leadership and technical skills required to accomplish assigned billet responsibilities. Directs the 
+    various administrative and training requirements of his unit with limited guidance.
+  recommendation: |
+    Retain and Promote.

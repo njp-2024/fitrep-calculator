@@ -1,0 +1,18 @@
+- id: 0
+  name: "Example 0"
+  rank: "Sgt"
+  MOS: "1833"
+  billet: "Section Leader"
+  billet_description: |
+    - None right now.
+  accomplishments: |
+    - None right now.
+  section_i: |
+    Sergeant ANON is an immensely talented and effective NCO who operates at a level beyond the grasp of his peers. 
+    Hand selected to assume a SNCO billet; he completely outperformed two seasoned Staff Sergeants. An absolute 
+    technical expert whose professional skill rivals that of an officer. He directs the various administrative and 
+    training requirements of his unit without fault. Demonstrates impeccable moral character and a matchless ability 
+    among his peers to lead and inspire Marines and Sailors. The Corps could not find a finer ambassador for 
+    recruiting duty. Highly recommended for any officer commissioning program.
+  recommendation: |
+    Highly recommended for any officer commissioning program.

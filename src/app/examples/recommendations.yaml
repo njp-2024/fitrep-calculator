@@ -1,0 +1,63 @@
+water_walkers:
+  promotion:
+    - An absolute must for promotion. Already performing at the next grade.
+    - Promote immediately! Already performing at the next grade.
+
+  assignment:
+    - Assign to the highest impact billets available.
+    - Will succeed in any role assigned.
+
+  command:
+    - Promote immediately! Ready for command now. 
+    - An absolute must for promotion and selection to command.  He is ready now!    
+
+  context:
+    - A water-walker, top 1 to 2 percent. 
+    - I will actively seek to serve with him again.
+
+top_third:
+  promotion:
+    - Enthusiastically recommended for promotion.
+    - Clearly ready for promotion; will excel at the next grade.
+
+  assignment:
+    - A good choice for high-impact billets across the force.
+    - Well suited for challenging assignments in the FMF.
+
+  command:
+    - Enthusiastically recommended for promotion and command at the first opportunity. 
+    - Clearly ready for promotion; select for command on the first look.
+
+  context:
+    - A top performer.   
+    - I would serve with him again in any conditions.
+
+middle_third:
+  promotion:
+    - Strongly recommend for promotion. 
+    - Highly recommend for promotion and retention.
+
+  assignment:
+    - Assign to billets of increased responsibility.
+
+  command:
+    - Strongly recommend for promotion. 
+    - Highly recommend for promotion and retention.
+
+  context:
+    - An average performer.   
+    - I would serve with him again if required.
+
+bottom_third:
+  promotion:
+    - None.
+
+  assignment:
+    - None.
+
+  command:
+    - None.
+
+  context:
+    - A low performer. 
+    - I would prefer not to work with him again.

@@ -1,0 +1,69 @@
+import pytest
+from unittest.mock import MagicMock, patch
+from src.app.llm_clients import LocalModelClient
+from src.app.llm_base import LLMRequest
+
+
+# We need to mock 'subprocess.run' because your Client uses the CLI method
+# We also pass local_path="dummy" to the constructor to bypass the ValueError check
+
+def test_client_generates_successfully():
+    """Verify the client returns a valid LLMResponse object on success."""
+
+    # 1. Mock the subprocess.run call so we don't actually run Ollama
+    with patch('src.app.llm_clients.subprocess.run') as mock_run:
+        # 2. Configure the mock to return a fake success result
+        mock_result = MagicMock()
+        mock_result.stdout = "This is a generated draft."
+        mock_result.returncode = 0
+        mock_run.return_value = mock_result
+
+        # 3. Instantiate Client with a DUMMY path so it doesn't complain
+        client = LocalModelClient(local_path="dummy/path/ollama.exe")
+
+        req = LLMRequest(system_prompt="Sys", user_prompt="User")
+        resp = client.generate(req)
+
+        # 4. Assertions
+        assert resp.text == "This is a generated draft."
+        assert resp.model == client.model
+        # Verify subprocess was called with the right arguments
+        args, _ = mock_run.call_args
+        assert "dummy/path/ollama.exe" in args[0]  # The command list
+
+
+def test_client_handles_missing_file():
+    """Verify the client raises a clear error if the executable is missing."""
+
+    # We don't mock subprocess here because we want the Validation logic in __init__ to run
+    # But wait, your validation checks if the file exists using Path.exists()
+
+    # We must mock Path.exists to simulate a missing file
+    with patch('src.app.llm_clients.Path.exists') as mock_exists:
+        mock_exists.return_value = False  # File not found
+
+        # This should fail immediately upon initialization
+        with pytest.raises(ValueError) as excinfo:
+            # We pass a path that "looks" real but mocked to not exist
+            LocalModelClient(local_path=r"C:\Fake\ollama.exe")
+
+        assert "found" in str(excinfo.value) or "missing" in str(excinfo.value)
+
+
+def test_client_handles_subprocess_error():
+    """Verify the client handles runtime errors from the CLI."""
+
+    with patch('src.app.llm_clients.subprocess.run') as mock_run:
+        # Simulate the CLI command failing (e.g. exit code 1)
+        import subprocess
+        mock_run.side_effect = subprocess.CalledProcessError(returncode=1, cmd="ollama", stderr="Model not found")
+
+        client = LocalModelClient(local_path="dummy_path")
+
+        # FIX: Added 'system_prompt' argument below
+        req = LLMRequest(system_prompt="sys", user_prompt="Hi")
+
+        with pytest.raises(RuntimeError) as excinfo:
+            client.generate(req)
+
+        assert "Ollama CLI Error" in str(excinfo.value)
