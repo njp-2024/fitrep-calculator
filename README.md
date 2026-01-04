@@ -8,7 +8,7 @@
 
 The **FitRep Calculator** is a desktop-grade application designed to assist USMC Reporting Seniors (RS) in preparing Fitness Reports. It addresses two critical needs:
 
-1.  **Relative Value (RV) Forecasting:** Allows an RS to see *exactly* how a specific set of attribute marks will impact a report's Relative Value (RV) and Cumulative RV *before* submitting the report.
+1.  **Relative Value (RV) Forecasting:** Allows an RS to see how a specific set of attribute marks will impact a report's Relative Value (RV) and Cumulative RV *before* submitting the report.
 2.  **Section I Narrative Generation:** Leverages Large Language Models (LLMs) to assist Reporting Seniors in drafting Section I comments that align in tone and language with the relative value of the report(s). It supports three tiers of AI inference:
     * **Local (Offline):** Runs entirely on your CPU via Ollama (Mistral/Llama). *Not available in the web app currently.*
     * **Foundation (Cloud):** Uses OpenAI (GPT-4o-mini) for maximum reasoning capability.
@@ -86,6 +86,7 @@ streamlit run src/ui/gui_main.py
 
 1.  **Profile Page:** Initialize your RS Profile (Rank, High, Low, Average, Total Reports).
 2.  **Reports Page:** Add Marines. Toggle attribute buttons (A-G) to see real-time impact on RV.
+    * RV accuracy is typically within 0.03 to 0.09 when entering profile data (high/low/avg/number of reports) to start.  This is because OMPF rounds those values to 2 decimal places.  The calculations are close enough to confirm reports fall in the desired third, but are not exact.
 3.  **Narratives Page:** Enter accomplishments and context. *Choose your model to draft text*.
 
 
