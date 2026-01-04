@@ -10,7 +10,7 @@ The **FitRep Calculator** is a desktop-grade application designed to assist USMC
 
 1.  **Relative Value (RV) Forecasting:** Allows an RS to see *exactly* how a specific set of attribute marks will impact a report's Relative Value (RV) and Cumulative RV *before* submitting the report.
 2.  **Section I Narrative Generation:** Leverages Large Language Models (LLMs) to assist Reporting Seniors in drafting Section I comments that align in tone and language with the relative value of the report(s). It supports three tiers of AI inference:
-    * **Local (Offline):** Runs entirely on your CPU via Ollama (Mistral/Llama).
+    * **Local (Offline):** Runs entirely on your CPU via Ollama (Mistral/Llama). *Not available in the web app currently.*
     * **Foundation (Cloud):** Uses OpenAI (GPT-4o-mini) for maximum reasoning capability.
     * **Open Weights (Hybrid):** Connects to Hugging Face Inference endpoints (Qwen/Mixtral) for flexible experimentation.
 
@@ -22,8 +22,8 @@ The **FitRep Calculator** is a desktop-grade application designed to assist USMC
 ## Deployment & Access
 
 ### Option 1: Live Web Application
-The latest stable version is hosted on Streamlit Cloud and is accessible from any .mil or commercial device:
-**[🔗 Launch FitRep Calculator](https://your-app-url-here.streamlit.app)**
+The latest stable version is hosted on Streamlit Cloud and is accessible at:
+**[🔗 Launch FitRep Calculator](https://fitrep-calculator.streamlit.app/)**
 
 ### Option 2: Deploy Your Own Private Instance
 If you prefer to host this strictly for your own unit or within a private infrastructure:
