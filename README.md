@@ -155,7 +155,6 @@ Contributions are welcome, but please coordinate with me before opening any pull
 **Current Roadmap:**
 - [ ] Improve prompt_builder / improve LLM outputs.
 - [ ] Improve test suite.
-- [ ] Request/obtain permissions to access on MCEN.
 - [ ] Obtain DoW GenAI and/or CamoGPT API keys for official integration and adoption.
 
 
