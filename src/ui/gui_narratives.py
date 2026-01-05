@@ -154,6 +154,19 @@ def render_input_section(curr_rpt, changed_names):
 ##########################  Generative Section  ####################################
 ####################################################################################
 
+def render_disclaimer():
+    """
+    Renders a security warning regarding PII/CUI and third-party API usage.
+    """
+    st.warning(
+        "**PRIVACY WARNING: READ BEFORE GENERATING**\n\n"
+        "This tool utilizes commercial third-party AI services (e.g., OpenAI, Hugging Face) "
+        "to generate text. Text entered in the narrative input above is transmitted to external servers for processing.\n\n"
+        "DO NOT use this feature with unauthorized data.  It is intended for experimentation using "
+        "anonymized, synthetic data for the time being.\n",
+        icon="⚠️"
+    )
+
 def render_generation_section(curr_rpt, data_saved, accomplishments, user_context):
     """
     Handles Model Selection and Generation Trigger.
@@ -176,6 +189,10 @@ def render_generation_section(curr_rpt, data_saved, accomplishments, user_contex
     current_hash = get_input_hash(curr_rpt.name, curr_rpt.rank, curr_rpt.get_letter_scores(), accomplishments,
                                   user_context, model_option)
     fresh_data = current_hash != getattr(curr_rpt, 'last_gen_hash', None)  #if model_option != 'Manual Input' else True
+
+    # disclaimer
+    if model_option == "Foundation" or "Open Weight":
+        render_disclaimer()
 
     # check max gens
     max_generations = 3

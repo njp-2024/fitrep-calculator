@@ -18,15 +18,20 @@ import gui_narratives
 import gui_sidebar as sidebar
 
 
-# BRIDGE: Load secrets into os.environ for the backend to see
-if "OPENAI_API_KEY" in st.secrets:
-    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
-if "HF_API_TOKEN" in st.secrets:
-    os.environ["HF_API_TOKEN"] = st.secrets["HF_API_TOKEN"]
-
-
 # Page Configuration (Browser Tab Title)
 st.set_page_config(page_title="FitRep Assistant", layout="wide")
+
+
+# BRIDGE: Load secrets into os.environ for the backend to see
+try:
+    if "OPENAI_API_KEY" in st.secrets:
+        os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+    if "HF_API_TOKEN" in st.secrets:
+        os.environ["HF_API_TOKEN"] = st.secrets["HF_API_TOKEN"]
+except FileNotFoundError:
+    # This just means we are running locally without a secrets.toml file.
+    # We can safely ignore this because load_dotenv() handled it above.
+    pass
 
 
 ####################################################################################
