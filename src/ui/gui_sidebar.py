@@ -90,7 +90,7 @@ def render_reports_summary():
 def render_narratives_summary():
     """Renders the summary card for the Narratives page."""
     mro_name = st.session_state.get('narrative_name', '')
-    prof = st.session_state.get('rank_profile')
+    prof = st.session_state.get('active_profile')
     mro_rank = prof.rank if prof else "Unknown"
     display_rpt = st.session_state.get('display_rpt')
 
