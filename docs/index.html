@@ -13,13 +13,9 @@ app_url: "https://fitrep-calculator.streamlit.app/"
 button_text: "Launch App"
 
 # --- OVERVIEW SECTION ---
-overview_title: "The Administrative Burden"
+overview_title: "The Reason"
 overview_text: >
-  Marines spend countless hours manually calculating cumulative averages or deciphering the
-  "hidden" math behind the Performance Evaluation System (PES). Furthermore, translating specific
-  accomplishments into the nuanced language required by selection boards is often a friction point
-  that delays submission. This tool bridges the gap between raw data and the final report,
-  providing clarity on the math and administrative support for the narrative.
+  The app addresses two key issues: place holder
 
 # --- VIDEO SECTION ---
 # Paste just the ID after embed/ (e.g. dQw4w9WgXcQ)
@@ -27,17 +23,13 @@ video_id: "placeholder"
 video_caption: "Watch the 2-minute walkthrough of the Relative Value engine and AI drafter."
 
 # --- FEATURES SECTION ---
-feature_1_title: "📊 Real-Time Relative Value"
+feature_1_title: "Real-Time Relative Value"
 feature_1_text: >
-  Raw averages can be misleading. A 4.0 from a strict Senior is worth more than a 4.0 from a lenient one.
-  This engine uses Standard Deviation to calculate your True Relative Value (RV), giving you an
-  accurate picture of where you stand against the cumulative average.
+  Discussion on RV
 
-feature_2_title: "🤖 AI-Assisted Drafting"
+feature_2_title: "AI-Assisted Drafting"
 feature_2_text: >
-  Stop staring at a blank page. Powered by OpenAI, the assistant acts as a typist—not an author.
-  You provide the raw bullet points and accomplishments; the tool structures them into professional,
-  board-ready narrative blocks without inventing facts.
+  Discussion on Sect I comments.
 
 # --- FOOTER ---
 copyright_text: "&copy; 2026 FitRep Calculator Project."
@@ -53,6 +45,11 @@ disclaimer_text: >
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.hero_title }}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
     <style>
         /* --- GLOBAL VARIABLES & RESET --- */
         :root {
@@ -72,7 +69,7 @@ disclaimer_text: >
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;  /* New Line */
             line-height: 1.6;
             color: var(--text-main);
             background-color: var(--bg-color);
