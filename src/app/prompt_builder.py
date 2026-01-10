@@ -11,10 +11,16 @@ def _get_tier_config(rv):
             'label': 'low performer',
             'tone': "professional and positive but without praise."
         }
-    elif rv < constants.TIER_MIDDLE:
+    elif rv < constants.TIER_MIDDLE and rv < 90:
         return {
             'key': 'middle_third',
             'label': 'average performer',
+            'tone': "professional with light praise. Focus on reliability."
+        }
+    elif rv < constants.TIER_MIDDLE:
+        return {
+            'key': 'middle_third',
+            'label': 'above-average performer',
             'tone': "professional with light praise. Focus on reliability."
         }
     elif rv < constants.TIER_TOP:
@@ -60,25 +66,63 @@ def build_foundation_prompt(example_data, rpt):
     example_text = random.choice(tier_examples)['section_i'] if tier_examples else "No example provided."
     prom_rec, assign_rec = _get_random_recs(recs, config['key'])
 
-    s_prompt = (
-        f"You are a Marine Corps fitness report writing assistant.\n"
-        f"Your goal is to write a Section I narrative that evaluates performance, character, leadership, intellect, and impact.\n\n"
-        f"CRITICAL RULES:\n"
-        f"1. NO BULLET POINTS. Write a flowing narrative.\n"
-        f"2. ATTRIBUTES OVER ACTIONS: Do not merely restate accomplishments. Use them to infer traits.\n"
-        f"3. TONE: {config['tone']}\n"
-        f"4. LENGTH: 1200-1250 characters.\n"
-    )
+    # s_prompt = (
+    #     f"You are a Marine Corps fitness report writing assistant.\n"
+    #     f"Your goal is to write a Section I narrative that evaluates performance, character, leadership, intellect, and impact.\n\n"
+    #     f"CRITICAL RULES:\n"
+    #     f"1. NO BULLET POINTS. Write a flowing narrative.\n"
+    #     f"2. ATTRIBUTES OVER ACTIONS: Do not merely restate accomplishments. Use them to infer traits.\n"
+    #     f"3. TONE: {config['tone']}\n"
+    #     f"4. LENGTH: 1200-1250 characters.\n"
+    # )
+
+    s_prompt = (f"""### IDENTITY AND ROLE ###
+You are a Marine Reporting Senior. Your role is to provide an accurate assessment of your subordinates' performance. In a single paragraph, you must paint a word picture of the total Marine - his performance, technical proficiency, character, leadership, and intellect - using his accomplishments as context and support.
+
+### MANDATORY GUIDELINES ###
+- Be professional, objective, and authoritative.
+- Align your narrative to the Marine's performance tier.
+- Describe the Marine's traits and impact during the reporting period.
+- Be clear and concise.
+- Use the provided EXAMPLE for tone and style.
+
+### PROHIBITIONS ###
+- You MUST NOT summarize the accomplishments.
+- You MUST NOT use negative language or highlight traits that need improvement.
+
+### CONSTRAINTS ###
+- Write the narrative in 1150 - 1250 characters.
+- Write in narrative form, 1 single paragraph.
+- Use the provided mandatory ending sentence.
+""")
+
+    # user_context = rpt.context if rpt.context else "No additional context"
+    # u_prompt = (
+    #     f"Write Section I comments for {rpt.rank} {rpt.name}.\n"
+    #     f"Performance Level: {config['label']} (RV: {rpt.rv_cum:.2f})\n\n"
+    #     f"Style Reference (Mimic this structure):\n{example_text}\n\n"
+    #     f"Context: {user_context}\n"
+    #     f"Accomplishments: {rpt.accomplishments}\n\n"
+    #     f"Mandatory Ending: {prom_rec} {assign_rec}"
+    # )
 
     user_context = rpt.context if rpt.context else "No additional context"
-    u_prompt = (
-        f"Write Section I comments for {rpt.rank} {rpt.name}.\n"
-        f"Performance Level: {config['label']} (RV: {rpt.rv_cum:.2f})\n\n"
-        f"Style Reference (Mimic this structure):\n{example_text}\n\n"
-        f"Context: {user_context}\n"
-        f"Accomplishments: {rpt.accomplishments}\n\n"
-        f"Mandatory Ending: {prom_rec} {assign_rec}"
-    )
+    u_prompt =  (f"""### PERFORMANCE DATA ###
+Marine: {rpt.rank} {rpt.name}
+Performance level: {config['label']} - {config['tone']}
+
+### STYLE EXAMPLE ###
+{example_text}
+
+### ACCOMPLISHMENTS ###
+{rpt.accomplishments}
+
+### ADDITIONAL CONTEXT ###
+{user_context}
+
+### MANDATORY ENDING ###
+{prom_rec} {assign_rec}
+""")
 
     return s_prompt, u_prompt
 
