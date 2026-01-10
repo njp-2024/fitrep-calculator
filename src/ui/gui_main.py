@@ -88,7 +88,10 @@ def initializations():
 
         # Trigger Keys (Buttons)
         'reset_narrative': None,
-        'reset_secti': None
+        'reset_secti': None,
+
+        # check local
+        'is_local' : bool(constants.OLLAMA_PATH)
     }
 
     # Dynamic Keys (Category Buttons)

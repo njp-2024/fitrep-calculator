@@ -31,7 +31,7 @@ def render_about_section():
                 **Section I Comments**
                 - Generated using few shot prompts
                 - Examples selected based on RV
-                - Prompts available via 'Export Prompts'
+                - Prompts available via 'Print/Export Summary'
 
                 **Note:** All generated text is DRAFT and should be reviewed for accuracy.
                 """)

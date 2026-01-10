@@ -192,9 +192,12 @@ def render_generation_section(curr_rpt, data_saved, accomplishments, user_contex
 
     # button and model selection
     # disable selection if data is saved
+    models = ["Manual Input", "Foundation", "Open Weight"]
+    if st.session_state.is_local:
+        models.insert(1, "Local")
     model_option = st.radio(
         "Choose your LLM:",
-        ["Manual Input", "Local", "Foundation", "Open Weight"],
+        models, # ["Manual Input", "Local", "Foundation", "Open Weight"],
         horizontal=True,
         index=0,
         key=f"radio_{curr_rpt.name}",
