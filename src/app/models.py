@@ -29,6 +29,9 @@ class Report:
         self.rv_proc = 0
         self.rv_cum = 0
         # narratives
+        self.prompt = {"system": "Please enter accomplishments to generate a prompt",
+                       "user" : "Please enter accomplishments to generate a prompt"
+                       }
         self.accomplishments = ""
         self.context = ""
         self.secti = ""
@@ -85,6 +88,14 @@ class Report:
                    f"{letters[13]}")                # Reports
         return res_str
 
+    def print_prompt(self):
+        return f"""### INSTRUCTIONS ###
+{self.prompt["system"]}
+
+### DATA AND CONTEXT ###
+{self.prompt["user"]}
+"""
+
     def __repr__(self):
         res_str = f"**********************************\n"
         res_str += f"{self.rank} {self.name}:\n"
@@ -95,7 +106,11 @@ class Report:
         res_str += f"Accomplishments:\n"
         res_str += f"{self.accomplishments}\n\n"
         res_str += f"Sect I:\n"
-        res_str += f"{self.secti}\n"
+        res_str += f"{self.secti}\n\n"
+        res_str += f"Prompt:\n"
+        res_str += f"--------------------------\n"
+        res_str += self.print_prompt()
+        res_str += f"--------------------------\n"
         res_str += f"**********************************"
         return res_str
 
@@ -173,11 +188,13 @@ class ReportDB:
         if name in self.rpts_dict:
             self.rpts_dict[name].secti = final_text
 
-    def edit_report_narrative_inputs(self, name, accomplishments, user_context):
+    def edit_report_narrative_inputs(self, name, accomplishments, user_context, s_prompt, u_prompt):
         """Updates the input data (bullets/context) used for generation."""
         if name in self.rpts_dict:
             self.rpts_dict[name].accomplishments = accomplishments
             self.rpts_dict[name].context = user_context
+            self.rpts_dict[name].prompt["system"] = s_prompt
+            self.rpts_dict[name].prompt["user"] = u_prompt
 
     def get_report_by_name(self, name):
         return self.rpts_dict[name]

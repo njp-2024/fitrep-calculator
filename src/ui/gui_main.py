@@ -80,6 +80,7 @@ def initializations():
 
         # Narrative Generation State
         'narrative_prev_name': None,
+        'narrative_prompt_text': "",
         'narrative_accomplishments': "",
         'narrative_context': None,
         'narrative_final_text': None,

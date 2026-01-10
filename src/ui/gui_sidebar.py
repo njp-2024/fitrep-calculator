@@ -16,6 +16,27 @@ import src.app.constants as constants
 ####################################################################################
 ##################################  Sidebar ########################################
 ####################################################################################
+def render_about_section():
+    """Expanding area to provide info about the app"""
+    with st.expander("ℹ️ About"):
+        st.markdown("""
+                **RV Calculations**
+                - Are estimates (OMPF rounding limits precision)
+                - Order matters (assumes reports are processed in the order received, not report end/due dates)
+                - RV= 0  if # rpts < 3
+                - RV= 90 if high == profile average
+                - RV= 90 + 10 * ((rpt_avg - prof_avg) / (high - prof_avg))
+                - RV floor is 80
+
+                **Section I Comments**
+                - Generated using few shot prompts
+                - Examples selected based on RV
+                - Prompts available via 'Export Prompts'
+
+                **Note:** All generated text is DRAFT and should be reviewed for accuracy.
+                """)
+
+
 def render_profile_summary():
     """
     Renders the Profile Summary table at the top of the sidebar.
@@ -199,6 +220,8 @@ def render_sidebar():
 
         render_rpts_list()
         st.divider()
+
+        render_about_section()
 
         # TODO: Add calc_rv_table to cacl_eng so we can display the projected RV table
         # render_rv_overview()

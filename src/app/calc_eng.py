@@ -162,9 +162,38 @@ def update_calcs(display_rpt_db, orig_profile, working_profile, mro_rank, mro_na
     return display_rpt_db, working_profile, working_rpt
 
 
+def gen_prompt(rpt, example_data):
+    """
+    Hack fix to add prompt to report model.
+    """
+    s, u = prompt_builder.build_foundation_prompt(example_data, rpt)
+    return s, u
+
+
 ####################################################################################
 ##################################  LLM Logic  #####################################
 ####################################################################################
+
+def build_prompts_for_export(rpt_db):
+    """
+    Builds prompts for each rpt in the list.  This is called when user navigates to Narratives page.
+    :param rpt_db: The report DB from memory.
+    :return: a list of prompts.
+    """
+    # Create a clean string with headers for each report
+    final_prompts = ""
+    for idx, name in enumerate(rpt_db.name_list):
+        final_prompts += f"{'=' * 30}\n"
+        final_prompts += f"REPORT #{idx + 1}: {name}\n"
+        final_prompts += f"{'=' * 30}\n\n"
+        final_prompts += f"{rpt_db[name].prompt}\n\n"
+
+    # Handle the case where the list is empty
+    if not final_prompts:
+        final_prompts = "No reports added to profile yet."
+
+    return final_prompts
+
 
 def query_open(curr_rpt, example_data):
     """

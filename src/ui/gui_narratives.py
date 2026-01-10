@@ -101,6 +101,16 @@ def get_input_hash(name, rank, scores, accomplishments, context, model_option):
     return hashlib.md5(combined_string.encode()).hexdigest()
 
 
+def _handle_save_inputs(name, accomplishments, user_context):
+    rpt = st.session_state.rpt_db.get_report_by_name(name)
+    rpt.accomplishments = accomplishments
+    rpt.context = user_context
+    example_data = get_cached_data()
+    s, u = calc_eng.gen_prompt(rpt, example_data)
+
+    # update rpt
+    st.session_state.rpt_db.edit_report_narrative_inputs(name, accomplishments, user_context, s, u)
+
 def render_input_section(curr_rpt, changed_names):
     """
     Handles the text inputs.
@@ -132,7 +142,7 @@ def render_input_section(curr_rpt, changed_names):
     c1, c2, c3 = st.columns([1, 1, 5], gap='small')
     with c1:
         if st.button("Save Narrative Info", type='primary', disabled=not valid_narrative_inputs or data_saved):
-            st.session_state.rpt_db.edit_report_narrative_inputs(curr_rpt.name, accomplishments, user_context)
+            _handle_save_inputs(curr_rpt.name, accomplishments, user_context)
             st.rerun()
 
     with c2:
@@ -154,6 +164,14 @@ def render_input_section(curr_rpt, changed_names):
 ##########################  Generative Section  ####################################
 ####################################################################################
 
+def render_prompt_text_area(prompt_text):
+    with st.expander("See Prompt"):
+        st.text_area("If you don't want to generate here, you can copy and paste this into the LLM of your choice:",
+                     height=500,
+                     value=prompt_text,
+                     disabled=True
+                     )
+
 def render_disclaimer():
     """
     Renders a security warning regarding PII/CUI and third-party API usage.
@@ -162,8 +180,7 @@ def render_disclaimer():
         "**PRIVACY WARNING: READ BEFORE GENERATING**\n\n"
         "This tool utilizes commercial third-party AI services (e.g., OpenAI, Hugging Face) "
         "to generate text. Text entered in the narrative input above is transmitted to external servers for processing.\n\n"
-        "DO NOT use this feature with unauthorized data.  It is intended for experimentation using "
-        "anonymized, synthetic data for the time being.\n",
+        "Alternative: Copy the prompt (see prompt below) into your desired LLM service.\n",
         icon="⚠️"
     )
 
@@ -193,6 +210,10 @@ def render_generation_section(curr_rpt, data_saved, accomplishments, user_contex
     # disclaimer
     if model_option == "Foundation" or "Open Weight":
         render_disclaimer()
+
+    # give user opportunity to take prompt before generation
+    if data_saved:
+        render_prompt_text_area(curr_rpt.print_prompt())
 
     # check max gens
     max_generations = 3
@@ -329,8 +350,13 @@ def render_review_section(curr_rpt, changed_names, data_saved):
 
     st.divider()
 
-    if st.button("Complete - print summary below"):
-        txt = calc_eng.print_profile(st.session_state.rpt_db, st.session_state.original_profile, st.session_state.active_profile)
+    txt = calc_eng.print_profile(st.session_state.rpt_db, st.session_state.original_profile, st.session_state.active_profile)
+    st.download_button("Export Summary (.txt)",
+                       data=txt,
+                       file_name=f"{curr_rpt.rank} Session Summary.txt",
+                       mime="text/plain")
+
+    if st.button("Print Summary"):
         st.text_area(
             label="Summary:",
             value=txt,  # st.session_state['output'],
