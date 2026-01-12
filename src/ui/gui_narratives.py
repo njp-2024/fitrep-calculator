@@ -3,6 +3,7 @@ import hashlib
 import streamlit as st
 from pathlib import Path
 import sys
+import os
 
 
 # [TODO] DevOps: Standardize path handling
@@ -172,7 +173,7 @@ def render_input_section(curr_rpt, changed_names):
 ####################################################################################
 
 def render_prompt_text_area(prompt_text):
-    with st.expander("See Prompt"):
+    with st.expander("See Foundation Prompt"):
         st.text_area("If you don't want to generate here, you can copy and paste this into the LLM of your choice:",
                      height=500,
                      value=prompt_text,
@@ -196,15 +197,19 @@ def render_generation_section(curr_rpt, data_saved, accomplishments, user_contex
     Handles Model Selection and Generation Trigger.
     """
     st.write("**Generate Sect I**")
+    enable_open = os.environ.get("ENABLE_OPEN_WEIGHT_OPTION", "False").lower() in ("true", "1", "t")
+    enable_local = os.environ.get("ENABLE_LOCAL_OPTION", "False").lower() in ("true", "1", "t")
 
     # button and model selection
     # disable selection if data is saved
-    models = ["Manual Input", "Foundation", "Open Weight"]
-    if st.session_state.is_local:
-        models.insert(1, "Local")
+    model_list = ["Manual Input", "Foundation"]
+    if enable_local and constants.OLLAMA_PATH:  #st.session_state.is_local:
+        model_list.insert(1, "Local")
+    if enable_open:
+        model_list.insert(-1, "OpenWeight")
     model_option = st.radio(
         "Choose your LLM:",
-        models, # ["Manual Input", "Local", "Foundation", "Open Weight"],
+        model_list, # ["Manual Input", "Local", "Foundation", "Open Weight"],
         horizontal=True,
         index=0,
         key=f"radio_{curr_rpt.name}",

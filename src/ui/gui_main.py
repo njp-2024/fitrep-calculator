@@ -2,6 +2,7 @@ import os
 import streamlit as st
 from pathlib import Path
 import sys
+from dotenv import load_dotenv
 
 # [TODO] DevOps: When deploying, run this app as a module (python -m src.main)
 # [TODO] Refactor: Move this path logic to a generic 'utils.py' or run app as a module.
@@ -21,6 +22,7 @@ import gui_sidebar as sidebar
 # Page Configuration (Browser Tab Title)
 st.set_page_config(page_title="FitRep Assistant", layout="wide")
 
+load_dotenv()
 
 # BRIDGE: Load secrets into os.environ for the backend to see
 try:
@@ -91,7 +93,7 @@ def initializations():
         'reset_secti': None,
 
         # check local
-        'is_local' : bool(constants.OLLAMA_PATH)
+        # 'is_local' : bool(constants.OLLAMA_PATH)
     }
 
     # Dynamic Keys (Category Buttons)
