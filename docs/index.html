@@ -15,21 +15,37 @@ button_text: "Launch App"
 # --- OVERVIEW SECTION ---
 overview_title: "Overview"
 overview_text: >
-  This tool is designed to assist USMC Reporting Seniors (RS) in preparing Fitness Reports.
+  For Reporting Seniors (RS), Relative Value (RV) and Section I comments are two of the most important components of
+  Fitness Reports considered by selection boards. Yet, Reporting Seniors currently operate with a significant
+  blind spot: <strong>they cannot see the projected RV of a report before submitting it.</strong><br><br>
+
+  This creates a communication gap. While the RS communicates performance via raw attribute scores, the selection board
+  interprets performance via Relative Value. As noted in Baker and Kwan’s 2015 <em>Marine Corps Gazette</em> article,
+  “Miscalculating Performance,” the RV calculation is more complicated and nuanced than most realize.  This can lead
+  to unintentional miscommunications that negatively impact the evaluation process.<br><br>
+
+  This tool bridges that gap by estimating Relative Value in real-time. It is designed as a <strong>decision support
+  tool</strong>, not an automated drafter. The intended workflow is simple: score the Marine based on the PES, then
+  use this tool to confirm the board will consider the report exactly as you intend.
+
 
 # --- VIDEO SECTION ---
 # Paste just the ID after embed/ (e.g. dQw4w9WgXcQ)
 video_id: "placeholder"
-video_caption: "Watch the 2-minute walkthrough of the Relative Value engine and AI drafter."
+video_caption: "Quick walkthrough video in development."
 
 # --- FEATURES SECTION ---
 feature_1_title: "Real-Time Relative Value"
 feature_1_text: >
-  Discussion on RV
+  See how the Board sees your Marine(s). The engine reverse-engineers rounded data to project RV ranges, helping you
+  visualize the mathematical impact of every attribute change. No downloads, no PDF imports, and no maintenance of
+  Excel trackers required. <a href="guide.html#rv-engine">Learn how it works &rarr;</a>
 
 feature_2_title: "AI-Assisted Drafting"
 feature_2_text: >
-  Discussion on Sect I comments.
+  Draft accurate Section I comments quickly. The tool uses "few-shot prompting" to align the tone of your narrative
+  with the projected Relative Value. Designed as a decision support tool, not an autopilot.
+  <a href="guide.html#ai-drafter">See best practices &rarr;</a>
 
 # --- FOOTER ---
 copyright_text: "&copy; 2026 FitRep Calculator Project."
@@ -139,16 +155,20 @@ disclaimer_text: >
             font-weight: 800;
             letter-spacing: -0.02em;
             line-height: 1.1;
+            text-align: center;
         }
 
         .hero p {
             font-size: 1.15rem;
             color: var(--text-muted);
             margin-bottom: 25px;
+            text-align: center;
         }
 
         .cta-button {
-            display: inline-block;
+            display: block;
+            width: fit-content;
+            margin: 20px auto 0 auto;
             background-color: var(--accent-color);
             color: white;
             padding: 12px 30px;
@@ -164,7 +184,7 @@ disclaimer_text: >
 
         /* --- OVERVIEW SECTION (LEFT COL) --- */
         .overview {
-            text-align: left;
+            text-align: center;
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid var(--border-color);
@@ -234,6 +254,7 @@ disclaimer_text: >
 
 
         .feature-card {
+            text-align: center;
             padding: 20px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
