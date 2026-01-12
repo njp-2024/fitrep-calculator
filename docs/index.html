@@ -188,14 +188,21 @@ disclaimer_text: >
             margin-bottom: 30px;
         }
 
+        /* 1. OUTER CONTAINER: Controls size and centering */
+        .video-container-box {
+            max-width: 700px;  /* Your desired width */
+            width: 100%;
+            margin: 0 auto;    /* Centers it */
+        }
+
+        /* 2. INNER WRAPPER: Handles the 16:9 Aspect Ratio */
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            padding-bottom: 56.25%; /* 16:9 Ratio */
             height: 0;
             overflow: hidden;
-            max-width: 700px;
-            width: 100%;
-            margin: 0 auto;
+
+            /* Styles like border/shadow go on the inner wrapper */
             border-radius: 8px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             background: #000;
@@ -293,13 +300,17 @@ disclaimer_text: >
 
         <div class="right-col">
             <section class="video-section">
-                <div class="video-wrapper">
-                    <iframe
-                        src="https://www.youtube.com/embed/{{ page.video_id }}"
-                        title="App Walkthrough"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen>
-                    </iframe>
+                <div class="video-container-box">
+
+                    <div class="video-wrapper">
+                        <iframe
+                            src="https://www.youtube.com/embed/{{ page.video_id }}"
+                            title="App Walkthrough"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+
                 </div>
                 <p class="video-caption">{{ page.video_caption }}</p>
             </section>
