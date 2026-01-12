@@ -79,9 +79,9 @@ disclaimer_text: >
         /* --- LAYOUT UTILITIES --- */
         .container {
             /* WIDENED: Changed from 900px to 1200px */
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 50px;
         }
 
         /* NEW: Main Grid Layout for the split columns */
@@ -96,7 +96,7 @@ disclaimer_text: >
         @media (min-width: 992px) {
             .main-grid {
                 /* Desktop: Left col 35%, Right col rest */
-                grid-template-columns: 350px 1fr;
+                grid-template-columns: 30% 1fr;
                 align-items: start;
             }
         }
@@ -193,7 +193,9 @@ disclaimer_text: >
             padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
             height: 0;
             overflow: hidden;
+            max-width: 700px;
             width: 100%;
+            margin: 0 auto;
             border-radius: 8px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             background: #000;
@@ -213,6 +215,7 @@ disclaimer_text: >
             font-size: 0.9rem;
             color: var(--text-muted);
             font-style: italic;
+            text-align: center;
         }
 
         /* --- FEATURES GRID (RIGHT COL) --- */
@@ -222,11 +225,6 @@ disclaimer_text: >
             gap: 20px;
         }
 
-        @media (min-width: 600px) {
-            .features-grid {
-                grid-template-columns: 1fr 1fr; /* Side by side */
-            }
-        }
 
         .feature-card {
             padding: 20px;
