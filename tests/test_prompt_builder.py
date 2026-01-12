@@ -24,7 +24,7 @@ def test_tier_logic():
 
 def test_local_prompt_construction(mock_example_data):
     rpt = Report("Capt", "Jones")
-    rpt.rv_cum = 99.0  # Water walker
+    rpt.rv_cum_min = 99.0  # Water walker
     rpt.accomplishments = "- Saved the world"
 
     # We expect the builder to handle missing keys gracefully (defaulting to empty)

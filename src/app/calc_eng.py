@@ -124,15 +124,25 @@ def _update_profile(orig_prof, working_prof, db):
     for name in db.name_list:
         rpt = db.rpts_dict[name]
         working_prof.update_with_rpt(rpt)
-        rpt.rv_proc = _rv_eq(rpt.rpt_avg, working_prof.num_rpts, working_prof.high, working_prof.avg)
+
+        rv_from_high = _rv_eq(rpt.rpt_avg, working_prof.num_rpts, working_prof.high, working_prof.high_avg)  # working_prof.avg) working_prof.get_average())
+        rv_from_low = _rv_eq(rpt.rpt_avg, working_prof.num_rpts, working_prof.high, working_prof.low_avg)  # working_prof.avg) working_prof.get_average())
+
+        rpt.rv_proc_min = min(rv_from_high, rv_from_low)
+        rpt.rv_proc_max = max(rv_from_high, rv_from_low)
 
     # have to go back through and update cumulative rvs based on the final profile values
     final_high = working_prof.high
-    final_avg = working_prof.avg
+    final_avg_low = working_prof.low_avg   # working_prof.avg working_prof.get_average()
+    final_avg_high = working_prof.high_avg
     final_num_rpts = working_prof.num_rpts
     for name in db.name_list:
         rpt = db.rpts_dict[name]
-        rpt.rv_cum = _rv_eq(rpt.rpt_avg, final_num_rpts, final_high, final_avg)
+        rv_cum_from_high = _rv_eq(rpt.rpt_avg, final_num_rpts, final_high, final_avg_high)
+        rv_cum_from_low = _rv_eq(rpt.rpt_avg, final_num_rpts, final_high, final_avg_low)
+
+        rpt.rv_cum_min = min(rv_cum_from_low, rv_cum_from_high)
+        rpt.rv_cum_max = max(rv_cum_from_low, rv_cum_from_high)
 
 
 def update_calcs(display_rpt_db, orig_profile, working_profile, mro_rank, mro_name, scores_dict):

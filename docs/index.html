@@ -70,7 +70,7 @@ disclaimer_text: >
         }
 
         body {
-            font-family: 'Inter', sans-serif;  /* New Line */
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--text-main);
             background-color: var(--bg-color);
@@ -78,13 +78,27 @@ disclaimer_text: >
 
         /* --- LAYOUT UTILITIES --- */
         .container {
-            max-width: 900px;
+            /* WIDENED: Changed from 900px to 1200px */
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        section {
-            padding: 30px 0;
+        /* NEW: Main Grid Layout for the split columns */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Mobile: Stacked */
+            gap: 40px;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+
+        @media (min-width: 992px) {
+            .main-grid {
+                /* Desktop: Left col 35%, Right col rest */
+                grid-template-columns: 350px 1fr;
+                align-items: start;
+            }
         }
 
         /* --- NAVIGATION --- */
@@ -112,10 +126,11 @@ disclaimer_text: >
             color: var(--text-main);
         }
 
-        /* --- HERO SECTION --- */
+        /* --- HERO SECTION (LEFT COL) --- */
         .hero {
-            text-align: center;
-            padding: 40px 0 20px;
+            /* Changed to left align for the column layout */
+            text-align: left;
+            padding: 0 0 20px 0;
         }
 
         .hero h1 {
@@ -123,12 +138,13 @@ disclaimer_text: >
             margin-bottom: 15px;
             font-weight: 800;
             letter-spacing: -0.02em;
+            line-height: 1.1;
         }
 
         .hero p {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             color: var(--text-muted);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .cta-button {
@@ -146,26 +162,30 @@ disclaimer_text: >
             background-color: var(--accent-hover);
         }
 
-        /* --- OVERVIEW SECTION --- */
+        /* --- OVERVIEW SECTION (LEFT COL) --- */
         .overview {
-            max-width: 700px;
-            margin: 0 auto;
             text-align: left;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
         }
 
         .overview h2 {
-            font-size: 1rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
-            margin-bottom: 15px;
-            text-align: center;
+            margin-bottom: 10px;
         }
 
-        /* --- VIDEO SECTION --- */
+        .overview p {
+            font-size: 0.95rem;
+        }
+
+        /* --- VIDEO SECTION (RIGHT COL) --- */
         .video-section {
-            background-color: var(--bg-alt);
-            text-align: center;
+            /* Removed background color and centered alignment */
+            margin-bottom: 30px;
         }
 
         .video-wrapper {
@@ -173,10 +193,10 @@ disclaimer_text: >
             padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
             height: 0;
             overflow: hidden;
-            max-width: 800px;
-            margin: 0 auto;
+            width: 100%;
             border-radius: 8px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            background: #000;
         }
 
         .video-wrapper iframe {
@@ -189,22 +209,22 @@ disclaimer_text: >
         }
 
         .video-caption {
-            margin-top: 20px;
+            margin-top: 10px;
             font-size: 0.9rem;
             color: var(--text-muted);
+            font-style: italic;
         }
 
-        /* --- FEATURES GRID --- */
+        /* --- FEATURES GRID (RIGHT COL) --- */
         .features-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 40px;
-            margin-top: 0;
+            grid-template-columns: 1fr; /* Mobile: Stacked */
+            gap: 20px;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 600px) {
             .features-grid {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr 1fr; /* Side by side */
             }
         }
 
@@ -212,16 +232,23 @@ disclaimer_text: >
             padding: 20px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
+            background-color: #fff;
         }
 
         .feature-card h3 {
             margin-bottom: 10px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
         }
 
         /* --- FOOTER --- */
         footer {
-            background-color: #1f2937; /* Dark Slate */
+            background-color: #1f2937;
             color: #d1d5db;
             padding: 40px 0;
             font-size: 0.85rem;
@@ -240,15 +267,6 @@ disclaimer_text: >
             color: #9ca3af;
             font-style: italic;
         }
-
-        /* --- DIVIDER UTILITY --- */
-        hr {
-            border: 0;
-            height: 1px;
-            background: #e5e7eb;
-            margin: 20px 0;
-            width: 100%;
-        }
     </style>
 </head>
 <body>
@@ -260,44 +278,34 @@ disclaimer_text: >
         </div>
     </nav>
 
-    <header class="hero">
-        <div class="container">
-            <h1>{{ page.hero_title }}</h1>
-            <p>{{ page.hero_line_1 }}<br>{{ page.hero_line_2 }}</p>
+    <main class="container main-grid">
 
-            <a href="{{ page.app_url }}" class="cta-button" target="_blank">{{ page.button_text }}</a>
+        <div class="left-col">
+            <header class="hero">
+                <h1>{{ page.hero_title }}</h1>
+                <p>{{ page.hero_line_1 }}<br>{{ page.hero_line_2 }}</p>
+                <a href="{{ page.app_url }}" class="cta-button" target="_blank">{{ page.button_text }}</a>
+            </header>
+
+            <section class="overview">
+                <h2>{{ page.overview_title }}</h2>
+                <p>{{ page.overview_text }}</p>
+            </section>
         </div>
-    </header>
 
-    <div class="container"><hr></div>
+        <div class="right-col">
+            <section class="video-section">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/{{ page.video_id }}"
+                        title="App Walkthrough"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <p class="video-caption">{{ page.video_caption }}</p>
+            </section>
 
-    <section>
-        <div class="container overview">
-            <h2>{{ page.overview_title }}</h2>
-            <p>{{ page.overview_text }}</p>
-        </div>
-    </section>
-
-    <div class="container"><hr></div>
-
-    <section class="video-section">
-        <div class="container">
-            <div class="video-wrapper">
-                <iframe
-                    src="https://www.youtube.com/embed/{{ page.video_id }}"
-                    title="App Walkthrough"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                </iframe>
-            </div>
-            <p class="video-caption">{{ page.video_caption }}</p>
-        </div>
-    </section>
-
-    <div class="container"><hr></div>
-
-    <section>
-        <div class="container">
             <div class="features-grid">
                 <div class="feature-card">
                     <h3>{{ page.feature_1_title }}</h3>
@@ -310,7 +318,8 @@ disclaimer_text: >
                 </div>
             </div>
         </div>
-    </section>
+
+    </main>
 
     <footer>
         <div class="container">

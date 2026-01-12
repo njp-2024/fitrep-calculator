@@ -27,20 +27,24 @@ USMC_CATEGORIES = [
     "Judgment", "Reports"
 ]
 
-TIER_BOTTOM = 86.6
-TIER_MIDDLE = 93.3
+TIER_BOTTOM = 86.67
+TIER_MIDDLE = 93.34
 TIER_TOP = 98.0
 # eliter/water walker is above 98.0
 
 
 # LLM Constants
-FOUNDATION_TEMP = 0.7    # base of .2, increased to increase creativity
+FOUNDATION_TEMP = 1.0    # base of .2, increased to increase creativity
 LOCAL_TEMP = 0.7
 OPEN_TEMP = 0.7
 
 FOUNDATION_MAX_TOKENS = 500
 LOCAL_MAX_TOKENS = 500
 OPEN_MAX_TOKENS = 500
+
+MIN_ACCOMPLISHMENTS_LENGTH = 50
+MAX_ACCOMPLISHMENTS_LENGTH = 1500
+MAX_USER_CONTEXT_LENGTH = 800
 
 # If you are using the local option on your machine, make sure these constants are set based on your set up
 # See README.md for instructions

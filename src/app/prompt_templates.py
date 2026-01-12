@@ -161,7 +161,7 @@ You are a Marine Reporting Senior. Your role is to provide an accurate assessmen
 """),
         "user":     ("""### PERFORMANCE DATA ###
 Marine: {rpt.rank} {rpt.name}
-Performance level: {config['label']} (Relative Value: {rpt.rv_cum:.2f})
+Performance level: {config['label']} (Relative Value: {rpt.rv_cum_min:.2f})
 
 ### STYLE EXAMPLE ###
 {example_text}

@@ -11,6 +11,7 @@ if str(root_path) not in sys.path:
 
 import src.app.models as models
 import src.app.constants as constants
+import src.app.calc_eng as calc_eng
 
 
 ####################################################################################
@@ -34,6 +35,7 @@ def render_about_section():
                 - Prompts available via 'Print/Export Summary'
 
                 **Note:** All generated text is DRAFT and should be reviewed for accuracy.
+                For more details: [FitRep Calculator](https://njp-2024.github.io/fitrep-calculator/)
                 """)
 
 
@@ -65,13 +67,13 @@ def render_profile_summary():
     h_col1.markdown("Orig.")
     h_col2.markdown(f"{orig_prof.high:.2f}")
     h_col3.markdown(f"{orig_prof.low:.2f}")
-    h_col4.markdown(f"{orig_prof.avg:.2f}")
+    h_col4.markdown(f"{orig_prof.avg:.2f}")  # (f"{orig_prof.get_average():.2f}") (f"{orig_prof.avg:.2f}")
     h_col5.markdown(f"{orig_prof.num_rpts}")
 
     h_col1.markdown("*NEW*")
     h_col2.markdown(f"*{prof.high:.2f}*")
     h_col3.markdown(f"*{prof.low:.2f}*")
-    h_col4.markdown(f"*{prof.avg:.2f}*")
+    h_col4.markdown(f"*{prof.avg:.2f}*")    # (f"*{prof.avg:.2f}*") (f"*{prof.get_average():.2f}*")
     h_col5.markdown(f"*{prof.num_rpts}*")
 
 
@@ -85,7 +87,9 @@ def _render_active_report_card(mro_name: str, mro_rank: str, report_obj):
         report_obj (Report): The working report object containing scores.
     """
     rpt_avg = report_obj.rpt_avg if report_obj else 0.0
-    rpt_rv = report_obj.rv_cum if report_obj else 0.0
+    rpt_rv_max = report_obj.rv_cum_max if report_obj else 0.0
+    rpt_rv_min = report_obj.rv_cum_min if report_obj else 0.0
+
 
     with st.container(border=True):
         if not mro_name:
@@ -94,9 +98,11 @@ def _render_active_report_card(mro_name: str, mro_rank: str, report_obj):
             st.markdown(f"**{mro_rank} {mro_name}**")
 
         # Comparison Metrics
-        c1, c2 = st.columns(2)
-        c1.metric("Report Avg", f"{rpt_avg:.2f}")
-        c2.metric("Estimated RV", f"{rpt_rv:.2f}")
+        # c1, c2 = st.columns(2)
+        # c1.metric("Report Avg", f"{rpt_avg:.2f}")
+        # c2.metric("Estimated RV", f"{rpt_rv_min:.2f} - {rpt_rv_max:.2f}")
+        st.metric("**Report Average**", f"{rpt_avg:.2f}")
+        st.metric("**Estimated RV**", f"{rpt_rv_min:.2f} - {rpt_rv_max:.2f}")
 
 
 def render_reports_summary():
@@ -137,8 +143,8 @@ def render_rpts_list():
         data.append({
             "Name": rpt.name[:8],
             "Avg": float(f"{rpt.rpt_avg:.2f}"),
-            "RV": float(f"{rpt.rv_proc:.2f}"),
-            "Cum": float(f"{rpt.rv_cum:.2f}")
+            "RV": float(f"{rpt.rv_proc_min:.2f}"),
+            "Cum": float(f"{rpt.rv_cum_min:.2f}")
         })
 
     df = pd.DataFrame(data)
@@ -172,6 +178,7 @@ def render_rpts_list():
 
     # Render Static Table
     st.table(styled_df)
+    st.caption("Displaying min. RV")
 
 
 def render_rv_overview():

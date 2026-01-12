@@ -26,8 +26,11 @@ class Report:
         # values
         self.scores = np.zeros(14)
         self.rpt_avg = 0
-        self.rv_proc = 0
-        self.rv_cum = 0
+        # min/max rvs
+        self.rv_proc_min = 0
+        self.rv_cum_min = 0
+        self.rv_proc_max = 0
+        self.rv_cum_max = 0
         # narratives
         self.prompt = {"system": "Please enter accomplishments to generate a prompt",
                        "user" : "Please enter accomplishments to generate a prompt"
@@ -100,8 +103,8 @@ class Report:
         res_str = f"**********************************\n"
         res_str += f"{self.rank} {self.name}:\n"
         res_str += f"Rpt Avg:   {self.rpt_avg:.2f}\n"
-        res_str += f"RV Proc:   {self.rv_proc:.2f}\n"
-        res_str += f"RV Cum:    {self.rv_cum:.2f}\n"
+        res_str += f"RV Proc:   {self.rv_proc_min:.2f} - {self.rv_proc_max:.2f}\n"
+        res_str += f"RV Cum:    {self.rv_cum_min:.2f} - {self.rv_cum_max:.2f}\n"
         res_str += f"Scores:    {self.scores_as_str()}\n"
         res_str += f"Accomplishments:\n"
         res_str += f"{self.accomplishments}\n\n"
@@ -130,13 +133,21 @@ class RankProfile:
         self.high = high
         self.low = low
         self.avg = avg
+        self.low_avg = avg - 0.005
+        self.high_avg = avg + 0.005     # accounts for precision loss
         self.num_rpts = num_rpts
+
+        # new value, attempt to reduce prrecision errors
+        self.score_sum = avg * num_rpts
 
     def set_values(self, high, low, avg, num_rpts):
         self.high = high
         self.low = low
         self.avg = avg
+        self.low_avg = avg - 0.005
+        self.high_avg = avg + 0.005  # accounts for precision loss
         self.num_rpts = num_rpts
+        self.score_sum = avg * num_rpts
 
     def update_with_rpt(self, rpt):
         """
@@ -151,7 +162,21 @@ class RankProfile:
         score_sum = self.avg * self.num_rpts
         score_sum += rpt.rpt_avg
         self.num_rpts += 1
-        self.avg = score_sum / self.num_rpts
+        #self.avg = score_sum / self.num_rpts
+        # welfords
+        self.avg = self.avg + ((rpt.rpt_avg - self.avg) / self.num_rpts)
+        self.low_avg = self.low_avg + ((rpt.rpt_avg - self.low_avg) / self.num_rpts)
+        self.high_avg = self.high_avg + ((rpt.rpt_avg - self.high_avg) / self.num_rpts)
+
+        # new
+        self.score_sum += rpt.rpt_avg
+
+    def get_average(self):
+        """
+        added to reduce precision errors caused by rounded profile averages
+        :return:
+        """
+        return self.score_sum / self.num_rpts
 
     def __repr__(self):
         res_str = f"{self.label} {self.rank} Profile - {self.num_rpts} Reports\n"

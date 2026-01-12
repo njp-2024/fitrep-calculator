@@ -61,8 +61,9 @@ def render_rpt_data():
             # Create the "Data Row"
             v_col1, v_col2, v_col3 = st.columns(3)
             v_col1.write(f"{curr_rpt.rpt_avg:.2f}")
-            v_col2.write(f"{curr_rpt.rv_proc:.2f}")
-            v_col3.write(f"{curr_rpt.rv_cum:.2f}")
+            v_col2.write(f"{curr_rpt.rv_proc_min:.2f} - {curr_rpt.rv_proc_max:.2f}")
+            v_col3.write(f"{curr_rpt.rv_cum_min:.2f} - {curr_rpt.rv_cum_max:.2f}")
+
 
     with c2:
         col_2_atts = constants.USMC_CATEGORIES[:5]
@@ -102,14 +103,19 @@ def get_input_hash(name, rank, scores, accomplishments, context, model_option):
 
 
 def _handle_save_inputs(name, accomplishments, user_context):
+    # enforce character limits
+    acc = accomplishments[:constants.MAX_ACCOMPLISHMENTS_LENGTH]
+    context = user_context[:constants.MAX_USER_CONTEXT_LENGTH]
+
+    # hack to get prompts (added after initial design)
     rpt = st.session_state.rpt_db.get_report_by_name(name)
-    rpt.accomplishments = accomplishments
-    rpt.context = user_context
+    rpt.accomplishments = acc
+    rpt.context = context
     example_data = get_cached_data()
     s, u = calc_eng.gen_prompt(rpt, example_data)
 
     # update rpt
-    st.session_state.rpt_db.edit_report_narrative_inputs(name, accomplishments, user_context, s, u)
+    st.session_state.rpt_db.edit_report_narrative_inputs(name, acc, context, s, u)
 
 def render_input_section(curr_rpt, changed_names):
     """
@@ -124,19 +130,20 @@ def render_input_section(curr_rpt, changed_names):
         st.session_state.narrative_prev_name = curr_rpt.name
         st.session_state.reset_narrative = False
 
-    accomplishments = st.text_area("Billet Accomplishments - (>50 chars)",
+    accomplishments = st.text_area(f"Billet Accomplishments - ({constants.MIN_ACCOMPLISHMENTS_LENGTH} - {constants.MAX_ACCOMPLISHMENTS_LENGTH} chars)",
                                    height=300,
                                    placeholder="Copy/Paste accomplishments here OR describe what MRO did. (e.g., Managed 50 vehicles with 100% FMC rate...)",
                                    key='narrative_accomplishments')
     st.caption(f"Current length: {len(accomplishments)} char")
 
-    user_context = st.text_area("Additional Context / Personalization - (optional)",
+    user_context = st.text_area(f"Additional Context / Personalization - (optional, max {constants.MAX_USER_CONTEXT_LENGTH} chars)",
                                 height=100,
                                 placeholder="Any specific tone or context you want to include? (e.g., Focus on his leadership during the field exercise...)",
                                 key='narrative_context')
+    st.caption(f"Current length: {len(user_context)} char")
 
     # disable save if not valid inputs or data saved and matches saved data
-    valid_narrative_inputs = len(accomplishments) > 50
+    valid_narrative_inputs =  (constants.MIN_ACCOMPLISHMENTS_LENGTH < len(accomplishments) < constants.MAX_ACCOMPLISHMENTS_LENGTH) and (len(user_context) < constants.MAX_USER_CONTEXT_LENGTH)
     data_saved = curr_rpt.accomplishments != "" and accomplishments == curr_rpt.accomplishments and user_context == curr_rpt.context
 
     c1, c2, c3 = st.columns([1, 1, 5], gap='small')
@@ -150,8 +157,8 @@ def render_input_section(curr_rpt, changed_names):
             st.session_state.reset_narrative = True
             st.rerun()
 
-    if not valid_narrative_inputs and len(accomplishments) > 0:
-        st.caption(":red[Accomplishments too short.]")
+    if not valid_narrative_inputs:
+        st.caption(":red[Invalid Inputs - check character limits]")
     elif data_saved:
         st.caption(":green[Inputs Saved.]")
     else:

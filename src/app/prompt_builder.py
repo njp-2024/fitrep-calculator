@@ -8,13 +8,13 @@ def _get_tier_config(rv):
     if rv < constants.TIER_BOTTOM:
         return {
             'key': 'bottom_third',
-            'label': 'low performer',
+            'label': 'average performer',
             'tone': "professional and positive but without praise."
         }
     elif rv < constants.TIER_MIDDLE and rv < 90:
         return {
             'key': 'middle_third',
-            'label': 'average performer',
+            'label': 'above-average performer',
             'tone': "professional with light praise. Focus on reliability."
         }
     elif rv < constants.TIER_MIDDLE:
@@ -59,69 +59,40 @@ def build_foundation_prompt(example_data, rpt):
     examples = example_data.examples
     recs = example_data.recs
 
-    config = _get_tier_config(rpt.rv_cum)
+    config = _get_tier_config(rpt.rv_cum_min)
 
     # Select dynamic content
     tier_examples = examples.get(config['key'], [])
     example_text = random.choice(tier_examples)['section_i'] if tier_examples else "No example provided."
     prom_rec, assign_rec = _get_random_recs(recs, config['key'])
 
-    # s_prompt = (
-    #     f"You are a Marine Corps fitness report writing assistant.\n"
-    #     f"Your goal is to write a Section I narrative that evaluates performance, character, leadership, intellect, and impact.\n\n"
-    #     f"CRITICAL RULES:\n"
-    #     f"1. NO BULLET POINTS. Write a flowing narrative.\n"
-    #     f"2. ATTRIBUTES OVER ACTIONS: Do not merely restate accomplishments. Use them to infer traits.\n"
-    #     f"3. TONE: {config['tone']}\n"
-    #     f"4. LENGTH: 1200-1250 characters.\n"
-    # )
+    s_prompt = (f"""You are a United States Marine Reporting Senior writing Section I comments for a fitness report.
 
-    s_prompt = (f"""### IDENTITY AND ROLE ###
-You are a Marine Reporting Senior. Your role is to provide an accurate assessment of your subordinates' performance. In a single paragraph, you must paint a word picture of the total Marine - his performance, technical proficiency, character, leadership, and intellect - using his accomplishments as context and support.
-
-### MANDATORY GUIDELINES ###
-- Be professional, objective, and authoritative.
-- Align your narrative to the Marine's performance tier.
-- Describe the Marine's traits and impact during the reporting period.
-- Be clear and concise.
-- Use the provided EXAMPLE for tone and style.
-
-### PROHIBITIONS ###
-- You MUST NOT summarize the accomplishments.
-- You MUST NOT use negative language or highlight traits that need improvement.
-
-### CONSTRAINTS ###
-- Write the narrative in 1150 - 1250 characters.
-- Write in narrative form, 1 single paragraph.
-- Use the provided mandatory ending sentence.
+TASK: Produce a single-paragraph narrative that paints a clear word picture of the Marine’s professional qualities - performance, technical proficiency, character, leadership, intellect, and overall impact - inferred from his ACCOMPLISHMENTS. The narrative must reflect the assigned performance tier and read as an authoritative command assessment.
+NARRATIVE STRUCTURE: Your narrative word picture must follow this template:
+- Opening: One to two sentences that use two-three descriptive adjectives to describe the total Marine and address overall impact or performance.
+- Body:  A short paragraph that paints the word picture of the Marine's professional qualities.  Each sentence should describe a specific quality or qualities.
+- Closing:  Use the MANDATORY ENDING provided by the user.
+GUIDELINES: 
+- Do NOT summarize, list, or paraphrase ACCOMPLISHMENTS - use ONLY as evidence to support your narrative.
+- Use concise, professional language
+- Match descriptive language and tone to the assigned PERFORMANCE TIER
+- Match style and structure to the EXAMPLE
+- Use ADDITIONAL CONTEXT as extra evidence to shape emphasis and tone
+CONSTRAINTS:
+- Length: 1150–1250 characters
+- Structure: One paragraph only
 """)
 
-    # user_context = rpt.context if rpt.context else "No additional context"
-    # u_prompt = (
-    #     f"Write Section I comments for {rpt.rank} {rpt.name}.\n"
-    #     f"Performance Level: {config['label']} (RV: {rpt.rv_cum:.2f})\n\n"
-    #     f"Style Reference (Mimic this structure):\n{example_text}\n\n"
-    #     f"Context: {user_context}\n"
-    #     f"Accomplishments: {rpt.accomplishments}\n\n"
-    #     f"Mandatory Ending: {prom_rec} {assign_rec}"
-    # )
-
     user_context = rpt.context if rpt.context else "No additional context"
-    u_prompt =  (f"""### PERFORMANCE DATA ###
-Marine: {rpt.rank} {rpt.name}
-Performance level: {config['label']} - {config['tone']}
-
-### STYLE EXAMPLE ###
-{example_text}
-
-### ACCOMPLISHMENTS ###
+    u_prompt =  (f"""Write section I comments for: {rpt.rank} {rpt.name}
+PERFORMANCE TIER: {config['label']} - {config['tone']}
+ACCOMPLISHMENTS:
 {rpt.accomplishments}
-
-### ADDITIONAL CONTEXT ###
-{user_context}
-
-### MANDATORY ENDING ###
-{prom_rec} {assign_rec}
+ADDITIONAL CONTEXT: {user_context}
+EXAMPLE:
+{example_text}
+MANDATORY ENDING: {prom_rec} {assign_rec}
 """)
 
     return s_prompt, u_prompt
@@ -138,7 +109,7 @@ def build_open_weights_prompt(example_data, rpt):
     examples = example_data.examples
     recs = example_data.recs
 
-    config = _get_tier_config(rpt.rv_cum)
+    config = _get_tier_config(rpt.rv_cum_min)
 
     # 1. Select dynamic content
     tier_examples = examples.get(config['key'], [])
@@ -148,12 +119,12 @@ def build_open_weights_prompt(example_data, rpt):
     # 2. System Prompt: Role & Rules
     # slightly adjusted for Qwen/Mixtral which prefer very explicit formatting rules
     s_prompt = (
-        f"You are an expert US Marine Corps Fitness Report writer.\n"
-        f"Your task is to write a Section I narrative evaluating character, leadership, and impact.\n\n"
+        f"You are a United States Marine Reporting Senior writing Section I comments for a fitness report.\n"
+        f"Produce a single-paragraph narrative that paints a clear word picture of the Marine’s professional qualities - performance, technical proficiency, character, leadership, intellect, and overall impact - inferred from his ACCOMPLISHMENTS.\n\n"
         f"STRICT OUTPUT RULES:\n"
         f"1. OUTPUT FORMAT: A single paragraph of text. NO Markdown formatting, NO bullet points.\n"
         f"2. LENGTH: Between 1200 and 1250 characters.\n"
-        f"3. TONE: {config['tone']}\n"
+        f"3. TONE: The narrative must reflect the assigned performance tier and read as an authoritative command assessment.\n"
         f"4. CONTENT: Infer traits from the provided accomplishments. Do not just list them.\n"
     )
 
@@ -162,7 +133,7 @@ def build_open_weights_prompt(example_data, rpt):
 
     u_prompt = (
         f"Write Section I comments for {rpt.rank} {rpt.name}.\n"
-        f"Performance Tier: {config['label']} (RV: {rpt.rv_cum:.2f})\n\n"
+        f"Performance Tier: {config['label']} - {config['tone']}\n\n"
 
         f"REFERENCE STYLE (Mimic this sentence structure):\n"
         f"\"{example_text}\"\n\n"
@@ -183,7 +154,7 @@ def build_local_prompt(example_data, rpt):
     """
     examples = example_data.examples
 
-    config = _get_tier_config(rpt.rv_cum)
+    config = _get_tier_config(rpt.rv_cum_min)
 
     tier_examples = examples.get(config['key'], [])
     example_text = random.choice(tier_examples)['section_i'] if tier_examples else ""
