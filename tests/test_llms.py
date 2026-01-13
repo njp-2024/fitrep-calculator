@@ -67,3 +67,95 @@ def test_client_handles_subprocess_error():
             client.generate(req)
 
         assert "Ollama CLI Error" in str(excinfo.value)
+
+
+####################################################################################
+########################  NEW TESTS: LLM Clients & Dataclasses  ####################
+####################################################################################
+def test_openai_client_initialization():
+    """Test OpenAI client requires API key"""
+    import os
+
+    # Save original key
+    original = os.environ.get("OPENAI_API_KEY")
+    original_default = os.environ.get("OPENAI_DEFAULT_API_KEY")
+
+    # Remove keys
+    if "OPENAI_API_KEY" in os.environ:
+        del os.environ["OPENAI_API_KEY"]
+    if "OPENAI_DEFAULT_API_KEY" in os.environ:
+        del os.environ["OPENAI_DEFAULT_API_KEY"]
+
+    try:
+        from src.app.llm_clients import OpenAIClient
+
+        with pytest.raises(ValueError) as excinfo:
+            OpenAIClient()
+
+        assert "API Key" in str(excinfo.value)
+
+    finally:
+        # Restore original keys
+        if original:
+            os.environ["OPENAI_API_KEY"] = original
+        if original_default:
+            os.environ["OPENAI_DEFAULT_API_KEY"] = original_default
+
+
+def test_huggingface_client_initialization():
+    """Test HuggingFace client requires token"""
+    import os
+
+    # Save original token
+    original = os.environ.get("HF_API_TOKEN")
+
+    # Remove token
+    if "HF_API_TOKEN" in os.environ:
+        del os.environ["HF_API_TOKEN"]
+
+    try:
+        from src.app.llm_clients import HuggingFaceClient
+
+        with pytest.raises(ValueError) as excinfo:
+            HuggingFaceClient()
+
+        assert "Token" in str(excinfo.value)
+
+    finally:
+        # Restore original token
+        if original:
+            os.environ["HF_API_TOKEN"] = original
+
+
+def test_llm_request_dataclass():
+    """Test LLMRequest validation"""
+    from src.app.llm_base import LLMRequest
+
+    req = LLMRequest(
+        system_prompt="Test system",
+        user_prompt="Test user",
+        max_tokens=500,
+        temperature=0.7
+    )
+
+    assert req.system_prompt == "Test system"
+    assert req.user_prompt == "Test user"
+    assert req.max_tokens == 500
+    assert req.temperature == 0.7
+
+
+def test_llm_response_dataclass():
+    """Test LLMResponse structure"""
+    from src.app.llm_base import LLMResponse
+
+    resp = LLMResponse(
+        text="Generated text",
+        model="gpt-4o-mini",
+        prompt_tokens=100,
+        completion_tokens=50
+    )
+
+    assert resp.text == "Generated text"
+    assert resp.model == "gpt-4o-mini"
+    assert resp.prompt_tokens == 100
+    assert resp.completion_tokens == 50
