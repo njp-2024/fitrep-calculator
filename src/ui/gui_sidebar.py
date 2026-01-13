@@ -18,7 +18,7 @@ import src.app.calc_eng as calc_eng
 ##################################  Sidebar ########################################
 ####################################################################################
 def render_feedback_button():
-    st.link_button("Give Feedback", "https://forms.gle/8h5hw5GC2hdCdGe19", use_container_width=True)
+    st.link_button("Give Feedback", "https://docs.google.com/forms/d/e/1FAIpQLScaCydKlmuaccfDeurEgdrwjfADiDSwdxwgWl5ZPPYgF0Sywg/viewform?usp=dialog", use_container_width=True)
 
 def render_about_section():
     """Expanding area to provide info about the app"""
