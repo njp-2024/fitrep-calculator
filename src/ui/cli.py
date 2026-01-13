@@ -12,6 +12,28 @@ import src.app.models as models
 import src.app.calc_eng as calc_eng
 import src.app.constants as constants
 
+####################################################################################
+#                              DEPRECATION NOTICE                                  #
+####################################################################################
+#
+# This CLI interface has been DEPRECATED as of January 2026.
+#
+# Reason: The CLI does not support modern features including:
+#   - LLM-powered narrative generation
+#   - Real-time RV preview with shadow state
+#   - Export functionality
+#   - Multi-report session management
+#
+# Recommended Alternative: Use the Streamlit GUI
+#   Run: streamlit run src/ui/gui_main.py
+#
+# For programmatic access to calculations, import modules directly:
+#   from src.app import calc_eng, models
+#
+# This file is maintained for reference only and will not receive updates.
+#
+####################################################################################
+
 
 class FitRepCLI:
     def __init__(self):
@@ -195,6 +217,16 @@ class FitRepCLI:
         input("Press Enter...")
 
     def run(self):
+        # Display deprecation warning on first run
+        print("\n" + "="*70)
+        print("⚠️  DEPRECATION WARNING")
+        print("="*70)
+        print("This CLI interface is DEPRECATED and no longer maintained.")
+        print("Please use the Streamlit GUI for the full feature set:")
+        print("  → streamlit run src/ui/gui_main.py")
+        print("="*70)
+        input("\nPress Enter to continue anyway...")
+
         while self.running:
             self.print_header()
             print("\n1. Setup/Edit Profile")

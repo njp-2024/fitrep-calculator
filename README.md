@@ -1,40 +1,61 @@
-# USMC FitRep Calculator & Section I Generator
+# FitRep Calculator & Section I Generator
 
 **An offline-capable decision support tool for USMC Reporting Seniors.**
 
-![Status](https://img.shields.io/badge/Status-Prototype-blueviolet) ![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Streamlit](https://img.shields.io/badge/Streamlit-1.39%2B-FF4B4B)
+![Status](https://img.shields.io/badge/Status-Prototype-blueviolet) ![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Streamlit](https://img.shields.io/badge/Streamlit-1.40%2B-FF4B4B)
 
 ## Overview
 
-The **FitRep Calculator** is a desktop-grade application designed to assist USMC Reporting Seniors (RS) in preparing Fitness Reports. It addresses two critical needs:
+The **FitRep Calculator** is a designed to assist USMC Reporting Seniors (RS) in preparing Fitness Reports. It addresses two critical needs:
 
 1.  **Relative Value (RV) Forecasting:** Allows an RS to see how a specific set of attribute marks will impact a report's Relative Value (RV) and Cumulative RV *before* submitting the report.
 2.  **Section I Narrative Generation:** Leverages Large Language Models (LLMs) to assist Reporting Seniors in drafting Section I comments that align in tone and language with the relative value of the report(s). It supports three tiers of AI inference:
-    * **Local (Offline):** Runs entirely on your CPU via Ollama (Mistral/Llama). *Not available in the web app currently.*
-    * **Foundation (Cloud):** Uses OpenAI (GPT-4o-mini) for maximum reasoning capability.
-    * **Open Weights (Hybrid):** Connects to Hugging Face Inference endpoints (Qwen/Mixtral) for flexible experimentation.
+    * **Local (Offline):** Runs entirely on your CPU via Ollama (Mistral/Llama). *Requires local deployment* - controlled by `ENABLE_LOCAL_OPTION` environment variable.
+    * **Foundation (Cloud):** Uses OpenAI (GPT-4o-mini) for maximum reasoning capability. Available in both web app and local deployment.
+    * **Open Weights (Hybrid):** Connects to Hugging Face Inference endpoints (Qwen/Mixtral) for flexible experimentation. *Requires local deployment* - controlled by `ENABLE_OPEN_WEIGHT_OPTION` environment variable.
+    * The application also prints the prompts for users to copy if they choose to use other LLM services.
 
-⚠️  **Note:**  The Section I LLM integration is experimental.  The local (offline) mode is as safe to use as the computer you use it on.  **DO NOT** use the Foundation or Open Weight options with unauthorized data, though.  Those options are intended for experimentation with synthetic data only right now.
+⚠️  **Note:**  The Section I LLM integration is experimental. The local (offline) mode keeps all data on your machine. When using Foundation or Open Weight options, narrative data is transmitted to third-party API providers (OpenAI/HuggingFace). Per API policies, this data is not used for model training. Use placeholder names and avoid entering Controlled Unclassified Information (CUI).
 
 ⚠️ **Disclaimer:** This is an unofficial decision-support tool and is not endorsed by the USMC or DoW. All outputs are advisory only and must be reviewed by the Reporting Senior prior to use.
 
 ---
 ## Deployment & Access
 
-### Option 1: Live Web Application
-The latest stable version is hosted on Streamlit Cloud and is accessible at:
+### Option 1: Live Web Application (Streamlit Cloud)
+The latest stable version is hosted on Streamlit Cloud:
 **[🔗 Launch FitRep Calculator](https://fitrep-calculator.streamlit.app/)**
 
-### Option 2: Deploy Your Own Private Instance
-If you prefer to host this strictly for your own unit or within a private infrastructure:
+**Available Features:**
+- ✅ RV Calculation & Forecasting
+- ✅ Foundation AI Model (OpenAI GPT-4o-mini)
+
+**Limitations:**
+- ❌ Local (Ollama) model disabled - requires local infrastructure
+- ❌ OpenWeight (HuggingFace) model disabled - requires local infrastructure
+
+### Option 2: Local Deployment (Full Feature Set)
+For access to all AI model options, deploy locally:
+
+**Benefits:**
+- ✅ Full feature set including Local (Ollama) and OpenWeight (HuggingFace) models
+- ✅ Customizable configuration via environment variables
+
+**See Installation section below for setup instructions.**
+
+### Option 3: Deploy Your Own Private Cloud Instance
+If you prefer to host this strictly for your own unit within Streamlit Cloud:
 
 1.  **Fork** this repository to your own GitHub account.
 2.  Log in to [Streamlit Cloud](https://streamlit.io/cloud).
 3.  Click **"New App"** and select your forked repository.
 4.  Set the **Main File Path** to `src/ui/gui_main.py`.
-5.  **Secrets:** If using OpenAI, go to App Settings > Secrets and add:
+5.  **Secrets:** Go to App Settings > Secrets and add:
     ```toml
     OPENAI_API_KEY = "sk-..."
+    # Optional: Enable experimental features (not recommended in cloud)
+    # ENABLE_LOCAL_OPTION = "false"  
+    # ENABLE_OPEN_WEIGHT_OPTION = "false"
     ```
 6.  Click **Deploy**.
 
@@ -52,8 +73,8 @@ If you prefer to host this strictly for your own unit or within a private infras
 
 1.  **Clone the Repository**
     ```bash
-    git clone [https://github.com/yourusername/fitrep_calculator.git](https://github.com/yourusername/fitrep_calculator.git)
-    cd fitrep_calculator
+    git clone https://github.com/njp-2024/fitrep-calculator.git
+    cd fitrep-calculator
     ```
 
 2.  **Install Dependencies**
@@ -61,12 +82,41 @@ If you prefer to host this strictly for your own unit or within a private infras
     pip install -r requirements.txt
     ```
 
-3.  **Configure Environment (Optional)**
-    If you plan to use OpenAI or HuggingFace models, create a `.env` file or set environment variables:
+3.  **Configure Environment Variables**
+    Create a `.env` file in the project root:
     ```bash
-    export OPENAI_API_KEY="sk-..."
-    export HF_API_TOKEN="hf_..."
+    # Required for Foundation model (OpenAI)
+    OPENAI_API_KEY=sk-...
+
+    # Optional: Enable Local model (requires Ollama installation)
+    ENABLE_LOCAL_OPTION=true
+
+    # Optional: Enable OpenWeight model (requires HuggingFace token)
+    ENABLE_OPEN_WEIGHT_OPTION=true
+    HF_API_TOKEN=hf_...
     ```
+
+    **Notes:**
+    - Foundation model works with just `OPENAI_API_KEY`
+    - Local model requires Ollama installation (see step 4 below) AND `ENABLE_LOCAL_OPTION=true`
+    - OpenWeight model requires HuggingFace token AND `ENABLE_OPEN_WEIGHT_OPTION=true`
+    - If these variables are not set, those options will not appear in the UI
+
+    
+### Running the Local Model (Ollama) - Local Deployment Only
+
+The prospect of using local models is attractive to an expeditionary organization. This feature allows experimentation with a simple use case.
+
+1.  **Install Ollama**: Download from [ollama.com](https://ollama.com).
+2.  **Pull the Model**: Run `ollama pull mistral:7b-instruct-v0.3-q4_K_M` in your terminal.
+3.  **Enable in Environment**: Set `ENABLE_LOCAL_OPTION=true` in your `.env` file.
+4.  **Configure the Path** (if needed):
+    * `constants.py` attempts to find Ollama automatically via `shutil.which("ollama")`
+    * If auto-detection fails, open `src/app/constants.py` and set:
+      ```python
+      OLLAMA_PATH = r"C:\Users\YourName\AppData\Local\Programs\Ollama\ollama.exe"
+      ```
+    * *Note: On Mac/Linux, auto-detection usually works without manual configuration.*
 
 ---
 
@@ -85,47 +135,83 @@ streamlit run src/ui/gui_main.py
 **Workflow:**
 
 1.  **Profile Page:** Initialize your RS Profile (Rank, High, Low, Average, Total Reports).
-2.  **Reports Page:** Add Marines. Toggle attribute buttons (A-G) to see real-time impact on RV.
-    * RV accuracy is typically within 0.03 to 0.09 when entering profile data (high/low/avg/number of reports) to start.  This is because OMPF rounds those values to 2 decimal places.  The calculations are close enough to confirm reports fall in the desired third, but are not exact.
-3.  **Narratives Page:** Enter accomplishments and context. *Choose your model to draft text*.
+2.  **Reports Page:** Add Marines. Toggle attribute -buttons (A-H) to see real-time impact on RV.
+3.  **Narratives Page:** Enter accomplishments and context. *Choose your model to draft text OR copy the prompt into your preferred browser based LLM*.
 
 
-### 2. The CLI (Command Line)
-A lightweight, text-based interface for quick calculations without the browser.
+### 2. The CLI (Command Line) - **DEPRECATED**
 
-```bash
-python src/ui/cli.py
+⚠️ **The CLI has been deprecated.** Use the Streamlit GUI for the full experience.
+
+The CLI remains in the codebase for reference but is no longer maintained. For programmatic access to the calculation engine, import the modules directly:
+
+```python
+from src.app import calc_eng, models
+
+# Example: Direct calculation usage
+profile = models.RankProfile("Test", "Capt", 5.0, 3.0, 4.0, 10)
+# ... use calc_eng functions
 ```
-
-### 3. Running the Local Model (Ollama)
-
-To use the "Local" model option without sending data to the cloud:
-
-1.  **Install Ollama**: Download from [ollama.com](https://ollama.com).
-2.  **Pull the Model**: Run `ollama pull mistral:7b-instruct-v0.3-q4_K_M` in your terminal.
-3.  **Configure the Path**:
-    * Open `src/app/constants.py`.
-    * Find `OLLAMA_PATH`.
-    * Update it to point to your `ollama.exe` location (e.g., `C:\Users\YourName\...\ollama.exe`).
-    * *Note: On Mac/Linux, you can usually set this to just "ollama".*
-
 
 ---
 ## Architecture
 
 The application follows a **Model-View-Controller (MVC)** pattern adapted for Streamlit:
 
+**Architecture Layers:**
 
+* **Models** (`src/app/models.py`): Core business objects
+  - `RankProfile` - RS statistics and RV calculation state
+  - `ReportDB` - In-memory report storage with insertion-order preservation
+  - `Report` - Individual report with scores, RV, and narrative data
+  - `ExampleData` - Cached YAML configuration loader
 
-[Diagram Pending]
+* **Controller** (`src/app/calc_eng.py`): Business logic orchestration
+  - RV calculation engine with precision error handling
+  - LLM request routing and prompt building
+  - Profile state management (original/active/display)
 
+* **View** (`src/ui/`): Streamlit page modules
+  - `gui_main.py` - Application router and initialization
+  - `gui_profile.py` - Profile data entry and validation
+  - `gui_reports.py` - Report entry with real-time RV preview
+  - `gui_narratives.py` - LLM-powered narrative generation
+  - `gui_sidebar.py` - Context-aware status display
 
-* **`src/app/models.py`**: Contains the `RankProfile`, `ReportDB`, and `Report` object classes.
-* **`src/app/calc_eng.py`**: The **"Controller."** Handles complex calculations, simulations, and routing LLM requests.
-* **`src/ui/`**: The **"View."** Split into modular pages (`gui_profile`, `gui_reports`, `gui_narratives`) to manage Streamlit's session state effectively.
-* **`src/app/llm_clients.py`**: A polymorphic interface for AI. 
+* **LLM Integration** (`src/app/llm_*.py`): Polymorphic AI interface
+  - `llm_base.py` - Abstract base class and data structures
+  - `llm_clients.py` - Concrete implementations (OpenAI, HuggingFace, Ollama)
+  - `prompt_builder.py` - RV-tiered prompt generation
 
-No external database, authentication service, or persistent backend is used in the current architecture.
+**Data Flow:**
+- Session-based state management (no persistence)
+- Shadow state for "what-if" calculations
+- Deep copy strategy prevents state mutations
+
+---
+
+## Data Privacy & Security
+
+**Session-Based Storage:**
+- All data stored in temporary session memory only (Streamlit session state)
+- No database, no file persistence, no user accounts
+- Data automatically erased on browser close/refresh
+
+**Local vs Cloud Models:**
+- **Local Mode (Ollama):**
+  - All data remains on your machine
+  - Zero external transmission
+- **Foundation/OpenWeight Modes:**
+  - Accomplishments and context sent to API providers (OpenAI/HuggingFace)
+  - Transmitted via encrypted HTTPS
+  - Per OpenAI API policy: data not used for model training
+  - Per HuggingFace policy: similar data protection guarantees
+
+**Web Application Security:**
+- Hosted on Streamlit Community Cloud
+- No persistent backend or database
+- Each user session isolated in separate container
+- See [Streamlit Security Policy](https://streamlit.io/security) for infrastructure details
 
 ---
 
@@ -136,28 +222,16 @@ The project includes a basic test suite.  To run the tests, use the following co
 pytest
 ```
 
-
----
-
-
-## Data Privacy & OPSEC
-
-* **Local Mode:** Using local mode keeps all data private.  Nothing will leave your computer.   7-8b parameter models can run on a CPU.
-* **Cloud Mode:** When "Foundation" or "Open Weight" is selected, data is sent to OpenAI or HuggingFace APIs, respectively.  Specifically, the prompts are built from user inputted narrative data and publicly available synthetic example language.
-* **Persistence:** This app currently uses in-memory session state. No external database server is used or required.  All data is lost on browser close/refresh.
-
-
 ---
 
 ## Contributing
 
-Contributions are welcome, but please coordinate with me before opening any pull requests.  Open an Issue for bug reports.
+Please contact me if you are interested in the tool. Open an Issue for bug reports.
 
 **Current Roadmap:**
-- [ ] Improve prompt_builder / improve LLM outputs.
+- [ ] Get user feedback, improve experience
+- [ ] Improve prompt_builder / LLM outputs.
 - [ ] Improve test suite.
-- [ ] Obtain DoW GenAI and/or CamoGPT API keys for official integration and adoption.
-
 
 ---
 

@@ -30,7 +30,7 @@ def render_about_section():
                 - RV floor is 80
 
                 **Section I Comments**
-                - Generated using few shot prompts
+                - Generated using example based prompts
                 - Examples selected based on RV
                 - Prompts available via 'Print/Export Summary'
 

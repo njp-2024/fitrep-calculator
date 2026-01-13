@@ -116,7 +116,7 @@
             <h2>The Communication Gap</h2>
             <p>For Reporting Seniors (RS), Relative Value (RV) and Section I comments are two of the most important components of Fitness Reports considered by selection boards. Yet, Reporting Seniors currently operate with a significant blind spot: <strong>they cannot see the projected RV of a report before submitting it.</strong></p>
 
-            <p>This creates a communication gap. While the RS communicates performance via raw attribute scores, the selection board interprets performance via Relative Value. As noted in Baker and Kwan’s 2015 <em>Marine Corps Gazette</em> article, <a href="https://scholarspace.manoa.hawaii.edu/items/01c4c148-706d-4340-9773-455435942738" target="_blank">“Miscalculating Performance,”</a> the RV calculation is more complicated and nuanced than most realize. This can lead to unintentional miscommunications that negatively impact the evaluation process.</p>
+            <p>This creates a communication gap. While the RS communicates performance via raw attribute scores, the selection board interprets performance via Relative Value. As noted in Baker and Kwan’s 2015 <em>Marine Corps Gazette</em> article, <a href="https://scholarspace.library.gwu.edu/concern/gw_works/g445cd46v" target="_blank">“Miscalculating Performance,”</a> the RV calculation is more complicated and nuanced than most realize. This can lead to unintentional miscommunications that negatively impact the evaluation process.</p>
 
             <p><strong>The Solution:</strong> This tool bridges that gap by estimating Relative Value in real-time. It requires no downloads, no PDF imports, and no maintenance of complex Excel trackers.</p>
 
@@ -145,7 +145,7 @@
             </ul>
 
             <h3>2. Processing Order</h3>
-            <p>The algorithm assumes MMRP processes reports in the linear order they are received, without regard to end date or reporting occasion. Actual RV at processing values may differ depending on MMRP’s actual processing order. However, <strong>Cumulative RV</strong> would not be affected.</p>
+            <p>The algorithm assumes MMRP processes reports in the linear order they are received, without regard to end date or reporting occasion. Actual RV at processing values may differ depending on MMRP’s actual processing order. However, Cumulative RV would not be affected.</p>
             <p><strong>Best Practice:</strong> If analyzing multiple reports, enter them in the chronological order you intend to submit them and focus on Cumulative RV.</p>
 
             <h3>3. The Formula</h3>
@@ -166,13 +166,13 @@
             <h2 id="ai-drafter">AI-Assisted Drafting</h2>
             <p>A common complaint from selection boards is that narrative comments do not align with the report score. The drafting assistant addresses this by using your projected RV to draft comments that align in tone with that score.</p>
 
-            <h3>How it Works: Few-Shot Prompting</h3>
-            <p>The tool uses a technique called "few-shot prompting." It selects publicly available examples (similar to those provided to new officers at TBS) that align with your calculated RV. It then feeds these examples to the Large Language Model (LLM) alongside your selected attributes to generate a draft.</p>
+            <h3>How it Works: Example-Based Prompting</h3>
+            <p>The tool uses a technique called example-based prompting. It selects from publicly available examples (similar to those provided to new officers at TBS) that align with your calculated RV. It then feeds these examples to the Large Language Model (LLM) alongside your selected attributes to generate a draft.</p>
             <p>Prompt structures are dynamically adjusted based on the selected model. The comprehensive prompt displayed in the UI is optimized for large foundation models (like GPT-4). If you select the open weight or local model options, the tool automatically simplifies the instructions to align with that model's reasoning capabilities and context window.</p>
 
             <h3>Considerations</h3>
             <ul>
-                <li><strong>Words Have Meaning:</strong> Effective narratives require more than just statistical alignment with Relative Value. We strongly recommend reviewing LtCol Tierney’s 2019 Gazette Article, <a href="#">“Words Have Meaning – Are you aware of what you are writing?”</a> for a detailed discussion on Section I writing technique. It is your responsibility to communicate accurate information—do not offload this to a machine.</li>
+                <li><strong>Words Have Meaning:</strong> Effective narratives require more than just statistical alignment with Relative Value. We strongly recommend reviewing LtCol Tierney’s 2019 Gazette Article, <a href="https://www.mca-marines.org/wp-content/uploads/Words-Have-Meaning.pdf" target="_blank">“Words Have Meaning – Are you aware of what you are writing?”</a> for a detailed discussion on Section I writing technique. It is your responsibility to communicate accurate information—do not offload this to a machine.</li>
                 <li><strong>Experimental Feature:</strong> This feature is currently experimental. It is set up to query three tiers of language models to compare capabilities and cost:
                     <ul>
                         <li><strong>Local:</strong> Requires Local Deployment. Not available in the web app; you must clone the repository from GitHub. Designed for advanced users to run small (7b-8b) parameter models offline on a personal PC.</li>
@@ -182,7 +182,7 @@
                 </li>
             </ul>
 
-            <p>The purpose of providing these options is to compare capabilities and cost. While the foundation models are typically more expensive to access through the API, a centralized interface like this tool could offset the cost with more efficient token usage. Alternatively, self-hosting open weight models could be an economical solution if infrastructure allows.</p>
+            <p>The purpose of providing these options is to compare capabilities and cost across different architectures. While foundation models are typically more expensive to access via API, a centralized interface like this tool could offset costs through efficient token usage and provide better force-wide standardization. Alternatively, self-hosting open weight models could offer a more economical solution where infrastructure permits. Finally, the ability to run small, local models is particularly relevant for expeditionary units operating in austere environments. This tool provides a controlled venue to experiment with these trade-offs on a standardized use case.</p>
 
             <div class="callout">
                 For user convenience, the tool prints the generated prompts for you to download or copy. You can run them in a more powerful model in your own browser if you prefer.
