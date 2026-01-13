@@ -17,6 +17,9 @@ import src.app.calc_eng as calc_eng
 ####################################################################################
 ##################################  Sidebar ########################################
 ####################################################################################
+def render_feedback_button():
+    st.link_button("Give Feedback", "https://forms.gle/8h5hw5GC2hdCdGe19", use_container_width=True)
+
 def render_about_section():
     """Expanding area to provide info about the app"""
     with st.expander("ℹ️ About"):
@@ -228,6 +231,7 @@ def render_sidebar():
         render_rpts_list()
         st.divider()
 
+        render_feedback_button()
         render_about_section()
 
         # TODO: Add calc_rv_table to cacl_eng so we can display the projected RV table
