@@ -266,7 +266,6 @@ Please contact me if you are interested in the tool. Open an Issue for bug repor
 
 ---
 
-
 ## License
 
 MIT License - See the LICENSE file for details.
