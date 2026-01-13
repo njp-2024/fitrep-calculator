@@ -77,12 +77,30 @@ If you prefer to host this strictly for your own unit within Streamlit Cloud:
     cd fitrep-calculator
     ```
 
-2.  **Install Dependencies**
+2.  **Create and Activate Virtual Environment**
+
+    **Why?** A virtual environment isolates project dependencies and makes command-line tools like `streamlit` available.
+
+    **Windows:**
+    ```bash
+    python -m venv venv
+    venv\Scripts\activate
+    ```
+
+    **Mac/Linux:**
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+    You'll know it's activated when you see `(venv)` in your terminal prompt.
+
+3.  **Install Dependencies**
     ```bash
     pip install -r requirements.txt
     ```
 
-3.  **Configure Environment Variables**
+4.  **Configure Environment Variables**
     Create a `.env` file in the project root:
     ```bash
     # Required for Foundation model (OpenAI)
@@ -127,10 +145,23 @@ The prospect of using local models is attractive to an expeditionary organizatio
 ### 1. The GUI (Streamlit)
 The primary interface is a responsive web app that runs locally in your browser.
 
+**Important:** You must activate the virtual environment before running the app.
+
+**Windows:**
 ```bash
-# Run from the project root
+# From the project root
+venv\Scripts\activate
 streamlit run src/ui/gui_main.py
 ```
+
+**Mac/Linux:**
+```bash
+# From the project root
+source venv/bin/activate
+streamlit run src/ui/gui_main.py
+```
+
+The app will open automatically in your browser at `http://localhost:8501`.
 
 **Workflow:**
 
