@@ -1,18 +1,17 @@
 import os
 import subprocess
-import requests
+import src.app.constants as constants
 
 from pathlib import Path
 from openai import OpenAI
 from huggingface_hub import InferenceClient
-# from src.app.llm_base import CommercialLLMClient, LLMRequest, LLMResponse, LocalLLMClient, OpenLLMClient
 from src.app.llm_base import BaseLLMClient, LLMRequest, LLMResponse
 
 class OpenAIClient(BaseLLMClient):
     """
-    Client for OpenAI's API (GPT-4o, GPT-3.5, etc.).
+    Client for OpenAI's Responses API (GPT-4o, GPT-5 series).
     """
-    def __init__(self, model: str = "gpt-4o-mini"):
+    def __init__(self, model: str = constants.DEFAULT_FRONTIER_MODEL):
         """
         Initialize the OpenAI client.
 
@@ -24,6 +23,11 @@ class OpenAIClient(BaseLLMClient):
         if not api_key:
             raise ValueError("Missing API Key: Set 'OPENAI_API_KEY' in your environment.")
 
+        if model not in constants.FRONTIER_MODELS.values():
+            raise ValueError(
+                f"Unsupported model '{model}'. Allowed: {sorted(list(constants.FRONTIER_MODELS.values()))}"
+            )
+
         self.client = OpenAI(api_key=api_key)
         self.model = model
 
@@ -32,24 +36,34 @@ class OpenAIClient(BaseLLMClient):
         Generate text using OpenAI chat completions.
         """
         try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {"role": "system", "content": request.system_prompt},
-                    {"role": "user", "content": request.user_prompt},
-                ],
-                max_tokens=request.max_tokens,
-                temperature=request.temperature,
-            )
+            # Responses API:
+            # - instructions: system/developer message
+            # - input: user content (string or structured items)
+            # - max_output_tokens: cap output (includes reasoning tokens for GPT-5 family)
+            kwargs = {
+                        "model": self.model,
+                        "instructions": request.system_prompt,
+                        "input": [{"role": "user", "content": request.user_prompt}],
+                        "max_output_tokens": request.max_tokens,
+                        "temperature": request.temperature,
+                        }
 
-            content = response.choices[0].message.content
+            if self.model.startswith("gpt-5"):
+                kwargs["reasoning"] = {"effort": "low"}
+
+            response = self.client.responses.create(**kwargs)
+
+            text = (response.output_text or "").strip()
+
             usage = response.usage
+            prompt_tokens = usage.input_tokens if usage else None
+            completion_tokens = usage.output_tokens if usage else None
 
             return LLMResponse(
-                text=content,
+                text=text,
                 model=response.model,
-                prompt_tokens=usage.prompt_tokens if usage else 0,
-                completion_tokens=usage.completion_tokens if usage else 0,
+                prompt_tokens=prompt_tokens,
+                completion_tokens=completion_tokens,
             )
 
         except Exception as e:
@@ -60,7 +74,7 @@ class LocalModelClient(BaseLLMClient):
     """
     Client for local inference via Ollama CLI.
     """
-    def __init__(self, local_path: str = None,  model: str = "mistral:7b-instruct-v0.3-q4_K_M"):
+    def __init__(self, local_path: str = None,  model: str = constants.DEFAULT_LOCAL_MODEL):
         """
         Args:
             local_path (str): Path to ollama executable. If None, raise error.
@@ -116,7 +130,7 @@ class HuggingFaceClient(BaseLLMClient):
     Client for HuggingFace Inference API (Serverless).
     Uses the chat.completions format for structured prompting.
     """
-    def __init__(self, model: str = "Qwen/Qwen2.5-72B-Instruct"):
+    def __init__(self, model: str = constants.DEFAULT_OPEN_MODEL):
         # Other models to try:
         # - "mistralai/Mixtral-8x7B-Instruct-v0.1"
         # - "meta-llama/Meta-Llama-3-70B-Instruct"

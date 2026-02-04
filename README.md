@@ -11,8 +11,8 @@ The **FitRep Calculator** is a designed to assist USMC Reporting Seniors (RS) in
 1.  **Relative Value (RV) Forecasting:** Allows an RS to see how a specific set of attribute marks will impact a report's Relative Value (RV) and Cumulative RV *before* submitting the report.
 2.  **Section I Narrative Generation:** Leverages Large Language Models (LLMs) to assist Reporting Seniors in drafting Section I comments that align in tone and language with the relative value of the report(s). It supports three tiers of AI inference:
     * **Local (Offline):** Runs entirely on your CPU via Ollama (Mistral/Llama). *Requires local deployment* - controlled by `ENABLE_LOCAL_OPTION` environment variable.
-    * **Foundation (Cloud):** Uses OpenAI (GPT-4o-mini) for maximum reasoning capability. Available in both web app and local deployment.
-    * **Open Weights (Hybrid):** Connects to Hugging Face Inference endpoints (Qwen/Mixtral) for flexible experimentation. *Requires local deployment* - controlled by `ENABLE_OPEN_WEIGHT_OPTION` environment variable.
+    * **Foundation (Cloud):** Uses OpenAI models for maximum reasoning capability. Available in both web app and local deployment.
+    * **Open Weights (Hybrid):** Connects to Hugging Face Inference endpoints (Qwen) for flexible experimentation. *Requires local deployment* - controlled by `ENABLE_OPEN_WEIGHT_OPTION` environment variable.
     * The application also prints the prompts for users to copy if they choose to use other LLM services.
 
 ⚠️  **Note:**  The Section I LLM integration is experimental. The local (offline) mode keeps all data on your machine. When using Foundation or Open Weight options, narrative data is transmitted to third-party API providers (OpenAI/HuggingFace). Per API policies, this data is not used for model training. Use placeholder names and avoid entering Controlled Unclassified Information (CUI).
@@ -28,7 +28,7 @@ The latest stable version is hosted on Streamlit Cloud:
 
 **Available Features:**
 - ✅ RV Calculation & Forecasting
-- ✅ Foundation AI Model (OpenAI GPT-4o-mini)
+- ✅ Foundation AI Models (OpenAI)
 
 **Limitations:**
 - ❌ Local (Ollama) model disabled - requires local infrastructure
@@ -115,7 +115,7 @@ If you prefer to host this strictly for your own unit within Streamlit Cloud:
     ```
 
     **Notes:**
-    - Foundation model works with just `OPENAI_API_KEY`
+    - Foundation models work with just `OPENAI_API_KEY`
     - Local model requires Ollama installation (see step 4 below) AND `ENABLE_LOCAL_OPTION=true`
     - OpenWeight model requires HuggingFace token AND `ENABLE_OPEN_WEIGHT_OPTION=true`
     - If these variables are not set, those options will not appear in the UI
@@ -174,15 +174,7 @@ The app will open automatically in your browser at `http://localhost:8501`.
 
 ⚠️ **The CLI has been deprecated.** Use the Streamlit GUI for the full experience.
 
-The CLI remains in the codebase for reference but is no longer maintained. For programmatic access to the calculation engine, import the modules directly:
-
-```python
-from src.app import calc_eng, models
-
-# Example: Direct calculation usage
-profile = models.RankProfile("Test", "Capt", 5.0, 3.0, 4.0, 10)
-# ... use calc_eng functions
-```
+The CLI remains in the codebase for reference but is no longer maintained. 
 
 ---
 ## Architecture

@@ -36,6 +36,25 @@ TIER_TOP = 98.0
 # eliter/water walker is above 98.0
 
 
+# Model dicts
+# Format: {'Display Name' : 'model_id'}
+
+# default: mistral:7b-instruct-v0.3-q4_K_M, others:
+DEFAULT_LOCAL_MODEL = "mistral:7b-instruct-v0.3-q4_K_M"
+LOCAL_MODELS = {"Mistral 7B" : "mistral:7b-instruct-v0.3-q4_K_M"}
+
+# default: Qwen/Qwen2.5-72B-Instruct, others:
+DEFAULT_OPEN_MODEL = "Qwen/Qwen2.5-72B-Instruct"
+OPEN_WEIGHT_MODELS = {"Qwen 72B" : "Qwen/Qwen2.5-72B-Instruct"}
+
+# default: gpt-4o-mini, others: gpt-5.1, gpt-5-mini, gpt-5-nano
+DEFAULT_FRONTIER_MODEL = "gpt-4o-mini"
+FRONTIER_MODELS = {"GPT-4o-mini" : "gpt-4o-mini",
+                   "GPT-5-mini" : "gpt-5-mini",
+                   "GPT-5-nano" : "gpt-5-nano",
+                   "GPT-4.1-mini" : "gpt-4.1-mini",
+                   "GPT-4.1-nano" : "gpt-4.1-nano"}
+
 # LLM Constants
 FOUNDATION_TEMP = 1.0    # base of .2, increased to increase creativity
 LOCAL_TEMP = 0.7
@@ -57,9 +76,6 @@ OLLAMA_PATH = shutil.which("ollama")
 
 # if that doesn't work, set path explicitly
 # OLLAMA_PATH = r"C:\Users\nicho\AppData\Local\Programs\Ollama\ollama.exe"
-
-# set model to whatever you want, just make sure you download it in ollama
-OLLAMA_MODEL = "mistral:7b-instruct-v0.3-q4_K_M"
 
 
 # other

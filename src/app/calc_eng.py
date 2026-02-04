@@ -205,7 +205,7 @@ def build_prompts_for_export(rpt_db):
     return final_prompts
 
 
-def query_open(curr_rpt, example_data):
+def query_open(curr_rpt, example_data, model=constants.DEFAULT_OPEN_MODEL):
     """
     Queries HuggingFace Open Weights (Qwen/Mixtral).
     Requires HF_API_TOKEN environment variable.
@@ -225,7 +225,7 @@ def query_open(curr_rpt, example_data):
         # - "mistralai/Mixtral-8x7B-Instruct-v0.1"
         # - "meta-llama/Meta-Llama-3-70B-Instruct"
         # - "Qwen/Qwen2.5-32B-Instruct"
-        client = llm_clients.HuggingFaceClient()
+        client = llm_clients.HuggingFaceClient(model)
 
         response = client.generate(request)
         return response.text, response.model
@@ -237,7 +237,7 @@ def query_open(curr_rpt, example_data):
         return f"HuggingFace Error: {str(e)}", "Error"
 
 
-def query_local(curr_rpt, example_data):
+def query_local(curr_rpt, example_data, model=constants.DEFAULT_LOCAL_MODEL):
     """
     Queries a local Ollama instance.
     """
@@ -251,7 +251,7 @@ def query_local(curr_rpt, example_data):
     )
 
     try:
-        client = llm_clients.LocalModelClient(constants.OLLAMA_PATH, constants.OLLAMA_MODEL)
+        client = llm_clients.LocalModelClient(constants.OLLAMA_PATH, model)
         response = client.generate(request)
         return response.text, response.model
 
@@ -267,15 +267,14 @@ def query_manual():
     return "Type section I comments here...", "Manual"
 
 
-def query_foundation(curr_rpt, example_data):
+def query_foundation(curr_rpt, example_data, model=constants.DEFAULT_FRONTIER_MODEL):
     """
-    Queries OpenAI's GPT-4o-mini.
+    Queries OpenAI via Responses API.
     Requires OPENAI_API_KEY environment variable.
-
-    Other models:  gpt-5.1, gpt-5-mini, gpt-5-nano
+    Available models defined in constants.FRONTIER_MODELS.
     """
     try:
-        llm = llm_clients.OpenAIClient(model="gpt-4o-mini")
+        llm = llm_clients.OpenAIClient(model=model)
 
         #s_prompt, u_prompt = prompt_builder.build_prompt_commercial(curr_rpt.rv_cum, curr_rpt.accomplishments, curr_rpt.context, curr_rpt.rank, curr_rpt.name)
         s_prompt, u_prompt = prompt_builder.build_foundation_prompt(example_data, curr_rpt)
@@ -284,7 +283,7 @@ def query_foundation(curr_rpt, example_data):
             system_prompt=s_prompt,
             user_prompt=u_prompt,
             max_tokens=constants.FOUNDATION_MAX_TOKENS,
-            temperature=constants.FOUNDATION_TEMP,  # increase to improve creativity, 0.2 was base
+            temperature=constants.FOUNDATION_TEMP,
         )
 
         response = llm.generate(request)

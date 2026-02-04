@@ -173,7 +173,7 @@ def render_input_section(curr_rpt, changed_names):
 ####################################################################################
 
 def render_prompt_text_area(prompt_text):
-    with st.expander("See Foundation Prompt"):
+    with st.expander("See Frontier Prompt"):
         st.text_area("If you don't want to generate here, you can copy and paste this into the LLM of your choice:",
                      height=500,
                      value=prompt_text,
@@ -182,7 +182,7 @@ def render_prompt_text_area(prompt_text):
 
 def render_disclaimer():
     """
-    Renders a security warning regarding PII/CUI and third-party API usage.
+    Renders a security warning regarding third-party API usage.
     """
     st.warning(
         "**PRIVACY WARNING: READ BEFORE GENERATING**\n\n"
@@ -200,22 +200,18 @@ def render_generation_section(curr_rpt, data_saved, accomplishments, user_contex
     enable_open = os.environ.get("ENABLE_OPEN_WEIGHT_OPTION", "False").lower() in ("true", "1", "t")
     enable_local = os.environ.get("ENABLE_LOCAL_OPTION", "False").lower() in ("true", "1", "t")
 
-    # button and model selection
-    # disable selection if data is saved
-    model_list = ["Manual Input", "Foundation"]
-    if enable_local and constants.OLLAMA_PATH:  #st.session_state.is_local:
-        model_list.insert(1, "Local")
+    # drop down button
+    options = ["Manual Input"]
+    for name in constants.FRONTIER_MODELS:
+        options.append(f"Frontier: {name}")
     if enable_open:
-        model_list.insert(-1, "OpenWeight")
-    model_option = st.radio(
-        "Choose your LLM:",
-        model_list, # ["Manual Input", "Local", "Foundation", "Open Weight"],
-        horizontal=True,
-        index=0,
-        key=f"radio_{curr_rpt.name}",
-        help=f"Local uses {constants.OLLAMA_MODEL} via Ollama on your CPU. Foundation uses gpt-4o-mini via API. Open Weight uses Qwen2.5-72b-Instruct via API.",
-        disabled=not data_saved
-    )
+        for name in constants.OPEN_WEIGHT_MODELS:
+            options.append(f"Open: {name}")
+    if enable_local and constants.OLLAMA_PATH:
+        for name in constants.LOCAL_MODELS:
+            options.append(f"Local: {name}")
+
+    model_option = st.selectbox("Choose your LLM:", options=options, disabled=not data_saved)
 
     # check current
     current_hash = get_input_hash(curr_rpt.name, curr_rpt.rank, curr_rpt.get_letter_scores(), accomplishments,
@@ -223,7 +219,7 @@ def render_generation_section(curr_rpt, data_saved, accomplishments, user_contex
     fresh_data = current_hash != getattr(curr_rpt, 'last_gen_hash', None)  #if model_option != 'Manual Input' else True
 
     # disclaimer
-    if model_option == "Foundation" or "Open Weight":
+    if "Manual" not in model_option and "Local" not in model_option:
         render_disclaimer()
 
     # give user opportunity to take prompt before generation
@@ -263,30 +259,29 @@ def render_generation_section(curr_rpt, data_saved, accomplishments, user_contex
 
 
 def _handle_llm_generation(curr_rpt, model_option, current_hash):
-    """
-    Internal helper to wrap API calls with error handling.
-
-    ONly foundation will work in app.  Local and Open will be disabled.
-    """
+    """Internal helper to wrap API calls with error handling."""
     example_data = get_cached_data()
+    model_name = model_option.split(":")[1].strip() if ":" in model_option else None
 
     try:
         with st.spinner(f"Generating with {model_option}..."):
             # Map the selection to your LLM clients
             if "Local" in model_option:
-                result, model = calc_eng.query_local(curr_rpt, example_data)
+                # No gen counter or hash lock - local inference is free and unlimited
+                result, model = calc_eng.query_local(curr_rpt, example_data, model=constants.LOCAL_MODELS[model_name])
 
-            elif "Foundation" in model_option:
-                result, model = calc_eng.query_foundation(curr_rpt, example_data)
+            elif "Frontier" in model_option:
+                result, model = calc_eng.query_foundation(curr_rpt, example_data, model=constants.FRONTIER_MODELS[model_name])
                 st.session_state.rpt_db.increment_report_gen_counter(curr_rpt.name)
                 curr_rpt.last_gen_hash = current_hash
 
             elif "Open" in model_option:
-                result, model = calc_eng.query_open(curr_rpt, example_data)
+                result, model = calc_eng.query_open(curr_rpt, example_data, model=constants.OPEN_WEIGHT_MODELS[model_name])
                 st.session_state.rpt_db.increment_report_gen_counter(curr_rpt.name)
                 curr_rpt.last_gen_hash = current_hash
 
             else:
+                # placeholder - plan to add library of phrases to populate sect i on manual mode
                 result, model = calc_eng.query_manual()
 
         st.session_state['output'] = (result, model)
