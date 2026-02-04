@@ -44,10 +44,10 @@ def render_header():
     """Renders the global application header using custom HTML for layout."""
     # Title and Welcome Message
     with st.container(border=True):
-        st.markdown("""
+        st.markdown(f"""
                 <div style='text-align: center; margin-top: -10px;'>
                     <h1 style='margin-bottom: 0px;'>FitRep Calculator</h1>
-                    <p style='color: gray; margin-top: 0px;'>See projected Relative Values for FitReps before submitting. Generate accurate Section I comments quickly and easily.</p>
+                    <p style='color: gray; margin-top: 0px;'>See projected Relative Values for FitReps before submitting. Generate accurate Section I comments quickly and easily. | v{constants.APP_VERSION}</p>
                 </div>
             """, unsafe_allow_html=True)
 

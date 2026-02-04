@@ -23,7 +23,9 @@ def render_feedback_button():
 def render_about_section():
     """Expanding area to provide info about the app"""
     with st.expander("ℹ️ About"):
-        st.markdown("""
+        st.markdown(f"""
+                **Version:** {constants.APP_VERSION}
+
                 **RV Calculations**
                 - Are estimates (OMPF rounding limits precision)
                 - Order matters (assumes reports are processed in the order received, not report end/due dates)
