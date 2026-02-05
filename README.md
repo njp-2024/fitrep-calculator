@@ -5,7 +5,7 @@
 ![Version](https://img.shields.io/badge/Version-0.2.1-green) ![Status](https://img.shields.io/badge/Status-Prototype-blueviolet) ![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Streamlit](https://img.shields.io/badge/Streamlit-1.40%2B-FF4B4B)
 
 ## Overview
-
+ 
 The **FitRep Calculator** is a designed to assist USMC Reporting Seniors (RS) in preparing Fitness Reports. It addresses two critical needs:
 
 1.  **Relative Value (RV) Forecasting:** Allows an RS to see how a specific set of attribute marks will impact a report's Relative Value (RV) and Cumulative RV *before* submitting the report.
