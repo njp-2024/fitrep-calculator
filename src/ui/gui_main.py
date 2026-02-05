@@ -43,6 +43,23 @@ except FileNotFoundError:
 def render_header():
     """Renders the global application header using custom HTML for layout."""
     # Title and Welcome Message
+    st.markdown(
+        """
+        <div style="
+            text-align: center;
+            background-color: #e8f0fe;
+            color: #1f2937;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        ">
+            -- 🚧 <strong>PROTOTYPE</strong> — Internal use only. Not an official DoW application. --
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
     with st.container(border=True):
         st.markdown(f"""
                 <div style='text-align: center; margin-top: -10px;'>
