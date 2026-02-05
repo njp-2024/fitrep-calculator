@@ -23,3 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Support for additional OpenAI models (gpt-4.1 and gpt-5 families)
+
+---
+## [0.2.1] - 2026-02-05
+
+### Added
+- Prototype banner w/ 'Not an official DoW app' message
