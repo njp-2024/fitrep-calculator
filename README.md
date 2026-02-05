@@ -2,7 +2,7 @@
 
 **An offline-capable decision support tool for USMC Reporting Seniors.**
 
-![Version](https://img.shields.io/badge/Version-0.1.0-green) ![Status](https://img.shields.io/badge/Status-Prototype-blueviolet) ![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Streamlit](https://img.shields.io/badge/Streamlit-1.40%2B-FF4B4B)
+![Version](https://img.shields.io/badge/Version-0.2.0-green) ![Status](https://img.shields.io/badge/Status-Prototype-blueviolet) ![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Streamlit](https://img.shields.io/badge/Streamlit-1.40%2B-FF4B4B)
 
 ## Overview
 
