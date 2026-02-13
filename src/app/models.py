@@ -35,6 +35,7 @@ class Report:
         self.prompt = {"system": "Please enter accomplishments to generate a prompt",
                        "user" : "Please enter accomplishments to generate a prompt"
                        }
+        self.billet = ""
         self.accomplishments = ""
         self.context = ""
         self.secti = ""
@@ -106,6 +107,7 @@ class Report:
         res_str += f"RV Proc:   {self.rv_proc_min:.2f} - {self.rv_proc_max:.2f}\n"
         res_str += f"RV Cum:    {self.rv_cum_min:.2f} - {self.rv_cum_max:.2f}\n"
         res_str += f"Scores:    {self.scores_as_str()}\n"
+        res_str += f"Billet:    {self.billet}\n"
         res_str += f"Accomplishments:\n"
         res_str += f"{self.accomplishments}\n\n"
         res_str += f"Sect I:\n"
@@ -213,9 +215,10 @@ class ReportDB:
         if name in self.rpts_dict:
             self.rpts_dict[name].secti = final_text
 
-    def edit_report_narrative_inputs(self, name, accomplishments, user_context, s_prompt, u_prompt):
-        """Updates the input data (bullets/context) used for generation."""
+    def edit_report_narrative_inputs(self, name, billet, accomplishments, user_context, s_prompt, u_prompt):
+        """Updates the input data (billet/bullets/context) used for generation."""
         if name in self.rpts_dict:
+            self.rpts_dict[name].billet = billet
             self.rpts_dict[name].accomplishments = accomplishments
             self.rpts_dict[name].context = user_context
             self.rpts_dict[name].prompt["system"] = s_prompt

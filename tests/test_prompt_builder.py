@@ -25,6 +25,7 @@ def test_tier_logic():
 def test_local_prompt_construction(mock_example_data):
     rpt = Report("Capt", "Jones")
     rpt.rv_cum_min = 99.0  # Water walker
+    rpt.billet = "Company Commander"
     rpt.accomplishments = "- Saved the world"
 
     # We expect the builder to handle missing keys gracefully (defaulting to empty)
@@ -36,6 +37,7 @@ def test_local_prompt_construction(mock_example_data):
 
     assert "Jones" in prompt
     assert "Capt" in prompt
+    assert "Company Commander" in prompt
     assert "Saved the world" in prompt
     assert "US Marine Corps" in prompt
 
@@ -63,6 +65,7 @@ def test_foundation_prompt_structure(mock_example_data):
 
     rpt = Report("Capt", "Smith")
     rpt.rv_cum_min = 95.0
+    rpt.billet = "Operations Officer"
     rpt.accomplishments = "Test accomplishments"
     rpt.context = "Test context"
 
@@ -77,6 +80,7 @@ def test_foundation_prompt_structure(mock_example_data):
     # User prompt should have report details
     assert "Smith" in user_prompt
     assert "Capt" in user_prompt
+    assert "Operations Officer" in user_prompt
     assert "accomplishments" in user_prompt.lower()
     assert "Test accomplishments" in user_prompt
 

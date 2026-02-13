@@ -95,28 +95,30 @@ def render_rpt_data():
 ############################  Narrative Inputs  ####################################
 ####################################################################################
 
-def get_input_hash(name, rank, scores, accomplishments, context, model_option):
+def get_input_hash(name, rank, scores, billet, accomplishments, context, model_option):
     """Generates a unique signature for the current set of inputs.
     Prevents multiple LLM generations in a row for the same data"""
-    combined_string = f"{name}|{rank}|{str(sorted(scores.items()))}|{accomplishments}|{context}|{model_option}"
+    combined_string = f"{name}|{rank}|{str(sorted(scores.items()))}|{billet}|{accomplishments}|{context}|{model_option}"
     # Generate a unique MD5 hex digest
     return hashlib.md5(combined_string.encode()).hexdigest()
 
 
-def _handle_save_inputs(name, accomplishments, user_context):
+def _handle_save_inputs(name, billet, accomplishments, user_context):
     # enforce character limits
+    bil = billet.strip()[:constants.MAX_BILLET_LENGTH]
     acc = accomplishments[:constants.MAX_ACCOMPLISHMENTS_LENGTH]
     context = user_context[:constants.MAX_USER_CONTEXT_LENGTH]
 
     # hack to get prompts (added after initial design)
     rpt = st.session_state.rpt_db.get_report_by_name(name)
+    rpt.billet = bil
     rpt.accomplishments = acc
     rpt.context = context
     example_data = get_cached_data()
     s, u = calc_eng.gen_prompt(rpt, example_data)
 
     # update rpt
-    st.session_state.rpt_db.edit_report_narrative_inputs(name, acc, context, s, u)
+    st.session_state.rpt_db.edit_report_narrative_inputs(name, bil, acc, context, s, u)
 
 def render_input_section(curr_rpt, changed_names):
     """
@@ -126,10 +128,16 @@ def render_input_section(curr_rpt, changed_names):
     st.write("**Narrative Info**")
 
     if changed_names or st.session_state.reset_narrative:  #st.session_state.narrative_prev_name != curr_rpt.name or st.session_state.reset_narrative:
+        st.session_state.narrative_billet = curr_rpt.billet
         st.session_state.narrative_accomplishments = curr_rpt.accomplishments
         st.session_state.narrative_context = curr_rpt.context
         st.session_state.narrative_prev_name = curr_rpt.name
         st.session_state.reset_narrative = False
+
+    billet = st.text_input(f"Billet ({constants.MIN_BILLET_LENGTH} - {constants.MAX_BILLET_LENGTH} chars)",
+                           placeholder="e.g., Company Commander, Operations Officer",
+                           key='narrative_billet')
+    st.caption(f"Current length: {len(billet)} char")
 
     accomplishments = st.text_area(f"Billet Accomplishments - ({constants.MIN_ACCOMPLISHMENTS_LENGTH} - {constants.MAX_ACCOMPLISHMENTS_LENGTH} chars)",
                                    height=300,
@@ -144,13 +152,18 @@ def render_input_section(curr_rpt, changed_names):
     st.caption(f"Current length: {len(user_context)} char")
 
     # disable save if not valid inputs or data saved and matches saved data
-    valid_narrative_inputs =  (constants.MIN_ACCOMPLISHMENTS_LENGTH < len(accomplishments) < constants.MAX_ACCOMPLISHMENTS_LENGTH) and (len(user_context) < constants.MAX_USER_CONTEXT_LENGTH)
-    data_saved = curr_rpt.accomplishments != "" and accomplishments == curr_rpt.accomplishments and user_context == curr_rpt.context
+    valid_narrative_inputs = (constants.MIN_BILLET_LENGTH <= len(billet.strip()) <= constants.MAX_BILLET_LENGTH
+                              and constants.MIN_ACCOMPLISHMENTS_LENGTH < len(accomplishments) < constants.MAX_ACCOMPLISHMENTS_LENGTH
+                              and len(user_context) < constants.MAX_USER_CONTEXT_LENGTH)
+    data_saved = (curr_rpt.accomplishments != ""
+                  and billet.strip() == curr_rpt.billet
+                  and accomplishments == curr_rpt.accomplishments
+                  and user_context == curr_rpt.context)
 
     c1, c2, c3 = st.columns([1, 1, 5], gap='small')
     with c1:
         if st.button("Save Narrative Info", type='primary', disabled=not valid_narrative_inputs or data_saved):
-            _handle_save_inputs(curr_rpt.name, accomplishments, user_context)
+            _handle_save_inputs(curr_rpt.name, billet, accomplishments, user_context)
             st.rerun()
 
     with c2:
@@ -165,7 +178,7 @@ def render_input_section(curr_rpt, changed_names):
     else:
         st.caption(":orange[Unsaved Changes - Save to enable generation.]")
 
-    return data_saved, accomplishments, user_context
+    return data_saved, billet, accomplishments, user_context
 
 
 ####################################################################################
@@ -192,7 +205,7 @@ def render_disclaimer():
         icon="⚠️"
     )
 
-def render_generation_section(curr_rpt, data_saved, accomplishments, user_context):
+def render_generation_section(curr_rpt, data_saved, billet, accomplishments, user_context):
     """
     Handles Model Selection and Generation Trigger.
     """
@@ -214,8 +227,8 @@ def render_generation_section(curr_rpt, data_saved, accomplishments, user_contex
     model_option = st.selectbox("Choose your LLM:", options=options, disabled=not data_saved)
 
     # check current
-    current_hash = get_input_hash(curr_rpt.name, curr_rpt.rank, curr_rpt.get_letter_scores(), accomplishments,
-                                  user_context, model_option)
+    current_hash = get_input_hash(curr_rpt.name, curr_rpt.rank, curr_rpt.get_letter_scores(), billet,
+                                  accomplishments, user_context, model_option)
     fresh_data = current_hash != getattr(curr_rpt, 'last_gen_hash', None)  #if model_option != 'Manual Input' else True
 
     # disclaimer
@@ -392,11 +405,11 @@ def run_narratives_page():
     changed_names = st.session_state.narrative_prev_name != curr_rpt.name
     st.session_state.narrative_prev_name = curr_rpt.name
 
-    data_saved, accomplishments, user_context = render_input_section(curr_rpt, changed_names)
+    data_saved, billet, accomplishments, user_context = render_input_section(curr_rpt, changed_names)
 
     st.divider()
 
-    render_generation_section(curr_rpt, data_saved, accomplishments, user_context)
+    render_generation_section(curr_rpt, data_saved, billet, accomplishments, user_context)
 
     st.divider()
 

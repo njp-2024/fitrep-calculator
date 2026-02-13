@@ -1,7 +1,7 @@
 import shutil
 
 # App version - single source of truth
-APP_VERSION = "0.2.3"
+APP_VERSION = "0.3.0"
 
 # fitrep constants
 SCORE_LETTER_VALS = ["A", "B", "C", "D", "E", "F", "G", "H"]
@@ -69,6 +69,8 @@ OPEN_MAX_TOKENS = 500
 MIN_ACCOMPLISHMENTS_LENGTH = 50
 MAX_ACCOMPLISHMENTS_LENGTH = 1500
 MAX_USER_CONTEXT_LENGTH = 800
+MIN_BILLET_LENGTH = 5
+MAX_BILLET_LENGTH = 50
 
 # If you are using the local option on your machine, make sure these constants are set based on your set up
 # See README.md for instructions
