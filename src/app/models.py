@@ -87,7 +87,7 @@ class Report:
         res_str = (f"{"".join(letters[0:2])} "      # Mission
                    f"{"".join(letters[2:5])} "      # Character
                    f"{"".join(letters[5:10])} "     # Leadership
-                   f"{"".join(letters[10:12])} "    # Intellect
+                   f"{"".join(letters[10:13])} "    # Intellect
                    f"{letters[13]}")                # Reports
         return res_str
 

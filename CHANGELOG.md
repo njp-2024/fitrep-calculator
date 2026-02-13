@@ -29,3 +29,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Prototype banner w/ 'Not an official DoW app' message
+
+---
+## [0.2.2] - 2026-02-13
+
+### Fixed
+- Fixed an issue where export/print session summary incorrectly displayed report scores
