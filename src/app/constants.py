@@ -1,7 +1,7 @@
 import shutil
 
 # App version - single source of truth
-APP_VERSION = "0.2.2"
+APP_VERSION = "0.2.3"
 
 # fitrep constants
 SCORE_LETTER_VALS = ["A", "B", "C", "D", "E", "F", "G", "H"]
@@ -35,6 +35,8 @@ TIER_MIDDLE = 93.34
 TIER_TOP = 98.0
 # eliter/water walker is above 98.0
 
+# Fitrep constants
+SECT_I_CHAR_LIMIT = 1056
 
 # Model dicts
 # Format: {'Display Name' : 'model_id'}

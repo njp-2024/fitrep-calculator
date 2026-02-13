@@ -35,3 +35,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed an issue where export/print session summary incorrectly displayed report scores
+
+---
+## [0.2.3] - 2026-02-13
+
+### Fixed
+- Corrected section I character limit from 1250 to 1056 in UI and prompt builder, added SECT_I_CHAR_LIMIT to constants.

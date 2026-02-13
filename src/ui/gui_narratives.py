@@ -320,9 +320,9 @@ def render_review_section(curr_rpt, changed_names, data_saved):
 
     # Character count helper
     char_count = len(final_text) if final_text else 0
-    st.caption(f"Current Character Count: {char_count} / 1250")
+    st.caption(f"Current Character Count: {char_count} / {constants.SECT_I_CHAR_LIMIT}")
 
-    if char_count > 1250:
+    if char_count > constants.SECT_I_CHAR_LIMIT:
         st.error("Warning: This narrative may be too long for the standard FitRep block.")
 
     # write captions

@@ -80,7 +80,7 @@ GUIDELINES:
 - Match style and structure to the EXAMPLE
 - Use ADDITIONAL CONTEXT as extra evidence to shape emphasis and tone
 CONSTRAINTS:
-- Length: 1150–1250 characters
+- Length: {constants.SECT_I_CHAR_LIMIT - 100} to {constants.SECT_I_CHAR_LIMIT} characters
 - Structure: One paragraph only
 """)
 
@@ -123,7 +123,7 @@ def build_open_weights_prompt(example_data, rpt):
         f"Produce a single-paragraph narrative that paints a clear word picture of the Marine’s professional qualities - performance, technical proficiency, character, leadership, intellect, and overall impact - inferred from his ACCOMPLISHMENTS.\n\n"
         f"STRICT OUTPUT RULES:\n"
         f"1. OUTPUT FORMAT: A single paragraph of text. NO Markdown formatting, NO bullet points.\n"
-        f"2. LENGTH: Between 1200 and 1250 characters.\n"
+        f"2. LENGTH: Between {constants.SECT_I_CHAR_LIMIT - 100} and {constants.SECT_I_CHAR_LIMIT} characters.\n"
         f"3. TONE: The narrative must reflect the assigned performance tier and read as an authoritative command assessment.\n"
         f"4. CONTENT: Infer traits from the provided accomplishments. Do not just list them.\n"
     )
@@ -166,7 +166,7 @@ def build_local_prompt(example_data, rpt):
         f"INSTRUCTIONS:\n"
         f"1. {config['tone']}\n"
         f"2. Infer traits from the accomplishments below.\n"
-        f"3. Write exactly one paragraph (~1200 chars).\n\n"
+        f"3. Write exactly one paragraph ({constants.SECT_I_CHAR_LIMIT} chars).\n\n"
         f"STYLE EXAMPLE:\n{example_text}\n\n"
         f"INPUT DATA:\n"
         f"Context: {user_context}\n"
