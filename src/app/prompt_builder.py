@@ -86,6 +86,7 @@ CONSTRAINTS:
 
     user_context = rpt.context if rpt.context else "No additional context"
     u_prompt =  (f"""Write section I comments for: {rpt.rank} {rpt.name}
+BILLET: {rpt.billet}
 PERFORMANCE TIER: {config['label']} - {config['tone']}
 ACCOMPLISHMENTS:
 {rpt.accomplishments}
@@ -133,6 +134,7 @@ def build_open_weights_prompt(example_data, rpt):
 
     u_prompt = (
         f"Write Section I comments for {rpt.rank} {rpt.name}.\n"
+        f"Billet: {rpt.billet}\n"
         f"Performance Tier: {config['label']} - {config['tone']}\n\n"
 
         f"REFERENCE STYLE (Mimic this sentence structure):\n"
@@ -169,6 +171,7 @@ def build_local_prompt(example_data, rpt):
         f"3. Write exactly one paragraph ({constants.SECT_I_CHAR_LIMIT} chars).\n\n"
         f"STYLE EXAMPLE:\n{example_text}\n\n"
         f"INPUT DATA:\n"
+        f"Billet: {rpt.billet}\n"
         f"Context: {user_context}\n"
         f"Accomplishments: {rpt.accomplishments}\n"
         f"RESPONSE:"

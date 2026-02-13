@@ -103,9 +103,10 @@ def test_narrative_input_editing():
     rpt = Report("Capt", "Smith")
     db.add_report(rpt)
 
-    db.edit_report_narrative_inputs("Smith", "New accomplishments", "New context", "sys", "user")
+    db.edit_report_narrative_inputs("Smith", "Test Billet", "New accomplishments", "New context", "sys", "user")
 
     updated = db.get_report_by_name("Smith")
+    assert updated.billet == "Test Billet"
     assert updated.accomplishments == "New accomplishments"
     assert updated.context == "New context"
     assert updated.prompt["system"] == "sys"
