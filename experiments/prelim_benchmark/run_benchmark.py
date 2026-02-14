@@ -23,10 +23,6 @@ from src.app.llm_clients import OpenAIClient, HuggingFaceClient, LocalModelClien
 from src.app.models import ExampleData
 import src.app.constants as constants
 
-# Generation parameters — used in LLMRequest and recorded in manifest
-TEMPERATURE = 0.7
-MAX_TOKENS = 500
-
 
 # Build model registry from bench_constants
 MODEL_REGISTRY = []
@@ -141,8 +137,8 @@ def main():
             request = LLMRequest(
                 system_prompt=system_prompt,
                 user_prompt=user_prompt,
-                max_tokens=MAX_TOKENS,
-                temperature=TEMPERATURE,
+                max_tokens=bench_constants.MAX_TOKENS,
+                temperature=bench_constants.TEMPERATURE,
             )
 
             start = time.time()
@@ -196,8 +192,8 @@ def main():
         prompt_variant=args.prompt_variant,
         notes=args.notes,
         model_names=model_names,
-        temperature=TEMPERATURE,
-        max_tokens=MAX_TOKENS,
+        temperature=bench_constants.TEMPERATURE,
+        max_tokens=bench_constants.MAX_TOKENS,
         results=logger.results,
         cases=dataset.cases,
     )
