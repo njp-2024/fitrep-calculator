@@ -54,7 +54,12 @@ class BenchLogger:
               f"| {result.latency_sec:.1f}s | {status}")
 
     def save(self, output_dir: Path):
-        """Write all results to a JSON file named {run_id}.json."""
+        """
+        Write all results to a JSON file named {run_id}.json.
+
+        Note: For structured per-run output (manifest, results, survey CSV),
+        use bench_export.save_run() instead.
+        """
         output_dir.mkdir(parents=True, exist_ok=True)
         filepath = output_dir / f"{self.run_id}.json"
 

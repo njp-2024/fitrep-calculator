@@ -3,14 +3,18 @@ run_benchmark.py
 
 Entry point for Model Benchmark experiments.
 
-Run from project root with: python -m experiments.prelim_benchmark.run_benchmark
+Run from project root with:
+  python -m experiments.prelim_benchmark.run_benchmark
+  python -m experiments.prelim_benchmark.run_benchmark --prompt-variant base --notes "baseline run"
 """
 
+import argparse
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 
 import experiments.prelim_benchmark.bench_constants as bench_constants
+from experiments.prelim_benchmark.bench_export import save_run
 from experiments.prelim_benchmark.bench_loader import load_dataset
 from experiments.prelim_benchmark.bench_logger import BenchLogger, BenchResult
 from experiments.prelim_benchmark.bench_prompts import base_prompt_builder
@@ -18,6 +22,10 @@ from src.app.llm_base import BaseLLMClient, LLMRequest
 from src.app.llm_clients import OpenAIClient, HuggingFaceClient, LocalModelClient
 from src.app.models import ExampleData
 import src.app.constants as constants
+
+# Generation parameters — used in LLMRequest and recorded in manifest
+TEMPERATURE = 0.7
+MAX_TOKENS = 500
 
 
 # Build model registry from bench_constants
@@ -28,6 +36,26 @@ for name, model_id in bench_constants.OPEN_WEIGHT_MODELS.items():
     MODEL_REGISTRY.append({"name": name, "model_id": model_id, "client_type": "huggingface"})
 for name, model_id in bench_constants.FRONTIER_MODELS.items():
     MODEL_REGISTRY.append({"name": name, "model_id": model_id, "client_type": "openai"})
+
+
+def _parse_args() -> argparse.Namespace:
+    """Parse command-line arguments for benchmark configuration."""
+    parser = argparse.ArgumentParser(
+        description="Run model benchmark experiments.",
+    )
+    parser.add_argument(
+        "--prompt-variant",
+        type=str,
+        default="base",
+        help="Which prompt builder was used (default: 'base')",
+    )
+    parser.add_argument(
+        "--notes",
+        type=str,
+        default="",
+        help="Free-text run description for the manifest",
+    )
+    return parser.parse_args()
 
 
 def _init_client(entry: dict) -> BaseLLMClient | None:
@@ -54,6 +82,8 @@ def _init_client(entry: dict) -> BaseLLMClient | None:
 
 
 def main():
+    args = _parse_args()
+
     print("=== Model Benchmark Runner ===")
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     print(f"Run ID: {run_id}")
@@ -111,8 +141,8 @@ def main():
             request = LLMRequest(
                 system_prompt=system_prompt,
                 user_prompt=user_prompt,
-                max_tokens=500,
-                temperature=0.7,
+                max_tokens=MAX_TOKENS,
+                temperature=TEMPERATURE,
             )
 
             start = time.time()
@@ -156,10 +186,22 @@ def main():
 
         print()
 
-    # Save results
+    # Save structured run output
     output_dir = Path(__file__).parent / "outputs"
-    filepath = logger.save(output_dir)
-    print(f"Results saved to {filepath}")
+    model_names = [m["entry"]["name"] for m in active_clients]
+    run_dir = save_run(
+        base_output_dir=output_dir,
+        run_id=run_id,
+        dataset_version=dataset.version,
+        prompt_variant=args.prompt_variant,
+        notes=args.notes,
+        model_names=model_names,
+        temperature=TEMPERATURE,
+        max_tokens=MAX_TOKENS,
+        results=logger.results,
+        cases=dataset.cases,
+    )
+    print(f"Results saved to {run_dir}")
     print(f"Total results: {len(logger.results)}")
     print("Done.")
 
