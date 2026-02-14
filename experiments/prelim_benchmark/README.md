@@ -1,6 +1,6 @@
-# Model Benchmark Harness
+# Preliminary Model Benchmark
 
-This directory contains the experimental framework for evaluating LLM capability and workflow integration for structured narrative generation tasks.
+This directory contains the experimental framework for evaluating LLM capability on structured narrative generation tasks (fitrep Section I narratives).
 
 This harness is **separate from the production app** and is used exclusively for controlled capability screening and internal experimentation.
 
@@ -8,76 +8,93 @@ This harness is **separate from the production app** and is used exclusively for
 
 ## Current Status
 
-The benchmark harness is in its initial setup phase.
+The benchmark harness is functional and can execute end-to-end runs across multiple models.
 
-Currently implemented:
+Implemented:
 
-- Standalone experiment entry point (`run_benchmark.py`)
-- Successful import of production LLM client
-- Verified API connectivity
-- Successful test generation using default model
+- Experiment entry point with CLI args (`run_benchmark.py`)
+- Synthetic dataset loading and validation (`bench_loader.py`)
+- Multi-model execution loop (local, HuggingFace, OpenAI clients)
+- Prompt builder for benchmark use (`bench_prompts.py`)
+- Per-result logging with console summaries (`bench_logger.py`)
+- Structured per-run output with manifest, results, and survey CSV (`bench_export.py`)
+- Blinded, randomized CSV export for human evaluation via surveys
 
 Not yet implemented:
 
-- Structured run logging
-- Multi-case execution
-- Multi-model execution
-- Synthetic dataset integration
-- Rating export pipeline
-
-
+- Aggregate metrics reporting
+- Automated summary generation
+- Part 2 scaled prompts per model size
 
 ---
 
 ## Purpose
 
-This harness will support:
+This study is a rapid, exploratory capability screening designed to inform AI deployment strategy for structured performance narrative generation tasks. There are two parts:
 
-1. Standardized capability benchmarking across model classes.
-2. Deployment realism benchmarking.
-3. Export of blinded outputs for human rating.
+1. **Part 1** -- One standard prompt, same across all models. Isolates raw model capability.
+2. **Part 2** -- Lightly scaled prompts per model size. Tests whether simple prompt scaling closes any gaps.
+
+Human evaluators will assess generated narratives via blinded surveys built from the CSV export.
 
 ---
-
 
 ## Directory Structure
 
 ```
-model_benchmark/
-│
+prelim_benchmark/
 ├── run_benchmark.py        # Entry point for benchmark runs
-├── data/                   # Synthetic datasets (versioned)
-├── config/                 # Benchmark configuration files
-├── outputs/
-└── README.md
+├── bench_constants.py      # Model registries, allowed tiers
+├── bench_export.py         # Structured output writers (manifest, results, survey CSV)
+├── bench_loader.py         # Synthetic dataset loader
+├── bench_logger.py         # BenchResult dataclass and run logger
+├── bench_prompts.py        # Prompt builders for benchmark use
+├── data/
+│   └── synthetic_cases_v1.json
+├── config/
+└── outputs/
+    └── runs/
+        └── {run_id}/
+            ├── manifest.json   # Run metadata, models, generation params
+            ├── results.json    # Full BenchResult data
+            └── survey.csv      # Blinded, shuffled rows for human evaluation
 ```
 
 ---
 
-## Running the Smoke Test
+## Running a Benchmark
 
 From the project root:
 
 ```bash
-python -m experiments.model_benchmark.run_benchmark
+python -m experiments.prelim_benchmark.run_benchmark
 ```
+
+With optional arguments:
+
+```bash
+python -m experiments.prelim_benchmark.run_benchmark --prompt-variant base --notes "Part 1 baseline run"
+```
+
+| Argument | Default | Description |
+|----------|---------|-------------|
+| `--prompt-variant` | `"base"` | Which prompt builder was used |
+| `--notes` | `""` | Free-text run description saved to manifest |
+
+---
+
+## Output Files
+
+Each run creates `outputs/runs/{run_id}/` containing:
+
+- **manifest.json** -- Run metadata: prompt variant, notes, model list, temperature, max_tokens
+- **results.json** -- Full generation results (text, token counts, latency, errors)
+- **survey.csv** -- Blinded and shuffled rows for building human evaluation surveys. Contains case context and generated narrative but no model identity.
 
 ---
 
 ## Notes
 
-- The experiment will use synthetic data only.
+- The experiment uses synthetic data only.
 - Not intended for production use.
 - Outputs are exploratory and for internal decision support only.
-
----
-
-## Future Additions
-
-- Run logging
-- Multi-model execution loop
-- Synthetic case generator
-- Blind rating export
-- Aggregate metrics reporting
-- Automated summary generation
-
