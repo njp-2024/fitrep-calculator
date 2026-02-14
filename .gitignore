@@ -80,8 +80,3 @@ Thumbs.db
 # -------------------------------
 *.env
 .streamlit/
-
-# -------------------------------
-# Experiment files
-# -------------------------------
-experiments/model_benchmark/outputs/

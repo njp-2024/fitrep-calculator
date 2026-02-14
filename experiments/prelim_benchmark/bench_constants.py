@@ -5,8 +5,4 @@ LOCAL_MODELS = {"Mistral 7B" : "mistral:7b-instruct-v0.3-q4_K_M"}
 
 OPEN_WEIGHT_MODELS = {"Qwen 72B" : "Qwen/Qwen2.5-72B-Instruct"}
 
-FRONTIER_MODELS = {"GPT-4o-mini" : "gpt-4o-mini",
-                   "GPT-5-mini" : "gpt-5-mini",
-                   "GPT-5-nano" : "gpt-5-nano",
-                   "GPT-4.1-mini" : "gpt-4.1-mini",
-                   "GPT-4.1-nano" : "gpt-4.1-nano"}
+FRONTIER_MODELS = {"GPT-4o-mini" : "gpt-4o-mini"}
