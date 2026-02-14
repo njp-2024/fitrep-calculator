@@ -9,6 +9,8 @@ Run from project root with: python -m experiments.prelim_benchmark.run_benchmark
 from datetime import datetime, timezone
 
 from experiments.prelim_benchmark.bench_loader import load_dataset
+from experiments.prelim_benchmark.bench_prompts import base_prompt_builder
+from src.app.models import ExampleData
 
 
 def main():
@@ -23,11 +25,23 @@ def main():
     print(f"Cases loaded: {len(dataset.cases)}")
     print()
 
-    # Print summary of each case
-    for case in dataset.cases:
-        print(f"  {case.case_id} | {case.rank} {case.name} | {case.target_tier}")
-
+    # Load example data (narratives and recommendations) once
+    example_data = ExampleData()
+    print(f"Example data loaded: {len(example_data.examples)} tiers, "
+          f"{len(example_data.recs)} rec categories")
     print()
+
+    # Build and preview prompts for each case
+    for case in dataset.cases:
+        system_prompt, user_prompt = base_prompt_builder(case, example_data)
+        preview = user_prompt[:200].replace("\n", " ")
+
+        print(f"  {case.case_id} | {case.rank} {case.name} | {case.target_tier}")
+        print(f"    System prompt: {len(system_prompt)} chars")
+        print(f"    User prompt:   {len(user_prompt)} chars")
+        print(f"    Preview: {preview}...")
+        print()
+
     print("Benchmark harness initialized successfully.")
 
 
