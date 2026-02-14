@@ -1,0 +1,48 @@
+{
+  "metadata": {
+    "version": "v1",
+    "description": "Synthetic FitRep benchmark cases",
+    "allowed_tiers": [
+      "bottom_third",
+      "middle_third",
+      "top_third",
+      "water_walker"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "C001",
+      "rank": "Sgt",
+      "name": "Smith",
+      "billet_title": "Combat Instructor",
+      "accomplishments": [
+        "Trained and mentored 300 students in the 0300 common skills package for class 11-13.",
+        "Served as Platoon Commander for Weapons Platoon and Mortar Section Lead Instructor for class 11-13.",
+        "Trained and mentored six new combat instructors during their first training cycle, ensuring a smooth transition and improving overall performance within the unit.",
+        "Trained, mentored, and produced 28 entry level students in becoming and 0341 basic infantry mortarman.",
+        "Served as position safety officer during eight live fire training events ensuring safe and effective training for over 280 student Marines training on M16A4, M203, AT-4 and LAW  trainers, 60mm and 81mm mortars, and live fire and movement.",
+        "Planned and supervised three live fire training events for the 60mm mortar and 81mm mortar systems, training and qualifying 28 students on those weapons systems.",
+        "Achieved a platoon GPA of 98.86 for the 0341 mortarman class."
+      ],
+      "context": "None",
+      "target_tier": "top_third"
+    },
+    {
+      "case_id": "C002",
+      "rank": "Sgt",
+      "name": "Johnson",
+      "billet_title": "Combat Instructor",
+      "accomplishments": [
+        "Trained and mentored 300 students in the 0300 common skills package for class 11-13.",
+        "Served as Platoon Commander for Weapons Platoon and Mortar Section Lead Instructor for class 11-13.",
+        "Trained and mentored six new combat instructors during their first training cycle, ensuring a smooth transition and improving overall performance within the unit.",
+        "Trained, mentored, and produced 28 entry level students in becoming and 0341 basic infantry mortarman.",
+        "Served as position safety officer during eight live fire training events ensuring safe and effective training for over 280 student Marines training on M16A4, M203, AT-4 and LAW  trainers, 60mm and 81mm mortars, and live fire and movement.",
+        "Planned and supervised three live fire training events for the 60mm mortar and 81mm mortar systems, training and qualifying 28 students on those weapons systems.",
+        "Achieved a platoon GPA of 98.86 for the 0341 mortarman class."
+      ],
+      "context": "None",
+      "target_tier": "middle_third"
+    }
+  ]
+}

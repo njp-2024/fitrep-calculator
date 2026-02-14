@@ -8,8 +8,7 @@ Run from project root with: python -m experiments.prelim_benchmark.run_benchmark
 
 from datetime import datetime, timezone
 
-from src.app.llm_base import LLMRequest
-from src.app import llm_clients
+from experiments.prelim_benchmark.bench_loader import load_dataset
 
 
 def main():
@@ -18,20 +17,17 @@ def main():
     print(f"Run ID: {run_id}")
     print()
 
-    client = llm_clients.OpenAIClient()
-    req = LLMRequest(
-        system_prompt="Always answer with a one-sentence joke.",
-        user_prompt="Say hello world.",
-        max_tokens=50,
-        temperature=0.3
-        )
-    resp = client.generate(req)
-
-    print(resp.text)
-    print("Model: ", resp.model)
-    print("Tokens: ", resp.prompt_tokens," input, ", resp.completion_tokens," output")
+    # Load benchmark cases
+    dataset = load_dataset()
+    print(f"Dataset version: {dataset.version}")
+    print(f"Cases loaded: {len(dataset.cases)}")
     print()
 
+    # Print summary of each case
+    for case in dataset.cases:
+        print(f"  {case.case_id} | {case.rank} {case.name} | {case.target_tier}")
+
+    print()
     print("Benchmark harness initialized successfully.")
 
 
