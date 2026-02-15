@@ -205,93 +205,112 @@ def build_prompts_for_export(rpt_db):
     return final_prompts
 
 
-def query_open(curr_rpt, example_data, model=constants.DEFAULT_OPEN_MODEL):
+def query_open(curr_rpt, example_data, model=constants.OPEN_WEIGHT_MODELS[constants.DEFAULT_OPEN_MODEL]):
     """
     Queries HuggingFace Open Weights (Qwen/Mixtral).
     Requires HF_API_TOKEN environment variable.
+
+    Args:
+        model: Model config dict with 'model_id' and 'reasoning' keys.
+               Defaults to OPEN_WEIGHT_MODELS entry for DEFAULT_OPEN_MODEL.
     """
+    model_id = model["model_id"]
+    is_reasoning = model.get("reasoning", False)
+    max_tokens = constants.REASONING_MAX_TOKENS if is_reasoning else constants.OPEN_MAX_TOKENS
+
     s_prompt, u_prompt = prompt_builder.build_open_weights_prompt(example_data, curr_rpt)
 
     request = llm_base.LLMRequest(
         system_prompt=s_prompt,
         user_prompt=u_prompt,
-        max_tokens=constants.OPEN_MAX_TOKENS,
-        temperature=constants.OPEN_TEMP
+        max_tokens=max_tokens,
+        temperature=constants.OPEN_TEMP,
+        reasoning=is_reasoning,
     )
 
     try:
-        # (Defaults to Qwen/Qwen2.5-72B-Instruct unless you pass a model arg)
-        # Other models to try:
-        # - "mistralai/Mixtral-8x7B-Instruct-v0.1"
-        # - "meta-llama/Meta-Llama-3-70B-Instruct"
-        # - "Qwen/Qwen2.5-32B-Instruct"
-        client = llm_clients.HuggingFaceClient(model)
+        client = llm_clients.HuggingFaceClient(model_id)
 
         response = client.generate(request)
-        return response.text, response.model
+        return response.text, response.model, response.prompt_tokens, response.completion_tokens
 
     except ValueError as ve:
-        # Specific catch for missing API Token
-        return f"Configuration Error: {str(ve)}", "Error"
+        return f"Configuration Error: {str(ve)}", "Error", None, None
     except Exception as e:
-        return f"HuggingFace Error: {str(e)}", "Error"
+        return f"HuggingFace Error: {str(e)}", "Error", None, None
 
 
-def query_local(curr_rpt, example_data, model=constants.DEFAULT_LOCAL_MODEL):
+def query_local(curr_rpt, example_data, model=constants.LOCAL_MODELS[constants.DEFAULT_LOCAL_MODEL]):
     """
     Queries a local Ollama instance.
+
+    Args:
+        model: Model config dict with 'model_id' and 'reasoning' keys.
+               Defaults to LOCAL_MODELS entry for DEFAULT_LOCAL_MODEL.
     """
+    model_id = model["model_id"]
+    is_reasoning = model.get("reasoning", False)
+    max_tokens = constants.REASONING_MAX_TOKENS if is_reasoning else constants.LOCAL_MAX_TOKENS
+
     prompt = prompt_builder.build_local_prompt(example_data, curr_rpt)
 
     request = llm_base.LLMRequest(
         system_prompt="",
         user_prompt=prompt,
-        max_tokens=constants.LOCAL_MAX_TOKENS, # Added explicit token limit
-        temperature=constants.LOCAL_TEMP # Added creativity param
+        max_tokens=max_tokens,
+        temperature=constants.LOCAL_TEMP,
+        reasoning=is_reasoning,
     )
 
     try:
-        client = llm_clients.LocalModelClient(constants.OLLAMA_PATH, model)
+        client = llm_clients.LocalModelClient(constants.OLLAMA_PATH, model_id)
         response = client.generate(request)
-        return response.text, response.model
+        return response.text, response.model, response.prompt_tokens, response.completion_tokens
 
     except ValueError as ve:
-        # Specific catch for missing API Token
-        return f"Configuration Error: {str(ve)}", "Error"
+        return f"Configuration Error: {str(ve)}", "Error", None, None
     except Exception as e:
-        return f"Local Inference Error: {str(e)}", "Error"
+        return f"Local Inference Error: {str(e)}", "Error", None, None
 
 
 def query_manual():
     """Returns a placeholder for manual entry."""
-    return "Type section I comments here...", "Manual"
+    return "Type section I comments here...", "Manual", None, None
 
 
-def query_foundation(curr_rpt, example_data, model=constants.DEFAULT_FRONTIER_MODEL):
+def query_foundation(curr_rpt, example_data, model=constants.FRONTIER_MODELS[constants.DEFAULT_FRONTIER_MODEL]):
     """
     Queries OpenAI via Responses API.
     Requires OPENAI_API_KEY environment variable.
     Available models defined in constants.FRONTIER_MODELS.
-    """
-    try:
-        llm = llm_clients.OpenAIClient(model=model)
 
-        #s_prompt, u_prompt = prompt_builder.build_prompt_commercial(curr_rpt.rv_cum, curr_rpt.accomplishments, curr_rpt.context, curr_rpt.rank, curr_rpt.name)
+    Args:
+        model: Model config dict with 'model_id' and 'reasoning' keys.
+               Defaults to FRONTIER_MODELS entry for DEFAULT_FRONTIER_MODEL.
+    """
+    model_id = model["model_id"]
+    is_reasoning = model.get("reasoning", False)
+    max_tokens = constants.REASONING_MAX_TOKENS if is_reasoning else constants.FOUNDATION_MAX_TOKENS
+
+    try:
+        llm = llm_clients.OpenAIClient(model=model_id)
+
         s_prompt, u_prompt = prompt_builder.build_foundation_prompt(example_data, curr_rpt)
 
         request = llm_base.LLMRequest(
             system_prompt=s_prompt,
             user_prompt=u_prompt,
-            max_tokens=constants.FOUNDATION_MAX_TOKENS,
+            max_tokens=max_tokens,
             temperature=constants.FOUNDATION_TEMP,
+            reasoning=is_reasoning,
         )
 
         response = llm.generate(request)
 
-        return response.text, response.model
+        return response.text, response.model, response.prompt_tokens, response.completion_tokens
 
     except Exception as e:
-        return f"API Error: {str(e)}", "Error"
+        return f"API Error: {str(e)}", "Error", None, None
 
 
 ####################################################################################

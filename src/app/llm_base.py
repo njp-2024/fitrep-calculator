@@ -16,6 +16,7 @@ class LLMRequest:
     user_prompt: str
     max_tokens: int = 300
     temperature: float = 0.2
+    reasoning: bool = False
 
 
 @dataclass

@@ -11,7 +11,7 @@ class OpenAIClient(BaseLLMClient):
     """
     Client for OpenAI's Responses API (GPT-4o, GPT-5 series).
     """
-    def __init__(self, model: str = constants.DEFAULT_FRONTIER_MODEL):
+    def __init__(self, model: str = constants.FRONTIER_MODELS[constants.DEFAULT_FRONTIER_MODEL]["model_id"]):
         """
         Initialize the OpenAI client.
 
@@ -23,9 +23,10 @@ class OpenAIClient(BaseLLMClient):
         if not api_key:
             raise ValueError("Missing API Key: Set 'OPENAI_API_KEY' in your environment.")
 
-        if model not in constants.FRONTIER_MODELS.values():
+        valid_ids = {cfg["model_id"] for cfg in constants.FRONTIER_MODELS.values()}
+        if model not in valid_ids:
             raise ValueError(
-                f"Unsupported model '{model}'. Allowed: {sorted(list(constants.FRONTIER_MODELS.values()))}"
+                f"Unsupported model '{model}'. Allowed: {sorted(valid_ids)}"
             )
 
         self.client = OpenAI(api_key=api_key)
@@ -48,8 +49,9 @@ class OpenAIClient(BaseLLMClient):
                         "temperature": request.temperature,
                         }
 
-            if self.model.startswith("gpt-5"):
-                kwargs["reasoning"] = {"effort": "low"}
+            # medium effort is default - these lines can support adding effort as a param in the future
+            # if request.reasoning:
+            #     kwargs["reasoning"] = {"effort": "medium"}
 
             response = self.client.responses.create(**kwargs)
 
@@ -74,7 +76,7 @@ class LocalModelClient(BaseLLMClient):
     """
     Client for local inference via Ollama CLI.
     """
-    def __init__(self, local_path: str = None,  model: str = constants.DEFAULT_LOCAL_MODEL):
+    def __init__(self, local_path: str = None,  model: str = constants.LOCAL_MODELS[constants.DEFAULT_LOCAL_MODEL]["model_id"]):
         """
         Args:
             local_path (str): Path to ollama executable. If None, raise error.
@@ -130,7 +132,7 @@ class HuggingFaceClient(BaseLLMClient):
     Client for HuggingFace Inference API (Serverless).
     Uses the chat.completions format for structured prompting.
     """
-    def __init__(self, model: str = constants.DEFAULT_OPEN_MODEL):
+    def __init__(self, model: str = constants.OPEN_WEIGHT_MODELS[constants.DEFAULT_OPEN_MODEL]["model_id"]):
         # Other models to try:
         # - "mistralai/Mixtral-8x7B-Instruct-v0.1"
         # - "meta-llama/Meta-Llama-3-70B-Instruct"

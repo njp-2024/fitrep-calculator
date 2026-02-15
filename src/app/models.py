@@ -41,6 +41,8 @@ class Report:
         self.secti = ""
         self.secti_gens = 0
         self.last_gen_hash = None
+        self.prompt_tokens = 0
+        self.completion_tokens = 0
         # if scores are provided, then update the values
         if scores_dict is not None:
             self.set_scores_with_dict(scores_dict)
@@ -110,6 +112,7 @@ class Report:
         res_str += f"Billet:    {self.billet}\n"
         res_str += f"Accomplishments:\n"
         res_str += f"{self.accomplishments}\n\n"
+        res_str += f"Tokens:    {self.prompt_tokens} in / {self.completion_tokens} out / {self.prompt_tokens + self.completion_tokens} total\n"
         res_str += f"Sect I:\n"
         res_str += f"{self.secti}\n\n"
         res_str += f"Prompt:\n"
