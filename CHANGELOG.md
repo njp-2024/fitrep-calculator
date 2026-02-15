@@ -52,3 +52,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 - Validation logic to require Billet field
 - Tests updated to support Billet attribute
+
+---
+## [0.4.0] - 2026-02-15
+
+### Added
+- Support for reasoning models
+  - Separate max_token limit for reasoning limit to let them think
+  - Updated model dictionaries from flat to rich, with model_id and reasoning flag
+- Token tracking for each report
+
+### Updated
+- Validation logic to require Billet field
+- Tests updated to support Billet attribute
