@@ -28,6 +28,7 @@ class BenchResult:
     latency_sec: float
     error: str | None         # None if success, error message if failed
     prompt_builder: str       # which builder was used (e.g. "base", "small", "mid")
+    reasoning: bool           # True if model uses chain-of-thought reasoning
 
 
 class BenchLogger:

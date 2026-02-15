@@ -10,6 +10,7 @@ For simple flat-file output, see BenchLogger.save() in bench_logger.py.
 import csv
 import json
 import random
+import re
 import uuid
 from dataclasses import asdict
 from datetime import datetime, timezone
@@ -28,6 +29,7 @@ def save_run(
     model_names: list[str],
     temperature: float,
     max_tokens: int,
+    max_tokens_reasoning: int,
     results: list[BenchResult],
     cases: list[BenchCase],
 ) -> Path:
@@ -41,7 +43,7 @@ def save_run(
 
     write_manifest(
         run_dir, run_id, dataset_version, prompt_mode,
-        notes, model_names, temperature, max_tokens,
+        notes, model_names, temperature, max_tokens, max_tokens_reasoning,
     )
     write_results(run_dir, run_id, dataset_version, results)
     write_survey_csv(run_dir, results, cases)
@@ -58,6 +60,7 @@ def write_manifest(
     model_names: list[str],
     temperature: float,
     max_tokens: int,
+    max_tokens_reasoning: int,
 ) -> Path:
     """Write manifest.json with run metadata and generation parameters."""
     filepath = run_dir / "manifest.json"
@@ -72,6 +75,7 @@ def write_manifest(
         "generation_params": {
             "temperature": temperature,
             "max_tokens": max_tokens,
+            "max_tokens_reasoning": max_tokens_reasoning,
         },
     }
 
@@ -129,6 +133,9 @@ def write_survey_csv(
         if case is None:
             continue
 
+        # Strip reasoning chain-of-thought tags for clean survey text
+        narrative = re.sub(r"<think>[\s\S]*?</think>", "", result.generated_text).strip()
+
         rows.append({
             "evaluation_id": uuid.uuid4().hex[:8],
             "rank": case.rank,
@@ -136,7 +143,7 @@ def write_survey_csv(
             "billet": case.billet_title,
             "accomplishments": "\n".join(case.accomplishments),
             "target_tier": result.target_tier,
-            "narrative": result.generated_text,
+            "narrative": narrative,
         })
 
     # Shuffle for blinding

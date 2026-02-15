@@ -10,13 +10,49 @@ LOCAL_MODELS = {
         "model_id": "mistral:7b-instruct-v0.3-q4_K_M",
         "size_category": MODEL_SIZE_SMALL,
     },
+    "Llama 3.2 3B" : {
+        "model_id": "llama3.2:3b-instruct-q4_K_M",
+        "size_category": MODEL_SIZE_SMALL
+    }
 }
 
 OPEN_WEIGHT_MODELS = {
-    "Qwen 72B": {
-        "model_id": "Qwen/Qwen2.5-72B-Instruct",
+    # "Qwen2.5 72B": {
+    #     "model_id": "Qwen/Qwen2.5-72B-Instruct",
+    #     "size_category": MODEL_SIZE_LARGE,
+    # },
+    "Qwen3 32B": {
+        "model_id": "Qwen/Qwen3-32B",
         "size_category": MODEL_SIZE_MID,
+        "reasoning": True,
     },
+    "Qwen3 Next 80B": {
+        "model_id": "Qwen/Qwen3-Next-80B-A3B-Instruct",
+        "size_category": MODEL_SIZE_LARGE,
+        "reasoning": True,
+    },
+    # "gpt-oss-120b" : {
+    #     "model_id": "openai/gpt-oss-120b",
+    #     "size_category": MODEL_SIZE_LARGE,
+    #     "reasoning": True,
+    # },
+    # "Qwen3 235B": {
+    #     "model_id": "Qwen/Qwen3-235B-A22B-Instruct-2507",
+    #     "size_category": MODEL_SIZE_LARGE,
+    #     "reasoning": True,
+    # },
+    # "Llama 3.3 70B": {
+    #     "model_id": "meta-llama/Llama-3.3-70B-Instruct",
+    #     "size_category": MODEL_SIZE_LARGE,
+    # },
+    "Llama 3.1 8B": {
+        "model_id": "meta-llama/Llama-3.1-8B-Instruct",
+        "size_category": MODEL_SIZE_SMALL,
+    },
+    # "Llama 4 Maverick 17B": {
+    #     "model_id": "meta-llama/Llama-4-Maverick-17B-128E-Instruct",
+    #     "size_category": MODEL_SIZE_MID
+    # }
 }
 
 FRONTIER_MODELS = {
@@ -29,3 +65,4 @@ FRONTIER_MODELS = {
 # Generation parameters
 TEMPERATURE = 0.7
 MAX_TOKENS = 500
+MAX_TOKENS_REASONING = 2000  # reasoning models need more tokens for chain-of-thought

@@ -36,6 +36,7 @@ for name, config in bench_constants.LOCAL_MODELS.items():
         "model_id": config["model_id"],
         "size_category": config["size_category"],
         "client_type": "local",
+        "reasoning": config.get("reasoning", False),
     })
 for name, config in bench_constants.OPEN_WEIGHT_MODELS.items():
     MODEL_REGISTRY.append({
@@ -43,6 +44,7 @@ for name, config in bench_constants.OPEN_WEIGHT_MODELS.items():
         "model_id": config["model_id"],
         "size_category": config["size_category"],
         "client_type": "huggingface",
+        "reasoning": config.get("reasoning", False),
     })
 for name, config in bench_constants.FRONTIER_MODELS.items():
     MODEL_REGISTRY.append({
@@ -50,6 +52,7 @@ for name, config in bench_constants.FRONTIER_MODELS.items():
         "model_id": config["model_id"],
         "size_category": config["size_category"],
         "client_type": "openai",
+        "reasoning": config.get("reasoning", False),
     })
 
 
@@ -196,10 +199,17 @@ def main():
         for case in dataset.cases:
             system_prompt, user_prompt = builder_fn(case, example_data)
 
+            # Reasoning models need a higher token budget for chain-of-thought
+            max_tokens = (
+                bench_constants.MAX_TOKENS_REASONING
+                if entry.get("reasoning")
+                else bench_constants.MAX_TOKENS
+            )
+
             request = LLMRequest(
                 system_prompt=system_prompt,
                 user_prompt=user_prompt,
-                max_tokens=bench_constants.MAX_TOKENS,
+                max_tokens=max_tokens,
                 temperature=bench_constants.TEMPERATURE,
             )
 
@@ -222,6 +232,7 @@ def main():
                     latency_sec=round(elapsed, 2),
                     error=None,
                     prompt_builder=builder_name,
+                    reasoning=entry.get("reasoning", False),
                 )
             except RuntimeError as e:
                 elapsed = time.time() - start
@@ -240,6 +251,7 @@ def main():
                     latency_sec=round(elapsed, 2),
                     error=str(e),
                     prompt_builder=builder_name,
+                    reasoning=entry.get("reasoning", False),
                 )
 
             logger.log(result)
@@ -258,6 +270,7 @@ def main():
         model_names=model_names,
         temperature=bench_constants.TEMPERATURE,
         max_tokens=bench_constants.MAX_TOKENS,
+        max_tokens_reasoning=bench_constants.MAX_TOKENS_REASONING,
         results=logger.results,
         cases=dataset.cases,
     )
