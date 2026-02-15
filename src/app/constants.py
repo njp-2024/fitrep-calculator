@@ -39,23 +39,29 @@ TIER_TOP = 98.0
 SECT_I_CHAR_LIMIT = 1056
 
 # Model dicts
-# Format: {'Display Name' : 'model_id'}
+# Format: {'Display Name' : {'model_id': str, 'reasoning': bool}}
 
-# default: mistral:7b-instruct-v0.3-q4_K_M, others:
-DEFAULT_LOCAL_MODEL = "mistral:7b-instruct-v0.3-q4_K_M"
-LOCAL_MODELS = {"Mistral 7B" : "mistral:7b-instruct-v0.3-q4_K_M"}
+# default: Mistral 7B, others:
+DEFAULT_LOCAL_MODEL = "Mistral 7B"
+LOCAL_MODELS = {
+    "Mistral 7B": {"model_id": "mistral:7b-instruct-v0.3-q4_K_M", "reasoning": False},
+}
 
-# default: Qwen/Qwen2.5-72B-Instruct, others:
-DEFAULT_OPEN_MODEL = "Qwen/Qwen2.5-72B-Instruct"
-OPEN_WEIGHT_MODELS = {"Qwen 72B" : "Qwen/Qwen2.5-72B-Instruct"}
+# default: Qwen 72B, others:
+DEFAULT_OPEN_MODEL = "Qwen 72B"
+OPEN_WEIGHT_MODELS = {
+    "Qwen 72B": {"model_id": "Qwen/Qwen2.5-72B-Instruct", "reasoning": False},
+}
 
-# default: gpt-4o-mini, others: gpt-5.1, gpt-5-mini, gpt-5-nano
-DEFAULT_FRONTIER_MODEL = "gpt-4o-mini"
-FRONTIER_MODELS = {"GPT-4o-mini" : "gpt-4o-mini",
-                   "GPT-5-mini" : "gpt-5-mini",
-                   "GPT-5-nano" : "gpt-5-nano",
-                   "GPT-4.1-mini" : "gpt-4.1-mini",
-                   "GPT-4.1-nano" : "gpt-4.1-nano"}
+# default: GPT-4o-mini, others: gpt-5.1, gpt-5-mini, gpt-5-nano
+DEFAULT_FRONTIER_MODEL = "GPT-4o-mini"
+FRONTIER_MODELS = {
+    "GPT-4o-mini":  {"model_id": "gpt-4o-mini",  "reasoning": False},
+    "GPT-5-mini":   {"model_id": "gpt-5-mini",   "reasoning": True},
+    "GPT-5-nano":   {"model_id": "gpt-5-nano",   "reasoning": True},
+    "GPT-4.1-mini": {"model_id": "gpt-4.1-mini", "reasoning": False},
+    "GPT-4.1-nano": {"model_id": "gpt-4.1-nano", "reasoning": False},
+}
 
 # LLM Constants
 FOUNDATION_TEMP = 1.0    # base of .2, increased to increase creativity
@@ -65,6 +71,7 @@ OPEN_TEMP = 0.7
 FOUNDATION_MAX_TOKENS = 500
 LOCAL_MAX_TOKENS = 500
 OPEN_MAX_TOKENS = 500
+REASONING_MAX_TOKENS = 5000  # reasoning models need more for chain-of-thought
 
 MIN_ACCOMPLISHMENTS_LENGTH = 50
 MAX_ACCOMPLISHMENTS_LENGTH = 1500
