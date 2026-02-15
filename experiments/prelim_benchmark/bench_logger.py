@@ -27,6 +27,7 @@ class BenchResult:
     completion_tokens: int | None
     latency_sec: float
     error: str | None         # None if success, error message if failed
+    prompt_builder: str       # which builder was used (e.g. "base", "small", "mid")
 
 
 class BenchLogger:

@@ -23,7 +23,7 @@ def save_run(
     base_output_dir: Path,
     run_id: str,
     dataset_version: str,
-    prompt_variant: str,
+    prompt_mode: str,
     notes: str,
     model_names: list[str],
     temperature: float,
@@ -40,7 +40,7 @@ def save_run(
     run_dir.mkdir(parents=True, exist_ok=True)
 
     write_manifest(
-        run_dir, run_id, dataset_version, prompt_variant,
+        run_dir, run_id, dataset_version, prompt_mode,
         notes, model_names, temperature, max_tokens,
     )
     write_results(run_dir, run_id, dataset_version, results)
@@ -53,7 +53,7 @@ def write_manifest(
     run_dir: Path,
     run_id: str,
     dataset_version: str,
-    prompt_variant: str,
+    prompt_mode: str,
     notes: str,
     model_names: list[str],
     temperature: float,
@@ -66,7 +66,7 @@ def write_manifest(
         "run_id": run_id,
         "dataset_version": dataset_version,
         "timestamp": datetime.now(timezone.utc).isoformat(),
-        "prompt_variant": prompt_variant,
+        "prompt_mode": prompt_mode,
         "notes": notes,
         "models": model_names,
         "generation_params": {

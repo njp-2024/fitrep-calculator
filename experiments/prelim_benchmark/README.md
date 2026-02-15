@@ -15,16 +15,16 @@ Implemented:
 - Experiment entry point with CLI args (`run_benchmark.py`)
 - Synthetic dataset loading and validation (`bench_loader.py`)
 - Multi-model execution loop (local, HuggingFace, OpenAI clients)
-- Prompt builder for benchmark use (`bench_prompts.py`)
+- Prompt builders for benchmark use (`bench_prompts.py`): base, small, and mid builders
 - Per-result logging with console summaries (`bench_logger.py`)
 - Structured per-run output with manifest, results, and survey CSV (`bench_export.py`)
 - Blinded, randomized CSV export for human evaluation via surveys
+- Part 2 scaled prompts per model size (`--prompt-mode scaled`)
 
 Not yet implemented:
 
 - Aggregate metrics reporting
 - Automated summary generation
-- Part 2 scaled prompts per model size
 
 ---
 
@@ -73,13 +73,14 @@ python -m experiments.prelim_benchmark.run_benchmark
 With optional arguments:
 
 ```bash
-python -m experiments.prelim_benchmark.run_benchmark --prompt-variant base --notes "Part 1 baseline run"
+python -m experiments.prelim_benchmark.run_benchmark --prompt-mode uniform --notes "Part 1 baseline run"
 ```
 
 | Argument | Default | Description |
 |----------|---------|-------------|
-| `--prompt-variant` | `"base"` | Which prompt builder was used |
+| `--prompt-mode` | `"uniform"` | Prompt strategy: `uniform` uses base builder for all models, `scaled` matches builder to model size |
 | `--notes` | `""` | Free-text run description saved to manifest |
+| `--skip-local` | off | Exclude local models from the run |
 
 ---
 
@@ -87,7 +88,7 @@ python -m experiments.prelim_benchmark.run_benchmark --prompt-variant base --not
 
 Each run creates `outputs/runs/{run_id}/` containing:
 
-- **manifest.json** -- Run metadata: prompt variant, notes, model list, temperature, max_tokens
+- **manifest.json** -- Run metadata: prompt mode, notes, model list, temperature, max_tokens
 - **results.json** -- Full generation results (text, token counts, latency, errors)
 - **survey.csv** -- Blinded and shuffled rows for building human evaluation surveys. Contains case context and generated narrative but no model identity.
 
