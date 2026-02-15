@@ -211,6 +211,7 @@ def main():
                 user_prompt=user_prompt,
                 max_tokens=max_tokens,
                 temperature=bench_constants.TEMPERATURE,
+                reasoning=entry.get("reasoning", False),
             )
 
             start = time.time()
