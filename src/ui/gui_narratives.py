@@ -281,21 +281,25 @@ def _handle_llm_generation(curr_rpt, model_option, current_hash):
             # Map the selection to your LLM clients
             if "Local" in model_option:
                 # No gen counter or hash lock - local inference is free and unlimited
-                result, model = calc_eng.query_local(curr_rpt, example_data, model=constants.LOCAL_MODELS[model_name])
+                result, model, p_tokens, c_tokens = calc_eng.query_local(curr_rpt, example_data, model=constants.LOCAL_MODELS[model_name])
 
             elif "Frontier" in model_option:
-                result, model = calc_eng.query_foundation(curr_rpt, example_data, model=constants.FRONTIER_MODELS[model_name])
+                result, model, p_tokens, c_tokens = calc_eng.query_foundation(curr_rpt, example_data, model=constants.FRONTIER_MODELS[model_name])
                 st.session_state.rpt_db.increment_report_gen_counter(curr_rpt.name)
                 curr_rpt.last_gen_hash = current_hash
 
             elif "Open" in model_option:
-                result, model = calc_eng.query_open(curr_rpt, example_data, model=constants.OPEN_WEIGHT_MODELS[model_name])
+                result, model, p_tokens, c_tokens = calc_eng.query_open(curr_rpt, example_data, model=constants.OPEN_WEIGHT_MODELS[model_name])
                 st.session_state.rpt_db.increment_report_gen_counter(curr_rpt.name)
                 curr_rpt.last_gen_hash = current_hash
 
             else:
                 # placeholder - plan to add library of phrases to populate sect i on manual mode
-                result, model = calc_eng.query_manual()
+                result, model, p_tokens, c_tokens = calc_eng.query_manual()
+
+            # Accumulate token usage on the report
+            curr_rpt.prompt_tokens += (p_tokens or 0)
+            curr_rpt.completion_tokens += (c_tokens or 0)
 
         st.session_state['output'] = (result, model)
         st.session_state.narratives_gen_complete = True

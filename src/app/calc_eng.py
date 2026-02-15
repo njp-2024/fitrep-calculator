@@ -232,12 +232,12 @@ def query_open(curr_rpt, example_data, model=constants.OPEN_WEIGHT_MODELS[consta
         client = llm_clients.HuggingFaceClient(model_id)
 
         response = client.generate(request)
-        return response.text, response.model
+        return response.text, response.model, response.prompt_tokens, response.completion_tokens
 
     except ValueError as ve:
-        return f"Configuration Error: {str(ve)}", "Error"
+        return f"Configuration Error: {str(ve)}", "Error", None, None
     except Exception as e:
-        return f"HuggingFace Error: {str(e)}", "Error"
+        return f"HuggingFace Error: {str(e)}", "Error", None, None
 
 
 def query_local(curr_rpt, example_data, model=constants.LOCAL_MODELS[constants.DEFAULT_LOCAL_MODEL]):
@@ -265,17 +265,17 @@ def query_local(curr_rpt, example_data, model=constants.LOCAL_MODELS[constants.D
     try:
         client = llm_clients.LocalModelClient(constants.OLLAMA_PATH, model_id)
         response = client.generate(request)
-        return response.text, response.model
+        return response.text, response.model, response.prompt_tokens, response.completion_tokens
 
     except ValueError as ve:
-        return f"Configuration Error: {str(ve)}", "Error"
+        return f"Configuration Error: {str(ve)}", "Error", None, None
     except Exception as e:
-        return f"Local Inference Error: {str(e)}", "Error"
+        return f"Local Inference Error: {str(e)}", "Error", None, None
 
 
 def query_manual():
     """Returns a placeholder for manual entry."""
-    return "Type section I comments here...", "Manual"
+    return "Type section I comments here...", "Manual", None, None
 
 
 def query_foundation(curr_rpt, example_data, model=constants.FRONTIER_MODELS[constants.DEFAULT_FRONTIER_MODEL]):
@@ -307,10 +307,10 @@ def query_foundation(curr_rpt, example_data, model=constants.FRONTIER_MODELS[con
 
         response = llm.generate(request)
 
-        return response.text, response.model
+        return response.text, response.model, response.prompt_tokens, response.completion_tokens
 
     except Exception as e:
-        return f"API Error: {str(e)}", "Error"
+        return f"API Error: {str(e)}", "Error", None, None
 
 
 ####################################################################################
