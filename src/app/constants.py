@@ -1,7 +1,7 @@
 import shutil
 
 # App version - single source of truth
-APP_VERSION = "0.3.0"
+APP_VERSION = "0.4.0"
 
 # fitrep constants
 SCORE_LETTER_VALS = ["A", "B", "C", "D", "E", "F", "G", "H"]
