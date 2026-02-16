@@ -104,6 +104,12 @@ def _parse_args() -> argparse.Namespace:
         help="Skip local (Ollama) models to speed up runs",
     )
     parser.add_argument(
+        "--local-only",
+        action="store_true",
+        default=False,
+        help="Run only local (Ollama) models, skipping API-based models",
+    )
+    parser.add_argument(
         "--dataset",
         type=str,
         default="synthetic_cases_v1.json",
@@ -157,11 +163,20 @@ def main():
           f"{len(example_data.recs)} rec categories")
     print()
 
-    # Filter out local models if requested
+    # Validate mutually exclusive flags
+    if args.skip_local and args.local_only:
+        print("ERROR: --skip-local and --local-only are mutually exclusive.")
+        return
+
+    # Filter registry by model scope flags
     registry = MODEL_REGISTRY
     if args.skip_local:
         registry = [e for e in registry if e["client_type"] != "local"]
         print("Skipping local models (--skip-local)")
+        print()
+    elif args.local_only:
+        registry = [e for e in registry if e["client_type"] == "local"]
+        print("Running local models only (--local-only)")
         print()
 
     # Initialize clients for each registered model

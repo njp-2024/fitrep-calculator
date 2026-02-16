@@ -82,6 +82,9 @@ def base_prompt_builder(case: BenchCase, example_data: ExampleData) -> tuple[str
     prom_rec, assign_rec = _get_random_recs(example_data.recs, example_key)
     mandatory_ending = f"{prom_rec} {assign_rec}".strip()
 
+    if not mandatory_ending or mandatory_ending == "":
+        mandatory_ending = " "
+
     # System prompt: role, task, structure, constraints
     system_prompt = (
         "You are a United States Marine Reporting Senior writing Section I comments "
