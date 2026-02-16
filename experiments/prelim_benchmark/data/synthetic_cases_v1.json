@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "v1",
-    "description": "Synthetic FitRep benchmark cases",
+    "description": "Synthetic FitRep cases for benchmark evaluation",
     "allowed_tiers": [
       "bottom_third",
       "middle_third",
@@ -11,38 +11,341 @@
   },
   "cases": [
     {
-      "case_id": "C001",
-      "rank": "Sgt",
-      "name": "Smith",
-      "billet_title": "Combat Instructor",
+      "case_id": "SC001",
+      "rank": "1stLt",
+      "name": "Harmon",
+      "billet_title": "Platoon Commander",
       "accomplishments": [
-        "Trained and mentored 300 students in the 0300 common skills package for class 11-13.",
-        "Served as Platoon Commander for Weapons Platoon and Mortar Section Lead Instructor for class 11-13.",
-        "Trained and mentored six new combat instructors during their first training cycle, ensuring a smooth transition and improving overall performance within the unit.",
-        "Trained, mentored, and produced 28 entry level students in becoming and 0341 basic infantry mortarman.",
-        "Served as position safety officer during eight live fire training events ensuring safe and effective training for over 280 student Marines training on M16A4, M203, AT-4 and LAW  trainers, 60mm and 81mm mortars, and live fire and movement.",
-        "Planned and supervised three live fire training events for the 60mm mortar and 81mm mortar systems, training and qualifying 28 students on those weapons systems.",
-        "Achieved a platoon GPA of 98.86 for the 0341 mortarman class."
+        "Led a 43-Marine rifle platoon through a six-month deployment to Okinawa, Japan in support of the Unit Deployment Program.",
+        "Planned and executed 12 platoon-level field training exercises including live fire ranges, land navigation courses, and combat patrols.",
+        "Coordinated bilateral training events with the Japan Ground Self-Defense Force, training 85 Marines and 40 partner nation soldiers in urban operations.",
+        "Supervised the maintenance and accountability of over 200 individual and crew-served weapons systems throughout the deployment cycle.",
+        "Conducted 15 professional military education sessions for junior Marines on topics including troop welfare, small unit tactics, and combat orders.",
+        "Managed the platoon's pre-deployment training checklist, ensuring 100 percent completion of all individual and collective training requirements."
+      ],
+      "context": "None",
+      "target_tier": "bottom_third"
+    },
+    {
+      "case_id": "SC002",
+      "rank": "SSgt",
+      "name": "Delgado",
+      "billet_title": "Logistics Chief",
+      "accomplishments": [
+        "Managed the receipt, storage, and distribution of Class I through Class IX supplies for a 300-Marine battalion during garrison and field operations.",
+        "Coordinated the ground transportation of 45 vehicles and associated equipment to and from the deployment for training exercise at Fort Stewart.",
+        "Processed 320 supply requests through the Global Combat Support System, maintaining a 96 percent fill rate for the reporting period.",
+        "Supervised five Marines in the logistics section, conducting weekly inventory reconciliation of all accountable equipment.",
+        "Planned and executed the battalion's annual field supply economy exercise, accounting for all organizational property across four companies.",
+        "Tracked and reported the maintenance status of 38 principal end items, coordinating with the maintenance section to reduce deadline equipment by four vehicles."
+      ],
+      "context": "None",
+      "target_tier": "bottom_third"
+    },
+    {
+      "case_id": "SC003",
+      "rank": "GySgt",
+      "name": "Nakamura",
+      "billet_title": "Operations Chief",
+      "accomplishments": [
+        "Coordinated the planning and execution of 18 battalion-level training events across three geographic training areas.",
+        "Developed and maintained the battalion's training calendar, synchronizing operations across four subordinate companies and the headquarters element.",
+        "Supervised range scheduling and safety compliance for 22 live fire events, ensuring zero safety incidents.",
+        "Managed the operations section's daily battle rhythm including the production of daily staff journals and situation reports.",
+        "Processed 140 request mast cases and coordinated with the battalion adjutant on personnel actions requiring command attention.",
+        "Planned the battalion's participation in Exercise Iron Fist, coordinating lodging, training areas, and ammunition requirements for 180 Marines."
+      ],
+      "context": "None",
+      "target_tier": "bottom_third"
+    },
+    {
+      "case_id": "SC004",
+      "rank": "Sgt",
+      "name": "Whitfield",
+      "billet_title": "Squad Leader",
+      "accomplishments": [
+        "Led a 13-Marine rifle squad through a seven-month deployment cycle including pre-deployment training, deployment, and post-deployment stand-down.",
+        "Trained and evaluated squad members on individual and collective tasks including fire team rushes, squad attacks, and combat patrols.",
+        "Served as range safety officer for four live fire events involving the M16A4 service rifle and M240B medium machine gun.",
+        "Planned and led three squad-level field exercises focused on patrolling, ambush operations, and casualty evacuation procedures.",
+        "Conducted weekly gear inspections and ensured the accountability of all assigned individual equipment for 13 Marines.",
+        "Mentored three Lance Corporals in preparation for the Corporal's Course, all of whom completed the program during the reporting period.",
+        "Maintained a squad physical fitness average of 265 on the Physical Fitness Test."
+      ],
+      "context": "None",
+      "target_tier": "bottom_third"
+    },
+    {
+      "case_id": "SC005",
+      "rank": "Capt",
+      "name": "Reeves",
+      "billet_title": "Company Commander",
+      "accomplishments": [
+        "Commanded a 180-Marine rifle company through a six-month training cycle culminating in certification for deployment.",
+        "Planned and executed 20 company-level training events including combined arms live fire exercises, urban operations, and field exercises.",
+        "Supervised the development of four platoon commanders and a company executive officer during the pre-deployment training period.",
+        "Managed the company's annual budget of operational funds, coordinating expenditures across training, maintenance, and administrative requirements.",
+        "Ensured 100 percent completion of all individual training requirements for 180 Marines including rifle and pistol qualifications, swim qualifications, and annual training.",
+        "Oversaw the resolution of 12 non-judicial punishment cases and six administrative separation proceedings.",
+        "Coordinated the company's participation in a joint logistics over-the-shore exercise with Navy and Army elements, integrating 45 Marines into the joint task force."
+      ],
+      "context": "None",
+      "target_tier": "bottom_third"
+    },
+    {
+      "case_id": "SC006",
+      "rank": "SSgt",
+      "name": "Tran",
+      "billet_title": "Communications Chief",
+      "accomplishments": [
+        "Managed the installation, operation, and maintenance of tactical data and voice communications systems for a 500-Marine regiment.",
+        "Supervised eight Marines in the communications section, maintaining operational readiness of 30 radio systems and four satellite terminals.",
+        "Planned and established communications architecture for Exercise Desert Scimitar, providing reliable command and control networks across a 40-kilometer operating area.",
+        "Conducted 16 communications training sessions for non-communications Marines on the operation of handheld radios and reporting procedures.",
+        "Coordinated frequency management and spectrum allocation with higher headquarters for three major exercises.",
+        "Completed a full inventory and redistribution of communications equipment across four subordinate units, resolving six equipment shortages."
+      ],
+      "context": "None",
+      "target_tier": "middle_third"
+    },
+    {
+      "case_id": "SC007",
+      "rank": "GySgt",
+      "name": "Petrov",
+      "billet_title": "Motor Transport Chief",
+      "accomplishments": [
+        "Managed the maintenance and readiness of 52 tactical vehicles including Medium Tactical Vehicle Replacements, High Mobility Multipurpose Wheeled Vehicles, and Logistics Vehicle Systems.",
+        "Supervised 14 Marines in the motor transport section, maintaining a 90 percent equipment readiness rate throughout the reporting period.",
+        "Planned and executed the ground transportation of battalion equipment for two deployment for training exercises, moving 48 vehicles over 300 miles.",
+        "Coordinated the licensing and training of 35 Marines on tactical vehicle operation, reducing the battalion's unlicensed driver shortage.",
+        "Processed 180 dispatch requests and managed the daily vehicle allocation for battalion operations.",
+        "Conducted monthly vehicle inspections in accordance with the technical manual, identifying and correcting 22 maintenance deficiencies.",
+        "Tracked and reported parts requisitions through the maintenance management system, reducing average repair cycle time."
+      ],
+      "context": "None",
+      "target_tier": "middle_third"
+    },
+    {
+      "case_id": "SC008",
+      "rank": "1stLt",
+      "name": "Coleman",
+      "billet_title": "Intelligence Officer",
+      "accomplishments": [
+        "Served as the battalion intelligence officer, producing weekly intelligence summaries and threat assessments for the commanding officer and staff.",
+        "Developed and briefed the intelligence preparation of the battlefield for three major training exercises.",
+        "Supervised four Marines in the intelligence section, managing the production of 40 intelligence products during the reporting period.",
+        "Coordinated with regimental and division intelligence staffs on information requirements and collection management.",
+        "Planned and executed the battalion's counter-intelligence awareness training for 450 Marines.",
+        "Maintained the security manager program, processing 60 security clearance actions and conducting 12 security briefings.",
+        "Produced the opposing force plan for Exercise Steel Knight, integrating threat capabilities into a realistic training scenario for 800 participants."
+      ],
+      "context": "None",
+      "target_tier": "middle_third"
+    },
+    {
+      "case_id": "SC009",
+      "rank": "MSgt",
+      "name": "Garza",
+      "billet_title": "Battalion Training Chief",
+      "accomplishments": [
+        "Developed and managed the battalion's annual training plan, synchronizing training events across five companies and 650 Marines.",
+        "Coordinated range and training area scheduling for 45 events including live fire, maneuver, and combined arms exercises.",
+        "Supervised the collection and reporting of training readiness data in the training and readiness management system.",
+        "Planned the battalion's pre-deployment training program, ensuring completion of all required collective and individual tasks.",
+        "Managed the battalion training budget, tracking expenditures for ammunition, ranges, and temporary duty travel.",
+        "Coordinated the integration of three newly assigned officers into the training cycle, providing orientation on battalion operations and standards."
+      ],
+      "context": "None",
+      "target_tier": "middle_third"
+    },
+    {
+      "case_id": "SC010",
+      "rank": "Sgt",
+      "name": "Brooks",
+      "billet_title": "Airframes Mechanic",
+      "accomplishments": [
+        "Performed scheduled and unscheduled maintenance on six CH-53E Super Stallion helicopters, completing 85 maintenance actions during the reporting period.",
+        "Conducted pre-flight and post-flight inspections, identifying and correcting 14 discrepancies prior to flight operations.",
+        "Supervised two junior Marines in airframes maintenance tasks including hydraulic system servicing, flight control rigging, and structural repairs.",
+        "Completed a phase maintenance inspection on one aircraft, documenting and resolving 30 maintenance items over a 15-day period.",
+        "Maintained maintenance records and documentation in the naval aviation logistics command management information system.",
+        "Supported flight operations during Exercise Talisman Sabre, ensuring aircraft availability for 40 scheduled flight hours.",
+        "Trained and signed off two Marines on seven maintenance task qualifications."
+      ],
+      "context": "None",
+      "target_tier": "middle_third"
+    },
+    {
+      "case_id": "SC011",
+      "rank": "Capt",
+      "name": "Fitzpatrick",
+      "billet_title": "Assistant Operations Officer",
+      "accomplishments": [
+        "Served as the primary planner for three battalion-level exercises, developing operations orders, synchronization matrices, and execution checklists.",
+        "Coordinated fire support planning for combined arms live fire exercises, integrating mortar, artillery, and close air support into maneuver plans.",
+        "Managed the daily operations center watch, supervising the production of 180 daily situation reports and fragmentary orders.",
+        "Planned and coordinated the battalion's participation in a division-level command post exercise involving 2,000 Marines across four battalions.",
+        "Developed the tactical standard operating procedures for the battalion operations section, standardizing reporting formats and battle rhythm events.",
+        "Served as officer in charge of the battalion's deployment for training to Twentynine Palms, coordinating movement, lodging, and training area allocation for 500 Marines.",
+        "Briefed the regimental commander on battalion operations and training readiness during two quarterly training briefs."
       ],
       "context": "None",
       "target_tier": "top_third"
     },
     {
-      "case_id": "C002",
-      "rank": "Sgt",
-      "name": "Johnson",
-      "billet_title": "Combat Instructor",
+      "case_id": "SC012",
+      "rank": "1stSgt",
+      "name": "Warren",
+      "billet_title": "Company First Sergeant",
       "accomplishments": [
-        "Trained and mentored 300 students in the 0300 common skills package for class 11-13.",
-        "Served as Platoon Commander for Weapons Platoon and Mortar Section Lead Instructor for class 11-13.",
-        "Trained and mentored six new combat instructors during their first training cycle, ensuring a smooth transition and improving overall performance within the unit.",
-        "Trained, mentored, and produced 28 entry level students in becoming and 0341 basic infantry mortarman.",
-        "Served as position safety officer during eight live fire training events ensuring safe and effective training for over 280 student Marines training on M16A4, M203, AT-4 and LAW  trainers, 60mm and 81mm mortars, and live fire and movement.",
-        "Planned and supervised three live fire training events for the 60mm mortar and 81mm mortar systems, training and qualifying 28 students on those weapons systems.",
-        "Achieved a platoon GPA of 98.86 for the 0341 mortarman class."
+        "Served as the senior enlisted advisor for a 200-Marine headquarters and service company during garrison and field operations.",
+        "Supervised the professional development of eight staff noncommissioned officers and 12 noncommissioned officers across six sections.",
+        "Directed two Lance Corporal Leadership Seminars, graduating 50 Marines over two iterations.",
+        "Managed the company's administrative actions including 15 non-judicial punishment cases, eight meritorious promotion boards, and four administrative separation proceedings.",
+        "Coordinated the reception and integration of 35 newly reported Marines into the company, ensuring completion of all check-in requirements.",
+        "Organized the company's participation in the battalion Commander's Cup athletic competition.",
+        "Planned and supervised the company's annual Marine Corps Birthday Ball for 250 attendees.",
+        "Conducted monthly health and comfort inspections of all barracks spaces assigned to the company."
       ],
       "context": "None",
-      "target_tier": "middle_third"
+      "target_tier": "top_third"
+    },
+    {
+      "case_id": "SC013",
+      "rank": "SSgt",
+      "name": "Okafor",
+      "billet_title": "Reconnaissance Team Leader",
+      "accomplishments": [
+        "Led a six-Marine reconnaissance team through a seven-month deployment to the Central Command area of responsibility.",
+        "Planned and executed 10 reconnaissance and surveillance missions in support of the Marine Expeditionary Unit's intelligence collection plan.",
+        "Conducted amphibious reconnaissance training with partner nation special operations forces during three bilateral exercises.",
+        "Trained team members on insertion and extraction techniques including helicopter rope suspension, small boat operations, and combat diving procedures.",
+        "Maintained the team's operational readiness across all individual and collective tasks, completing 100 percent of required sustainment training.",
+        "Supervised the maintenance and accountability of specialized reconnaissance equipment valued at over one million dollars.",
+        "Produced 10 post-mission reports detailing observations and recommendations for the intelligence section and supported commanders."
+      ],
+      "context": "None",
+      "target_tier": "top_third"
+    },
+    {
+      "case_id": "SC014",
+      "rank": "GySgt",
+      "name": "Hawkins",
+      "billet_title": "Ammunition Chief",
+      "accomplishments": [
+        "Managed the receipt, storage, and issue of ammunition for a regiment of 1,200 Marines across four subordinate battalions.",
+        "Supervised 10 Marines in the ammunition section, maintaining compliance with explosive safety regulations across three ammunition supply points.",
+        "Planned and executed ammunition support for 30 live fire training events, issuing over 500,000 rounds of small arms and ordnance during the reporting period.",
+        "Conducted quarterly explosive safety inspections of all storage facilities, identifying and correcting 18 discrepancies.",
+        "Coordinated the turn-in and redistribution of excess ammunition across the regiment, reducing the excess ammunition inventory.",
+        "Maintained ammunition transaction records and submitted monthly expenditure reports to the division ammunition officer.",
+        "Trained 25 Marines from subordinate units on ammunition handling procedures and explosive safety requirements."
+      ],
+      "context": "None",
+      "target_tier": "top_third"
+    },
+    {
+      "case_id": "SC015",
+      "rank": "Sgt",
+      "name": "Malone",
+      "billet_title": "Data Systems Technician",
+      "accomplishments": [
+        "Installed, configured, and maintained network systems supporting 350 users across the battalion headquarters and four remote sites.",
+        "Resolved 220 trouble tickets during the reporting period, maintaining a 98 percent resolution rate within established timelines.",
+        "Planned and established tactical network services for three field exercises, providing voice, data, and video teleconference capabilities.",
+        "Supervised two junior Marines in the data section, training them on network administration, server management, and information assurance procedures.",
+        "Completed the migration of 200 user accounts to a new domain architecture during the command's network modernization effort.",
+        "Maintained network security compliance, conducting monthly vulnerability scans and applying patches to 45 workstations and eight servers.",
+        "Provided network engineering support for the battalion's command post during Exercise Dawn Blitz, enabling connectivity for 12 key leader systems."
+      ],
+      "context": "None",
+      "target_tier": "top_third"
+    },
+    {
+      "case_id": "SC016",
+      "rank": "MSgt",
+      "name": "Castillo",
+      "billet_title": "Battalion Operations Chief",
+      "accomplishments": [
+        "Served as the senior enlisted member of the operations section for an 800-Marine infantry battalion during a combat deployment.",
+        "Managed the daily operations center, supervising 12 Marines in the production of orders, reports, and tracking of current operations.",
+        "Coordinated the integration of enablers including explosive ordnance disposal, military working dog teams, and civil affairs into 25 company-level operations.",
+        "Developed the duty roster and watch schedule for the battalion combat operations center, ensuring continuous 24-hour coverage for seven months.",
+        "Planned and supervised the battalion's retrograde of personnel and equipment at the conclusion of the deployment, accounting for all organizational property.",
+        "Supervised the production of the battalion's post-deployment lessons learned report, consolidating inputs from 30 key leaders across the formation.",
+        "Coordinated the scheduling and execution of 40 convoy operations across the area of operations."
+      ],
+      "context": "None",
+      "target_tier": "water_walker"
+    },
+    {
+      "case_id": "SC017",
+      "rank": "Capt",
+      "name": "Langford",
+      "billet_title": "Logistics Officer",
+      "accomplishments": [
+        "Served as the battalion logistics officer, managing supply, maintenance, transportation, and food service operations for 650 Marines during a deployment to the Indo-Pacific region.",
+        "Planned and coordinated the embarkation of battalion equipment aboard two amphibious ships, loading 80 vehicles and 120 pallets of supplies.",
+        "Supervised 35 Marines across four logistics sections, maintaining operational readiness of all classes of supply throughout the deployment.",
+        "Coordinated aerial resupply operations for two companies operating at dispersed locations, planning and executing eight helicopter logistics support missions.",
+        "Managed the battalion's equipment maintenance program, tracking readiness rates and coordinating evacuation of deadline equipment to intermediate-level maintenance.",
+        "Developed the logistics estimate and sustainment annex for three battalion operations orders.",
+        "Coordinated with the Marine Logistics Group for theater-level support including contract maintenance, bulk fuel delivery, and general engineering support."
+      ],
+      "context": "None",
+      "target_tier": "water_walker"
+    },
+    {
+      "case_id": "SC018",
+      "rank": "SSgt",
+      "name": "Rivera",
+      "billet_title": "Explosive Ordnance Disposal Team Leader",
+      "accomplishments": [
+        "Led a five-Marine explosive ordnance disposal team during a seven-month deployment, responding to 30 requests for support from supported units.",
+        "Conducted 18 render-safe procedures on improvised explosive devices, conventional ordnance, and unexploded ordnance items.",
+        "Provided explosive hazard awareness training to 400 Marines from three infantry battalions prior to their deployment.",
+        "Supervised the maintenance and calibration of specialized detection and disposal equipment valued at over two million dollars.",
+        "Planned and executed post-blast analysis at four incident sites, producing technical exploitation reports for the intelligence section.",
+        "Trained two junior technicians on advanced render-safe procedures, qualifying both for independent team operations.",
+        "Coordinated with host nation ordnance disposal units during two bilateral training events, building interoperability and sharing technical procedures."
+      ],
+      "context": "None",
+      "target_tier": "water_walker"
+    },
+    {
+      "case_id": "SC019",
+      "rank": "1stSgt",
+      "name": "Drake",
+      "billet_title": "Battery First Sergeant",
+      "accomplishments": [
+        "Served as the senior enlisted advisor for a 150-Marine artillery battery during garrison operations and two major firing exercises.",
+        "Supervised the professional development of six staff noncommissioned officers and 14 noncommissioned officers across five sections.",
+        "Managed the battery's personnel readiness, maintaining 95 percent medical and dental readiness throughout the reporting period.",
+        "Directed the battery's participation in two battalion-level fire support coordination exercises, ensuring the readiness of all firing sections.",
+        "Coordinated the reception, staging, and integration of 20 newly assigned Marines into the battery.",
+        "Planned and supervised the battery's annual field mess operations during two 10-day field exercises, providing three meals daily for 150 Marines.",
+        "Conducted nine professional military education sessions for junior enlisted Marines on topics including leadership, standards and discipline, and career progression.",
+        "Organized the battery's annual safety stand-down, coordinating presentations on driving safety, financial readiness, and mental health resources for 150 attendees."
+      ],
+      "context": "None",
+      "target_tier": "water_walker"
+    },
+    {
+      "case_id": "SC020",
+      "rank": "Sgt",
+      "name": "Vega",
+      "billet_title": "Military Police Investigator",
+      "accomplishments": [
+        "Conducted 25 criminal investigations during the reporting period, preparing case files and evidence packages for review by the Staff Judge Advocate.",
+        "Served as the lead investigator on eight cases involving offenses under the Uniform Code of Military Justice.",
+        "Processed 40 crime scenes, collecting and documenting physical evidence in accordance with established forensic procedures.",
+        "Prepared and presented case briefs to the commanding officer and legal staff on 15 investigations.",
+        "Trained four junior military police Marines on evidence collection, interview techniques, and report writing procedures.",
+        "Coordinated with civilian law enforcement agencies on three cases involving off-installation incidents.",
+        "Maintained the section's evidence storage facility, conducting quarterly inventories and ensuring chain of custody compliance for 120 evidence items."
+      ],
+      "context": "None",
+      "target_tier": "water_walker"
     }
   ]
 }
