@@ -41,12 +41,18 @@ def save_run(
     run_dir = base_output_dir / "runs" / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
 
+    # Generate evaluation IDs once so both files share the same keys
+    eval_ids = {}
+    for r in results:
+        if r.error is None:
+            eval_ids[(r.case_id, r.model_id)] = uuid.uuid4().hex[:8]
+
     write_manifest(
         run_dir, run_id, dataset_version, prompt_mode,
         notes, model_names, temperature, max_tokens, max_tokens_reasoning,
     )
-    write_results(run_dir, run_id, dataset_version, results)
-    write_survey_csv(run_dir, results, cases)
+    write_results(run_dir, run_id, dataset_version, results, eval_ids)
+    write_survey_csv(run_dir, results, cases, eval_ids)
 
     return run_dir
 
@@ -90,16 +96,23 @@ def write_results(
     run_id: str,
     dataset_version: str,
     results: list[BenchResult],
+    eval_ids: dict[tuple[str, str], str],
 ) -> Path:
     """Write results.json — same schema as the flat-file logger output."""
     filepath = run_dir / "results.json"
+
+    entries = []
+    for r in results:
+        entry = asdict(r)
+        entry["evaluation_id"] = eval_ids.get((r.case_id, r.model_id))
+        entries.append(entry)
 
     payload = {
         "run_id": run_id,
         "dataset_version": dataset_version,
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "total_results": len(results),
-        "results": [asdict(r) for r in results],
+        "results": entries,
     }
 
     with open(filepath, "w", encoding="utf-8") as f:
@@ -112,6 +125,7 @@ def write_survey_csv(
     run_dir: Path,
     results: list[BenchResult],
     cases: list[BenchCase],
+    eval_ids: dict[tuple[str, str], str],
 ) -> Path:
     """
     Write survey.csv — blinded and shuffled rows for human evaluation.
@@ -137,7 +151,7 @@ def write_survey_csv(
         narrative = re.sub(r"<think>[\s\S]*?</think>", "", result.generated_text).strip()
 
         rows.append({
-            "evaluation_id": uuid.uuid4().hex[:8],
+            "evaluation_id": eval_ids[(result.case_id, result.model_id)],
             "rank": case.rank,
             "name": case.name,
             "billet": case.billet_title,
