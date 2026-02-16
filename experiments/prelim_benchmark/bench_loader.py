@@ -28,9 +28,9 @@ class BenchDataset:
     cases: list[BenchCase]
 
 
-def load_dataset() -> BenchDataset:
+def load_dataset(filename: str = "synthetic_cases_v1.json") -> BenchDataset:
     """Load and validate the synthetic benchmark cases from JSON."""
-    data_path = Path(__file__).parent / "data" / "synthetic_cases_v1.json"
+    data_path = Path(__file__).parent / "data" / filename
 
     with open(data_path, "r", encoding="utf-8") as f:
         raw = json.load(f)

@@ -103,6 +103,12 @@ def _parse_args() -> argparse.Namespace:
         default=False,
         help="Skip local (Ollama) models to speed up runs",
     )
+    parser.add_argument(
+        "--dataset",
+        type=str,
+        default="synthetic_cases_v1.json",
+        help="Dataset filename in data/ folder (default: synthetic_cases_v1.json)",
+    )
     return parser.parse_args()
 
 
@@ -136,10 +142,11 @@ def main():
     run_id = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S") + f"_{args.prompt_mode}"
     print(f"Run ID: {run_id}")
     print(f"Prompt mode: {args.prompt_mode}")
+    print(f"Dataset file: {args.dataset}")
     print()
 
     # Load benchmark cases
-    dataset = load_dataset()
+    dataset = load_dataset(args.dataset)
     print(f"Dataset version: {dataset.version}")
     print(f"Cases loaded: {len(dataset.cases)}")
     print()

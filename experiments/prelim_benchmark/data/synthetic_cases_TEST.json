@@ -1,0 +1,47 @@
+{
+  "metadata": {
+    "version": "v1",
+    "description": "Synthetic FitRep cases for benchmark evaluation - for quick Testing, tier neutral accomplishments",
+    "allowed_tiers": [
+      "bottom_third",
+      "middle_third",
+      "top_third",
+      "water_walker"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "SC002",
+      "rank": "SSgt",
+      "name": "Delgado",
+      "billet_title": "Logistics Chief",
+      "accomplishments": [
+        "Managed the receipt, storage, and distribution of Class I through Class IX supplies for a 300-Marine battalion during garrison and field operations.",
+        "Coordinated the ground transportation of 45 vehicles and associated equipment to and from the deployment for training exercise at Fort Stewart.",
+        "Processed 320 supply requests through the Global Combat Support System, maintaining a 96 percent fill rate for the reporting period.",
+        "Supervised five Marines in the logistics section, conducting weekly inventory reconciliation of all accountable equipment.",
+        "Planned and executed the battalion's annual field supply economy exercise, accounting for all organizational property across four companies.",
+        "Tracked and reported the maintenance status of 38 principal end items, coordinating with the maintenance section to reduce deadline equipment by four vehicles."
+      ],
+      "context": "None",
+      "target_tier": "bottom_third"
+    },
+    {
+      "case_id": "SC014",
+      "rank": "GySgt",
+      "name": "Hawkins",
+      "billet_title": "Ammunition Chief",
+      "accomplishments": [
+        "Managed the receipt, storage, and issue of ammunition for a regiment of 1,200 Marines across four subordinate battalions.",
+        "Supervised 10 Marines in the ammunition section, maintaining compliance with explosive safety regulations across three ammunition supply points.",
+        "Planned and executed ammunition support for 30 live fire training events, issuing over 500,000 rounds of small arms and ordnance during the reporting period.",
+        "Conducted quarterly explosive safety inspections of all storage facilities, identifying and correcting 18 discrepancies.",
+        "Coordinated the turn-in and redistribution of excess ammunition across the regiment, reducing the excess ammunition inventory.",
+        "Maintained ammunition transaction records and submitted monthly expenditure reports to the division ammunition officer.",
+        "Trained 25 Marines from subordinate units on ammunition handling procedures and explosive safety requirements."
+      ],
+      "context": "None",
+      "target_tier": "top_third"
+    }
+  ]
+}
