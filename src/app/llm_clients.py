@@ -24,6 +24,7 @@ class OpenAIClient(BaseLLMClient):
             raise ValueError("Missing API Key: Set 'OPENAI_API_KEY' in your environment.")
 
         valid_ids = {cfg["model_id"] for cfg in constants.FRONTIER_MODELS.values()}
+        valid_ids.add('gpt-5.2')
         if model not in valid_ids:
             raise ValueError(
                 f"Unsupported model '{model}'. Allowed: {sorted(valid_ids)}"
@@ -49,7 +50,7 @@ class OpenAIClient(BaseLLMClient):
                         "temperature": request.temperature,
                         }
 
-            # medium effort is default - these lines can support adding effort as a param in the future
+            # 5.2 defaults to no reasoning, 5-mini and nano apparently default to medium or minimal - it is unclear
             # if request.reasoning:
             #     kwargs["reasoning"] = {"effort": "medium"}
 

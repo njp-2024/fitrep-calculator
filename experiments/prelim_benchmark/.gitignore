@@ -1,3 +1,4 @@
 outputs/*.json
+outputs/*.txt
 outputs/runs/
 outputs/eval_*/

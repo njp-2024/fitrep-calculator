@@ -76,6 +76,11 @@ FRONTIER_MODELS = {
         "model_id": "gpt-4.1-nano",
         "size_category": MODEL_SIZE_LARGE,
     },
+    "GPT-5.2": {
+        "model_id": "gpt-5.2",
+        "size_category": MODEL_SIZE_LARGE,
+        "reasoning": True
+    },
     # "GPT-5-nano": {
     #     "model_id": "gpt-5-nano",
     #     "size_category": MODEL_SIZE_LARGE,

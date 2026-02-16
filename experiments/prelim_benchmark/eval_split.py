@@ -3,7 +3,7 @@ eval_split.py
 
 Sampling and packet preparation for Part B (scaled prompts) human evaluation.
 
-Splits 160 Part B outputs (8 models x 20 cases) into human-eval and LLM-eval
+Splits 180 Part B outputs (9 models x 20 cases) into human-eval and LLM-eval
 sets, then formats the human set into survey packets for evaluators.
 
 Run from project root with:
@@ -64,9 +64,9 @@ def stratified_sample(
 
     Returns:
         (wave1_samples, wave2_samples, llm_remainder)
-        - wave1_samples: 32 items (1 per cell)
-        - wave2_samples: 32 items (1 per cell, different from wave 1)
-        - llm_remainder: remaining items (160 - 64 = 96)
+        - wave1_samples: 36 items (1 per cell)
+        - wave2_samples: 36 items (1 per cell, different from wave 1)
+        - llm_remainder: remaining items (180 - 72 = 108)
     """
     rng = random.Random(seed)
 
@@ -157,7 +157,8 @@ def build_packets(
     3. Shuffle within each packet for presentation order
 
     Guarantees:
-    - Exactly packet_size/num_tiers narratives per tier per packet
+    - Approximately packet_size/num_tiers narratives per tier per packet
+      (exact when packet_size is divisible by num_tiers)
     - Each sample appears in exactly num_packets * packet_size / len(samples) packets
     """
     rng = random.Random(seed + 2)
@@ -488,7 +489,7 @@ def export_manifest(
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "run_dir": str(args.run_dir),
         "seed": args.seed,
-        "packet_size": 8,
+        "packet_size": 9,
         "num_packets_per_wave": 12,
         "counts": {
             "wave1_human_eval": len(wave1_samples),
@@ -602,10 +603,10 @@ def main():
 
     # 5. Build 12 packets per wave via circular rotation
     wave1_packets = build_packets(
-        wave1_samples, num_packets=12, packet_size=8, seed=args.seed,
+        wave1_samples, num_packets=12, packet_size=9, seed=args.seed,
     )
     wave2_packets = build_packets(
-        wave2_samples, num_packets=12, packet_size=8, seed=args.seed,
+        wave2_samples, num_packets=12, packet_size=9, seed=args.seed,
     )
 
     # 6. Create output directory
