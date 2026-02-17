@@ -69,7 +69,7 @@ Scale: 1-5
 
 ### Q4 - Overall Usefulness (Required)
 
-**Overall, how useful is this tool for writing fitrep narratives?**
+**Overall, how useful is this tool for preparing FitReps?**
 
 Scale: 1-5
 

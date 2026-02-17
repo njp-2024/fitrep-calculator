@@ -17,6 +17,9 @@ and accomplishments (all fake), followed by the narrative and target
 performance tier. They all have the same 5 questions. It should take 15-20
 minutes to complete.
 
+_Note: The top third performance tier is broken into 2 tiers.  The top 2% (RV greater than or equal to 98) are labeled
+as 'water_walker'.  The label 'top_third' refers to those with RV between 93.34 and 98._
+
 Thanks for supporting the project!
 
 ## Form Layout

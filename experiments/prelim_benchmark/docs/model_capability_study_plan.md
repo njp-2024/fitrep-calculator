@@ -72,12 +72,12 @@ All prompts include:
 
 ### Generation Parameters
 
-| Parameter | Value |
-|-----------|-------|
-| Temperature | 0.7 |
-| Max tokens (standard) | 500 |
-| Max tokens (reasoning models) | 5,000 |
-| Target character range | SECT_I_CHAR_LIMIT - 100 to SECT_I_CHAR_LIMIT |
+| Parameter | Value      |
+|-----------|------------|
+| Temperature | 0.7        |
+| Max tokens (standard) | 500        |
+| Max tokens (reasoning models) | 5,000      |
+| Target character range | 956 - 1056 |
 
 ### Experimental Matrix
 
