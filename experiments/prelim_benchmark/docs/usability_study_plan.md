@@ -92,46 +92,55 @@ Each case provides:
 
 ## Survey Design
 
-A single survey is completed after all 3 cases. The survey covers four areas:
+A single survey is completed after all 3 cases. The survey has 16 questions
+(13 required, 3 optional) across four sections:
 
-### Section 1: Narrative Quality (Q1-Q3)
+### Section 1: Narrative Quality (Q1-Q4)
 
-Evaluates how useful the generated narratives are as drafts.
+Captures the generation method used and evaluates how useful the generated
+narratives are as drafts.
 
-- **Q1 - Draft Usefulness**: 1-5 scale rating of overall narrative usefulness
-- **Q2 - Edit Effort**: Single choice on how much editing was needed (complete
+- **Q1 - Generation Method**: Multi-select on how participants generated
+  narratives (in-app, copy-paste to another AI tool, or both)
+- **Q2 - Draft Usefulness**: 1-5 scale rating of overall narrative usefulness
+- **Q3 - Edit Effort**: Single choice on how much editing was needed (complete
   rewrite through usable as-is)
-- **Q3 - Tier Accuracy**: 1-5 scale rating of how well narratives matched the
+- **Q4 - Tier Accuracy**: 1-5 scale rating of how well narratives matched the
   intended performance tier
 
-### Section 2: App Usefulness (Q4-Q7)
+### Section 2: App Usefulness (Q5-Q9)
 
-Evaluates whether the tool improves on existing fitrep writing processes.
+Establishes the participant's current process baseline and evaluates whether
+the tool improves on it.
 
-- **Q4 - Overall Usefulness**: 1-5 scale rating of tool usefulness
-- **Q5 - Versus Current Process**: Single choice comparison to current approach
+- **Q5 - Current Process**: Multi-select on how participants currently write
+  Section I narratives (from scratch, reuse previous, AI tools, templates)
+- **Q6 - Overall Usefulness**: 1-5 scale rating of tool usefulness
+- **Q7 - Versus Current Process**: Single choice comparison to current approach
   (much worse through much better)
-- **Q6 - Time Comparison**: Single choice comparison of speed (much slower
+- **Q8 - Time Comparison**: Single choice comparison of speed (much slower
   through much faster)
-- **Q7 - Likelihood to Use**: 1-5 scale rating of adoption likelihood
+- **Q9 - Likelihood to Use**: 1-5 scale rating of adoption likelihood
 
-### Section 3: Ease of Use (Q8-Q10)
+### Section 3: Ease of Use (Q10-Q13)
 
-Evaluates the learning curve and feature value.
+Evaluates the learning curve, RV display value, and feature preferences.
 
-- **Q8 - Ease of Use**: 1-5 scale rating
-- **Q9 - Learning Curve**: Single choice on how quickly participants felt
+- **Q10 - Ease of Use**: 1-5 scale rating
+- **Q11 - RV Display Usefulness**: 1-5 scale rating of how useful the relative
+  value calculations were while scoring attributes
+- **Q12 - Learning Curve**: Single choice on how quickly participants felt
   comfortable
-- **Q10 - Most Valuable Feature**: Single choice identifying the most valuable
+- **Q13 - Most Valuable Feature**: Single choice identifying the most valuable
   app feature
 
-### Section 4: Open-Ended (Q11-Q13)
+### Section 4: Open-Ended (Q14-Q16)
 
 Captures qualitative feedback.
 
-- **Q11 - What's Missing**: Free text on desired features or improvements
-- **Q12 - Biggest Concern**: Free text on concerns about AI-drafted narratives
-- **Q13 - Final Comments**: Free text for any additional feedback
+- **Q14 - What's Missing**: Free text on desired features or improvements
+- **Q15 - Biggest Concern**: Free text on concerns about AI-drafted narratives
+- **Q16 - Final Comments**: Free text for any additional feedback
 
 See `usability_survey_questions.md` for the complete question text formatted for
 Google Forms implementation.
@@ -142,10 +151,13 @@ Google Forms implementation.
 
 | Data Point | Source |
 |------------|--------|
-| Narrative quality perceptions | Survey Q1-Q3 |
-| App usefulness vs. current process | Survey Q4-Q7 |
-| Ease of use and learning curve | Survey Q8-Q10 |
-| Feature requests and concerns | Survey Q11-Q13 |
+| Generation method used | Survey Q1 |
+| Narrative quality perceptions | Survey Q2-Q4 |
+| Current process baseline | Survey Q5 |
+| App usefulness vs. current process | Survey Q6-Q9 |
+| RV display usefulness | Survey Q11 |
+| Ease of use and learning curve | Survey Q10, Q12-Q13 |
+| Feature requests and concerns | Survey Q14-Q16 |
 
 **Note:** This study does not collect app telemetry, timing data, or generated
 narrative text from participants. All assessment is self-reported via the survey.
@@ -161,11 +173,14 @@ Given the exploratory nature and small sample size (10+ participants):
 - **Qualitative**: Thematic grouping of open-ended responses to identify common
   feedback patterns.
 - **Key metrics**:
-  - Median draft usefulness rating (Q1)
-  - Distribution of edit effort (Q2)
-  - Median overall usefulness and likelihood to adopt (Q4, Q7)
-  - Comparison to current process (Q5)
-  - Common feature requests and concerns (Q11, Q12)
+  - Generation method distribution (Q1)
+  - Median draft usefulness rating (Q2)
+  - Distribution of edit effort (Q3)
+  - Current process breakdown (Q5)
+  - Median overall usefulness and likelihood to adopt (Q6, Q9)
+  - Comparison to current process (Q7)
+  - RV display usefulness distribution (Q11)
+  - Common feature requests and concerns (Q14, Q15)
 
 ---
 
