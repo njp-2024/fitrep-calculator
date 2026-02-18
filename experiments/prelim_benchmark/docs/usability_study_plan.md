@@ -79,42 +79,36 @@ Each case provides:
 ### Timing Estimate
 
 | Activity | Estimated Time |
-|----------|---------------|
-| Walkthrough video / instructions | 5-10 min |
-| Profile setup | 5 min |
-| Case 1 (first use, learning curve) | 10-15 min |
-| Case 2 | 8-10 min |
-| Case 3 | 8-10 min |
-| Survey | 5-10 min |
-| **Total** | **~45-60 min** |
+|----------|----------------|
+| Walkthrough video / instructions | 5-10 min       |
+| Case 1 (first use, learning curve) | 10-15 min      |
+| Case 2 | 8-10 min       |
+| Case 3 | 8-10 min       |
+| Survey | 5-10 min       |
+| **Total** | **~35-50 min** |
 
 ---
 
 ## Survey Design
 
-A single survey is completed after all 3 cases. The survey has 16 questions
-(13 required, 3 optional) across four sections:
+A single survey is completed after all 3 cases. The survey has 20 questions
+(17 required, 3 optional) across four sections:
 
-### Section 1: Narrative Quality (Q1-Q4)
+### Section 1: Background (Q1-Q5)
 
-Captures the generation method used and evaluates how useful the generated
-narratives are as drafts.
+Captures background on the participant and his/her current report preparation habits.
 
-- **Q1 - Generation Method**: Multi-select on how participants generated
-  narratives (in-app, copy-paste to another AI tool, or both)
-- **Q2 - Draft Usefulness**: 1-5 scale rating of overall narrative usefulness
-- **Q3 - Edit Effort**: Single choice on how much editing was needed (complete
-  rewrite through usable as-is)
-- **Q4 - Tier Accuracy**: 1-5 scale rating of how well narratives matched the
-  intended performance tier
+- **Q1 - Rank**: Drop-down
+- **Q2 - Experience**: Drop-down of how many reports they have written
+- **Q3 - Current Marking Habits**: Multi-choice on what tools/techniques they currently use to mark reports
+- **Q4 - Explicit RV Check**: Yes/No on whether they currently check RV for their reports or not
+- **Q5 - Current Narrative Habits**: Multi-choice on what tools/techniques they currently use to write narratives
 
-### Section 2: App Usefulness (Q5-Q9)
+### Section 2: App Usefulness (Q6-Q9)
 
 Establishes the participant's current process baseline and evaluates whether
 the tool improves on it.
 
-- **Q5 - Current Process**: Multi-select on how participants currently write
-  Section I narratives (from scratch, reuse previous, AI tools, templates)
 - **Q6 - Overall Usefulness**: 1-5 scale rating of tool usefulness
 - **Q7 - Versus Current Process**: Single choice comparison to current approach
   (much worse through much better)
@@ -134,13 +128,27 @@ Evaluates the learning curve, RV display value, and feature preferences.
 - **Q13 - Most Valuable Feature**: Single choice identifying the most valuable
   app feature
 
-### Section 4: Open-Ended (Q14-Q16)
+
+### Section 4: Narrative Quality (Q14-Q17)
+
+Captures the generation method used and evaluates how useful the generated
+narratives are as drafts.
+
+- **Q14 - Generation Method**: Multi-select on how participants generated
+  narratives (in-app, copy-paste to another AI tool, or both)
+- **Q15 - Draft Usefulness**: 1-5 scale rating of overall narrative usefulness
+- **Q16 - Edit Effort**: Single choice on how much editing was needed (complete
+  rewrite through usable as-is)
+- **Q17 - Tier Accuracy**: 1-5 scale rating of how well narratives matched the
+  intended performance tier
+
+### Section 5: Open-Ended (Q17-Q20)
 
 Captures qualitative feedback.
 
-- **Q14 - What's Missing**: Free text on desired features or improvements
-- **Q15 - Biggest Concern**: Free text on concerns about AI-drafted narratives
-- **Q16 - Final Comments**: Free text for any additional feedback
+- **Q18 - What's Missing**: Free text on desired features or improvements
+- **Q19 - Biggest Concern**: Free text on concerns about AI-drafted narratives
+- **Q20 - Final Comments**: Free text for any additional feedback
 
 See `usability_survey_questions.md` for the complete question text formatted for
 Google Forms implementation.
@@ -149,15 +157,15 @@ Google Forms implementation.
 
 ## Data Collected
 
-| Data Point | Source |
-|------------|--------|
-| Generation method used | Survey Q1 |
-| Narrative quality perceptions | Survey Q2-Q4 |
-| Current process baseline | Survey Q5 |
-| App usefulness vs. current process | Survey Q6-Q9 |
-| RV display usefulness | Survey Q11 |
+| Data Point | Source              |
+|------------|---------------------|
+| Generation method used | Survey Q14          |
+| Narrative quality perceptions | Survey Q15-Q17      |
+| Current process baseline | Survey Q1-Q5        |
+| App usefulness vs. current process | Survey Q6-Q9        |
+| RV display usefulness | Survey Q11          |
 | Ease of use and learning curve | Survey Q10, Q12-Q13 |
-| Feature requests and concerns | Survey Q14-Q16 |
+| Feature requests and concerns | Survey Q18-Q20      |
 
 **Note:** This study does not collect app telemetry, timing data, or generated
 narrative text from participants. All assessment is self-reported via the survey.
@@ -173,14 +181,14 @@ Given the exploratory nature and small sample size (10+ participants):
 - **Qualitative**: Thematic grouping of open-ended responses to identify common
   feedback patterns.
 - **Key metrics**:
-  - Generation method distribution (Q1)
-  - Median draft usefulness rating (Q2)
-  - Distribution of edit effort (Q3)
-  - Current process breakdown (Q5)
+  - Generation method distribution (Q14)
+  - Median draft usefulness rating (Q16)
+  - Distribution of edit effort (Q17)
+  - Current process breakdown (Q1-Q5)
   - Median overall usefulness and likelihood to adopt (Q6, Q9)
   - Comparison to current process (Q7)
   - RV display usefulness distribution (Q11)
-  - Common feature requests and concerns (Q14, Q15)
+  - Common feature requests and concerns (Q19, Q20)
 
 ---
 

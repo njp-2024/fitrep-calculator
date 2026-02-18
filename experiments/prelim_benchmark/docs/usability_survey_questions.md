@@ -9,7 +9,7 @@ generated. Your feedback will directly inform app development priorities.
 All cases used synthetic (fake) data -- no real people or accomplishments were
 used. Please answer based on your overall experience across all 3 cases.
 
-There are 16 questions (13 required, 3 optional). It should take 5-10 minutes
+There are 20 questions (17 required, 3 optional). It should take 5-10 minutes
 to complete.
 
 Thanks for supporting the project!
@@ -21,61 +21,46 @@ survey after finishing all 3 cases.
 
 ---
 
-## Section 1: Narrative Quality
+## Section 1: Background
 
-### Q1 - Generation Method (Required)
+### Q1 - Rank (Required)
 
-**How did you generate narratives during this session? (select all that apply)**
+**Select your rank.**
+
+Drop-Down:
+Lt through Col with other option.
+
+### Q2 - FitRep Experience (Required)
+
+**How much experience do you have as an RS?**  _Select the number of observed reports you have written_
+
+Drop-Down:
+- <5
+- 5-10
+- 10-20
+- 20-50
+- 50-100
+- 100+
+
+### Q3 - Marking Habits (Required)
+
+**How do you currently score/mark FitReps? (select all that apply)**
 
 Multi-select:
 
-- Used the in-app generation feature
-- Copied the prompt and used another AI tool (e.g., ChatGPT)
-- Both (tried each at least once)
+- I mark each report independently and submit without calculating anything
+- I use my RS List/Summary on OMPF to make sure the report average falls where I want
+- I built and maintain my own FitRep tracker
+- I use the 'USMC FitRep Tracker' excel tracker
+- Other
 
-### Q2 - Draft Usefulness (Required)
+### Q4 - Explicit RV Calculating habits (Required)
 
-**Overall, how useful were the generated narratives as starting drafts?**
+**Do you check the relative value (RV) of your reports before submitting them?**
 
-Scale: 1-5
-
-| Rating | Label              |
-|--------|--------------------|
-| 1      | Not useful at all  |
-| 2      | Slightly useful    |
-| 3      | Moderately useful  |
-| 4      | Very useful        |
-| 5      | Extremely useful   |
-
-### Q3 - Edit Effort (Required)
-
-**On average, how much editing did the generated narratives need?**
-
-Single choice:
-
-- Complete rewrite
-- Major edits (changed most of it)
-- Moderate edits (changed some sections)
-- Minor edits (small tweaks)
-- None (usable as-is)
-
-### Q4 - Tier Accuracy (Required)
-
-**How well did the narratives match the intended performance tier?**
-
-Scale: 1-5
-
-| Rating | Label              |
-|--------|--------------------|
-| 1      | Completely off     |
-| 2      | Mostly misaligned  |
-| 3      | Partially aligned  |
-| 4      | Mostly aligned     |
-| 5      | Fully aligned      |
-
----
-
-## Section 2: App Usefulness
+Choice:
+- Yes
+- No
 
 ### Q5 - Current Process (Required)
 
@@ -85,9 +70,14 @@ Multi-select:
 
 - Write from scratch
 - Adapt/reuse previous fitreps
-- Use AI tools (ChatGPT, etc.)
+- Use AI tools - I write the narrative, AI refines
+- Use AI tools - AI writes the narrative, I refine
 - Use templates or reference guides
 - Other (free text)
+
+---
+
+## Section 2: App Usefulness
 
 ### Q6 - Overall Usefulness (Required)
 
@@ -198,21 +188,76 @@ Single choice:
 
 ---
 
-## Section 4: Open-Ended
+## Section 4: Narrative Quality
 
-### Q14 - What's Missing (Optional)
+### Q14 - Generation Method (Required)
+
+**How did you generate narratives during this session? (select all that apply)**
+
+Multi-select:
+
+- Used the in-app generation feature
+- Copied the prompt and used another AI tool (e.g., ChatGPT)
+- Both (tried each at least once)
+
+
+### Q15 - Draft Usefulness (Required)
+
+**Overall, how useful were the generated narratives as starting drafts?**
+
+Scale: 1-5
+
+| Rating | Label              |
+|--------|--------------------|
+| 1      | Not useful at all  |
+| 2      | Slightly useful    |
+| 3      | Moderately useful  |
+| 4      | Very useful        |
+| 5      | Extremely useful   |
+
+### Q16 - Edit Effort (Required)
+
+**On average, how much editing did the generated narratives need?**
+
+Single choice:
+
+- Complete rewrite
+- Major edits (changed most of it)
+- Moderate edits (changed some sections)
+- Minor edits (small tweaks)
+- None (usable as-is)
+
+### Q17 - Tier Accuracy (Required)
+
+**How well did the narratives match the intended performance tier?**
+
+Scale: 1-5
+
+| Rating | Label              |
+|--------|--------------------|
+| 1      | Completely off     |
+| 2      | Mostly misaligned  |
+| 3      | Partially aligned  |
+| 4      | Mostly aligned     |
+| 5      | Fully aligned      |
+
+---
+
+## Section 5: Open-Ended
+
+### Q18 - What's Missing (Optional)
 
 **What features or improvements would make this tool more useful?**
 
 Free text.
 
-### Q15 - Biggest Concern (Optional)
+### Q19 - Biggest Concern (Optional)
 
 **Do you have any concerns about using AI to draft fitrep narratives?**
 
 Free text.
 
-### Q16 - Final Comments (Optional)
+### Q20 - Final Comments (Optional)
 
 **Any additional feedback?**
 
