@@ -7,16 +7,16 @@ instructions, enter the profile data, then work through each case in the app.
 
 ## Instructions
 
-1. Read these instructions and review this page: https://njp-2024.github.io/fitrep-calculator/
+1. Read these instructions and review this page: link
     - Watch the walkthrough video to see how the app works
 2. Open the app via the link above
 3. Complete reports for the 3 cases outlined below
     - The app allows processing reports for one rank at a time
     - Do all reports for one rank, reset the app, then do the next rank
     - Follow these steps for each rank
-4. After all 3 cases, complete the feedback survey (https://forms.osi.apps.mil/r/EdJm1KEnuK)
+4. After all 3 cases, complete the feedback survey (link)
     - Full link if the short one doesn't work:
-    - https://forms.osi.apps.mil/Pages/ResponsePage.aspx?id=2kzE9MYYsEaA8uKQByRE_dAoCfVBNfxKijVLcEixaGhUMVBDMUxOSUJNQzJBM1FURFc0RU00RzhFUi4u
+    - link
 
 
 Steps to complete reports:
