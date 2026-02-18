@@ -7,19 +7,32 @@ instructions, enter the profile data, then work through each case in the app.
 
 ## Instructions
 
-1. Watch the walkthrough video (link provided separately)
-2. Open the app (link provided separately)
-3. Enter the **Reporting Senior Profile** below into the app
-   - You will do one rank at a time (you can do all reports for one rank, then reset the app)
-4. Complete each of the 3 cases in order:
-   - Enter the Marine's rank and name
-   - Score the 14 attributes yourself, aiming for the **target tier** listed
-   - Enter the billet and accomplishments as narrative inputs
-   - Enter context if desired (you will have to make it up)
-   - Generate a narrative
-   - Review and edit the result as you see fit
-   - Print or save the results when complete
-5. After all 3 cases, complete the feedback survey (link provided separately)
+1. Read these instructions and review this page: https://njp-2024.github.io/fitrep-calculator/
+    - Watch the walkthrough video to see how the app works
+2. Open the app via the link above
+3. Complete reports for the 3 cases outlined below
+    - The app allows processing reports for one rank at a time
+    - Do all reports for one rank, reset the app, then do the next rank
+    - Follow these steps for each rank
+4. After all 3 cases, complete the feedback survey (https://forms.osi.apps.mil/r/EdJm1KEnuK)
+    - Full link if the short one doesn't work:
+    - https://forms.osi.apps.mil/Pages/ResponsePage.aspx?id=2kzE9MYYsEaA8uKQByRE_dAoCfVBNfxKijVLcEixaGhUMVBDMUxOSUJNQzJBM1FURFc0RU00RzhFUi4u
+
+
+Steps to complete reports:
+1. Enter the **Reporting Senior Profile** data (profiles provided below)
+2. Enter the Marine's rank and name
+3. Score the 14 attributes yourself, aiming for the **target tier** listed
+4. Complete all reports for the given rank, then proceed to the narratives page
+5. Enter the billet and accomplishments as narrative inputs
+6. Enter context if desired
+   - For your first narrative generation, do not enter any context
+7. Generate a narrative:
+   - **_Use GPT-4.1-mini_** to generate the narrative first
+   - You can try other methods after that, if needed
+8. Review and edit the result as you see fit
+9. Print or save the results when complete
+
 
 **Estimated time:** 30-45 minutes total
 
@@ -74,7 +87,7 @@ yourself to land in the **bottom third** tier.
 **Target Tier:** Middle Third
 
 Use the accomplishments below as narrative inputs. Score the 14 attributes
-yourself to land in the **middle third** tier.
+yourself to land in the **middle third** tier, slightly above average.
 
 ### Accomplishments
 
