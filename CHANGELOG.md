@@ -65,3 +65,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 - Validation logic to require Billet field
 - Tests updated to support Billet attribute
+
+
+---
+## [0.4.1] - 2026-02-18
+
+### Changed
+- Default model to GPT-4.1-mini on narratives page

@@ -1,7 +1,7 @@
 import shutil
 
 # App version - single source of truth
-APP_VERSION = "0.4.0"
+APP_VERSION = "0.4.1"
 
 # fitrep constants
 SCORE_LETTER_VALS = ["A", "B", "C", "D", "E", "F", "G", "H"]
@@ -54,7 +54,7 @@ OPEN_WEIGHT_MODELS = {
 }
 
 # default: GPT-4o-mini, others: gpt-5.1, gpt-5-mini, gpt-5-nano
-DEFAULT_FRONTIER_MODEL = "GPT-4o-mini"
+DEFAULT_FRONTIER_MODEL = "GPT-4.1-mini"
 FRONTIER_MODELS = {
     "GPT-4o-mini":  {"model_id": "gpt-4o-mini",  "reasoning": False},
     "GPT-5-mini":   {"model_id": "gpt-5-mini",   "reasoning": True},
