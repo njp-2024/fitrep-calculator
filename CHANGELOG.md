@@ -72,3 +72,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Default model to GPT-4.1-mini on narratives page
+
+---
+## [0.4.2] - 2026-03-25
+
+### Fixed
+- Profile page had conflicting validation rules when num reports was <3
+- Fixed this to correctly validate user inputs when num reports is <3
+- Added function to ensure correct profile average is stored when num reports <3
