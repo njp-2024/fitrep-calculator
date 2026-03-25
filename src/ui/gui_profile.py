@@ -33,16 +33,34 @@ def validate_inputs(high, low, avg, count):
         if not (0.0 <= low <= 7.0): return False, "Low must be between 0 and 7."
         if not (0.0 <= avg <= 7.0): return False, "Average must be between 0 and 7."
 
-        if low > high: return False, "Low cannot be greater than High."
-        if avg > high: return False, "Average cannot be greater than High."
-        if avg < low: return False, "Average cannot be lower than Low."
-
-        if count < 3 and avg > 0: return False, "Avg must be 0 if you have fewer than 3 reports."
+        if count == 1:
+            if avg > 0: return False, "Avg must be 0 if you have fewer than 3 reports."
+            if high != low: return False, "Only one report - high must equal low."
+        elif count == 2:
+            if avg > 0: return False, "Avg must be 0 if you have fewer than 3 reports."
+            if low > high: return False, "Low cannot be greater than High."
+        else:
+            if low > high: return False, "Low cannot be greater than High."
+            if avg > high: return False, "Average cannot be greater than High."
+            if avg < low: return False, "Average cannot be lower than Low."
 
     elif count == 0 and (high > 0 or low > 0 or avg > 0):
         return False, "High/Low/Avg must be 0 if you have 0 reports."
 
     return True, None
+
+def _get_correct_avg(unrounded_high, unrounded_low, avg, count):
+    """
+    Accounts for profiles with fewer than 3 reports correctly.
+    :param unrounded_high: profile high after unrounding
+    :param unrounded_low: profile low after unrounding
+    :param avg: profile avg as input by user
+    :param count: num reports as input by user
+    :return: avg for the profile
+    """
+    if count == 1: return unrounded_high
+    if count == 2: return (unrounded_low + unrounded_high) / 2
+    return avg
 
 def run_profile_page():
     """
@@ -74,8 +92,9 @@ def run_profile_page():
     if st.button("Save Profile", type='primary', disabled=not is_valid):
         unrounded_high = calc_eng.unround_score(high)
         unrounded_low = calc_eng.unround_score(low)
-        st.session_state.original_profile = models.RankProfile("Original", rank, unrounded_high, unrounded_low, avg, num_reports)
-        st.session_state.active_profile = models.RankProfile("Active", rank, unrounded_high, unrounded_low, avg, num_reports)
+        real_avg = _get_correct_avg(unrounded_high, unrounded_low, avg, num_reports)
+        st.session_state.original_profile = models.RankProfile("Original", rank, unrounded_high, unrounded_low, real_avg, num_reports)
+        st.session_state.active_profile = models.RankProfile("Active", rank, unrounded_high, unrounded_low, real_avg, num_reports)
         st.session_state.page = 'reports'
         st.rerun()
     st.caption("Save profile to add reports - profile will be locked while entering reports")
