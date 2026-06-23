@@ -80,3 +80,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Profile page had conflicting validation rules when num reports was <3
 - Fixed this to correctly validate user inputs when num reports is <3
 - Added function to ensure correct profile average is stored when num reports <3
+
+---
+## [0.4.3] - 2026-06-23
+
+### Changed
+- Removed GPT-5-mini and -nano from model list
+- They are thinking models and kept using all tokens to think, returning no text
+- When they did return text, it was no better than other models
