@@ -57,10 +57,8 @@ OPEN_WEIGHT_MODELS = {
 DEFAULT_FRONTIER_MODEL = "GPT-4.1-mini"
 FRONTIER_MODELS = {
     "GPT-4o-mini":  {"model_id": "gpt-4o-mini",  "reasoning": False},
-    "GPT-5-mini":   {"model_id": "gpt-5-mini",   "reasoning": True},
-    "GPT-5-nano":   {"model_id": "gpt-5-nano",   "reasoning": True},
     "GPT-4.1-mini": {"model_id": "gpt-4.1-mini", "reasoning": False},
-    "GPT-4.1-nano": {"model_id": "gpt-4.1-nano", "reasoning": False},
+    "GPT-4.1-nano": {"model_id": "gpt-4.1-nano", "reasoning": False}
 }
 
 # LLM Constants
